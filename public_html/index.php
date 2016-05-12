@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>Book-Store: Get the London Book</title>
+  <title>Book Store: Get the London Book</title>
   <meta name="description" content="Aston Book Store Project">
   <meta name="author" content="Karan Thaker">
 
@@ -33,9 +33,35 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="row">
-      <div class="one-half column" style="margin-top: 25%">
-        <h4>Blank Page... What a Novel idea!</h4>
-        <p>This index.php page is a basic start page for the book-store project. It's just waiting to have some content added!</p>
+      <!-- Title -->
+      <div class="eight columns" style="margin-top: 5%">
+        <h1>Book Store</h1>
+        <p>The one stop online shop for all your booking needs!</p>
+      </div>
+      <!-- End Title -->
+      <!-- Login Form -->
+      <div class="four columns" style="margin-top: 5%">
+        <label for="username">Username</label>
+        <input class="u-full-width" type="text" placeholder="Username" id="username">
+        
+        <label for="password">Password</label>
+        <input class="u-full-width" type="password" placeholder="Password" id="password">
+        
+        <input class="button-primary u-full-width" type="submit" value="Log In">
+        <a class="button u-full-width" href="#">Register?</a>
+      </div>
+      <!-- End Login Form -->
+    </div>
+    
+    <!-- Navbar....TODO: CSS Styling -->
+    <div id="nav" class="row">
+      <div class="twelve columns">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Books</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
       </div>
     </div>
   </div>
