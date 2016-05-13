@@ -40,28 +40,29 @@
       </div>
       <!-- End Title -->
       <!-- Login Form -->
-      <div class="four columns" style="margin-top: 5%">
-        <label for="username">Username</label>
-        <input class="u-full-width" type="text" placeholder="Username" id="username">
-        
-        <label for="password">Password</label>
-        <input class="u-full-width" type="password" placeholder="Password" id="password">
-        
-        <input class="button-primary u-full-width" type="submit" value="Log In">
-        <a class="button u-full-width" href="#">Register?</a>
-      </div>
+      <form id="login" action="../resources/php/login.php" method="post">
+        <div class="four columns" style="margin-top: 5%">
+          <label for="username">Username</label>
+          <input class="u-full-width" type="text" placeholder="Username" id="username" name="username">
+
+          <label for="password">Password</label>
+          <input class="u-full-width" type="password" placeholder="Password" id="password" name="password">
+
+          <input class="button-primary u-full-width" type="submit" name="submit" value="Log In">
+          <a class="button u-full-width" href="register.html">Not a member?</a>
+        </div>
+      </form>
       <!-- End Login Form -->
     </div>
     
-    <!-- Navbar....TODO: CSS Styling -->
     <div id="nav" class="row">
       <div class="twelve columns">
-        <ul>
-          <li><a href="#">Home</a></li>
+        <ol class="breadcrumb">
+          <li class="active">Home</li>
           <li><a href="#">Books</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
-        </ul>
+        </ol>
       </div>
     </div>
   </div>
