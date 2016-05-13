@@ -55,14 +55,14 @@
       <div class="one-half column">
         <form id="register" action="../resources/php/register.php" method="post">
           <label for="username">Username</label>
-          <input class="u-full-width" type="text" placeholder="Username" id="username" name="username">
+          <input class="u-full-width" type="text" placeholder="Username" id="username" name="username" required>
 
           <label for="password">Password</label>
-          <input class="u-full-width" type="password" placeholder="Password" id="password" name="password">
-          <input class="u-full-width" type="password" placeholder="Confirm" id="passwordConfirm" name="passwordConfirm">
+          <input class="u-full-width" type="password" placeholder="Password" id="password" name="password" required>
+          <input class="u-full-width" type="password" placeholder="Confirm" id="passwordConfirm" name="passwordConfirm" required>
 
           <label for="userType">User Type</label>
-          <select class="u-full-width" id="userType">
+          <select class="u-full-width" id="userType" required>
             <option value="Option 1">Student</option>
             <option value="Option 2">Staff</option>
           </select>
