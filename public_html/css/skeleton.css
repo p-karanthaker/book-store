@@ -303,6 +303,26 @@ ol ul {
 li {
   margin-bottom: 1rem; }
 
+/* Navbar
+----------- */
+.breadcrumb {
+    list-style: none;
+}
+
+.breadcrumb>li {
+    display: inline-block;
+}
+
+.breadcrumb>.active {
+    color: #777;
+}
+
+.breadcrumb>li+li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "/\00a0";
+}
+
 
 /* Code
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
