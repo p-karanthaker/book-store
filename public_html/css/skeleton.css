@@ -306,10 +306,7 @@ li {
 /* Navbar
 ----------- */
 .breadcrumb {
-    padding: 8px 15px;
-    margin-bottom: 20px;
     list-style: none;
-    border-radius: 4px;
 }
 
 .breadcrumb>li {
