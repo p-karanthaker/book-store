@@ -5,8 +5,8 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>Registration</title>
-  <meta name="description" content="Registration">
+  <title>Book Store: Get the London Book</title>
+  <meta name="description" content="Aston Book Store Project">
   <meta name="author" content="Karan Thaker">
 
   <!-- Mobile Specific Metas
@@ -34,43 +34,29 @@
   <div class="container">
     <div class="row">
       <!-- Title -->
-      <div class="twelve columns" style="margin-top: 5%">
-        <h1>Registration</h1>
+      <div class="two-thirds column" style="margin-top: 5%">
+        <h1>Book Store</h1>
       </div>
       <!-- End Title -->
+      <!-- Log In -->
+      <!-- TODO: If there is a session, then show "Sign Out" and "My Account" -->
+      <div class="one-third column" style="margin-top: 5%">
+        <a class="button button-primary u-full-width" href="login.php">Sign In</a>
+        <a class="button button-primary u-full-width" href="login.php">My Account</a>
+      </div>
+      <!-- End Login -->
     </div>
     
-    <div id="nav" class="row">
+    <div class="row">
       <div class="twelve columns">
-        <ul class="breadcrumb">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="#">Books</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
+      <ol class="breadcrumb">
+        <li class="active">Home</li>
+        <li><a href="#">Books</a></li>
+        <li><a href="#">Basket</a></li>
+      </ol>
+        </div>
     </div>
     
-    <div id="register" class="row">
-      <div class="one-half column">
-        <form id="register" action="../resources/php/register.php" method="post">
-          <label for="username">Username</label>
-          <input class="u-full-width" type="text" placeholder="Username" id="username" name="username" required>
-
-          <label for="password">Password</label>
-          <input class="u-full-width" type="password" placeholder="Password" id="password" name="password" required>
-          <input class="u-full-width" type="password" placeholder="Confirm" id="passwordConfirm" name="passwordConfirm" required>
-
-          <label for="userType">User Type</label>
-          <select class="u-full-width" id="userType" required>
-            <option value="Option 1">Student</option>
-            <option value="Option 2">Staff</option>
-          </select>
-          <input class="button-primary u-full-width" type="submit" name="submit" value="Register">
-          <a class="button u-full-width" href="index.html">Cancel</a>
-        </form>
-      </div>
-    </div>
   </div>
 
 <!-- End Document
