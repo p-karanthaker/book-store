@@ -41,24 +41,24 @@
         </div>
         <!-- End Title -->
 
-        <!-- Login Form -->
-        <div id="loginForm" class="row">
+        <!-- Registration Form -->
+        <div class="row">
           <div class="four columns offset-by-one-third">
-            <form id="register" action="register.php" method="post">
-            <label for="username">Username</label>
-            <input class="u-full-width" type="text" placeholder="Username" id="username" name="username" required>
+            <form name="registerform" action="register.php" method="post">
+              <label for="username">Username</label>
+              <input class="u-full-width" type="text" placeholder="Username" name="username" required>
 
-            <label for="password">Password</label>
-            <input class="u-full-width" type="password" placeholder="Password" id="password" name="password" required>
-            <input class="u-full-width" type="password" placeholder="Confirm" id="passwordConfirm" name="passwordConfirm" required>
+              <label for="password">Password</label>
+              <input class="u-full-width" type="password" placeholder="Password" name="password" required>
+              <input class="u-full-width" type="password" placeholder="Confirm" name="passwordconfirm" required>
 
-            <label for="userType">User Type</label>
-            <select class="u-full-width" id="userType" required>
-              <option value="Option 1">Student</option>
-              <option value="Option 2">Staff</option>
-            </select>
-            <input class="button-primary u-full-width" type="submit" name="submit" value="Register">
-            <a class="button u-full-width" href="index.php">Cancel</a>
+              <label for="usertype">User Type</label>
+              <select class="u-full-width" name="usertype" required>
+                <option value="Student">Student</option>
+                <option value="Staff">Staff</option>
+              </select>
+              <input class="button-primary u-full-width" type="submit" name="register" value="Register">
+              <a class="button u-full-width" href="index.php">Cancel</a>
           </form>
           </div>
         </div>
@@ -71,7 +71,18 @@
 
 <!-- Begin PHP -->
 <?php
-
+  if(isset($_POST["register"])) 
+  {
+    $salt = "saltysalty";
+    $username = $_POST["username"];
+    $password_hash = crypt($_POST["password"], $salt);
+    $password_confirm_hash = crypt($_POST["passwordconfirm"], $salt);
+    $user_type = $_POST["usertype"];
+    echo $username, "<br>", $password_hash, "<br>", $password_confirm_hash, "<br>", $user_type;
+  } else 
+  {
+    return false;
+  }
 ?>
 <!-- End PHP -->
 
