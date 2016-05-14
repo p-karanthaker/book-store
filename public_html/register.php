@@ -50,10 +50,10 @@
 
               <label for="password">Password</label>
               <input class="u-full-width" type="password" placeholder="Password" name="password" required>
-              <input class="u-full-width" type="password" placeholder="Confirm" name="passwordconfirm" required>
+              <input class="u-full-width" type="password" placeholder="Confirm" name="password_confirm" required>
 
-              <label for="usertype">User Type</label>
-              <select class="u-full-width" name="usertype" required>
+              <label for="user_type">User Type</label>
+              <select class="u-full-width" name="user_type" required>
                 <option value="Student">Student</option>
                 <option value="Staff">Staff</option>
               </select>
@@ -75,18 +75,23 @@
   {
     public function __construct()
     {
-      $this->registerUser();
+      if(isset($_POST["register"]))
+      {
+        $this->registerUser();
+      }
     }
     
     private function registerUser()
     {
-      if ($this->validateFormData())
-      {
-        echo "Valid!";
-      } else 
-      {
-        return false;
-      }
+      
+        if ($this->validateFormData())
+        {
+          echo "Valid!";
+        } else 
+        {
+          echo "Something went wrong.";
+          return false;
+        }
     } 
     
     /**
@@ -100,9 +105,17 @@
       define("REGEX_MATCHER", '/^[a-z0-9]{6,12}$/i');
       
       if(!empty($_POST["username"])
+        && !empty($_POST["password"])
+        && !empty($_POST["password_confirm"])
+        && !empty($_POST["user_type"])
         && strlen($_POST["username"]) <= MAX_LENGTH
         && strlen($_POST["username"]) >= MIN_LENGTH
-        && preg_match(REGEX_MATCHER, $_POST["username"]))
+        && preg_match(REGEX_MATCHER, $_POST["username"])
+        && strlen($_POST["password"]) <= MAX_LENGTH
+        && strlen($_POST["password"]) >= MIN_LENGTH
+        && preg_match(REGEX_MATCHER, $_POST["password"])
+        && ($_POST["password"] === $_POST["password_confirm"])
+        && ($_POST["user_type"] === "Student") || ($_POST["user_type"] === "Staff"))
       {
         echo $_POST["username"];
         return true;
@@ -119,8 +132,8 @@
         echo $salt, "<br>";
         $username = $_POST["username"];
         $password_hash = crypt($_POST["password"], $salt);
-        $password_confirm_hash = crypt($_POST["passwordconfirm"], $salt);
-        $user_type = $_POST["usertype"];
+        $password_confirm_hash = crypt($_POST["password_confirm"], $salt);
+        $user_type = $_POST["user_type"];
         echo $username, "<br>", $password_hash, "<br>", $password_confirm_hash, "<br>", $user_type, "<br>";
 
       } else 
