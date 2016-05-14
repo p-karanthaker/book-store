@@ -21,6 +21,11 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
+    
+    <!-- JavaScript
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -34,35 +39,58 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">  
       <!-- Title -->
-        <div class="row">
-          <div class="twelve columns" style="margin-top: 5%">
-            <h2 class="u-text-centre">Register</h2>
-          </div>
+      <div class="row">
+        <div class="twelve columns" style="margin-top: 5%">
+          <h2 class="u-text-centre">Register</h2>
         </div>
-        <!-- End Title -->
+      </div>
+      <!-- End Title -->
 
-        <!-- Registration Form -->
-        <div class="row">
-          <div class="four columns offset-by-one-third">
-            <form name="registerform" action="register.php" method="post">
-              <label for="username">Username</label>
-              <input class="u-full-width" type="text" placeholder="Username" name="username" required>
+      <!-- Registration Form -->
+      <div class="row">
+        <div class="four columns offset-by-one-third">
+          <form name="registerform" action="register.php" method="post">
+            <label for="username">Username</label>
+            <input class="u-full-width" type="text" placeholder="Username" name="username" required>
 
-              <label for="password">Password</label>
-              <input class="u-full-width" type="password" placeholder="Password" name="password" required>
-              <input class="u-full-width" type="password" placeholder="Confirm" name="password_confirm" required>
+            <label for="password">Password</label>
+            <input class="u-full-width" type="password" placeholder="Password" name="password" required>
+            <input class="u-full-width" type="password" placeholder="Confirm" name="password_confirm" required>
 
-              <label for="user_type">User Type</label>
-              <select class="u-full-width" name="user_type" required>
-                <option value="Student">Student</option>
-                <option value="Staff">Staff</option>
-              </select>
-              <input class="button-primary u-full-width" type="submit" name="register" value="Register">
-              <a class="button u-full-width" href="index.php">Cancel</a>
-          </form>
-          </div>
+            <label for="user_type">User Type</label>
+            <select class="u-full-width" name="user_type" required>
+              <option value="Student">Student</option>
+              <option value="Staff">Staff</option>
+            </select>
+            <input class="button-primary u-full-width" type="submit" name="register" value="Register">
+            <a class="button u-full-width" href="index.php">Cancel</a>
+        </form>
         </div>
-        <!-- End Login Form -->
+      </div>
+      <!-- End Login Form -->
+      
+      <!-- Alert examples
+      <div class="alert alert-warning">
+        <a class="close" data-dismiss="alert">&times;</a>
+        <strong>Warning!</strong> This is a warning alert.
+      </div>
+
+      <div class="alert alert-success">
+        <a class="close" data-dismiss="alert">&times;</a>
+        <strong>Success!</strong> You successfully read this important alert message.
+      </div>
+
+      <div class="alert alert-error">
+        <a class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong> Change a few things up and try submitting again.
+      </div>
+
+      <div class="alert alert-info">
+        <a class="close" data-dismiss="alert">&times;</a>
+        <strong>Info!</strong> This alert needs your attention, but it's not super important.
+      </div>
+      -->
+      
     </div>
   </body>
   <!-- End Body-->
@@ -86,10 +114,20 @@
       
         if ($this->validateFormData())
         {
-          echo "Valid!";
+          echo "<div class='container'>
+                  <div class='alert alert-success'>
+                    <a class='close' data-dismiss='alert'>&times;</a>
+                    <strong>Success!</strong> Form is valid!
+                  </div>
+                </div>";
         } else 
         {
-          echo "Something went wrong.";
+          echo "<div class='container'>
+                  <div class='alert alert-error'>
+                    <a class='close' data-dismiss='alert'>&times;</a>
+                    <strong>Error!</strong> Form is not valid!
+                  </div>
+                </div>";
           return false;
         }
     } 
@@ -117,7 +155,6 @@
         && ($_POST["password"] === $_POST["password_confirm"])
         && ($_POST["user_type"] === "Student") || ($_POST["user_type"] === "Staff"))
       {
-        echo $_POST["username"];
         return true;
       } else {
         return false;
