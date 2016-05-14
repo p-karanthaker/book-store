@@ -111,7 +111,6 @@
     
     private function registerUser()
     {
-      
         if ($this->validateFormData())
         {
           echo "<div class='container'>
@@ -123,9 +122,13 @@
         } else 
         {
           echo "<div class='container'>
-                  <div class='alert alert-error'>
+                  <div class='alert alert-error alert-block'>
                     <a class='close' data-dismiss='alert'>&times;</a>
-                    <strong>Error!</strong> Form is not valid!
+                    <h5><strong>Invalid Input!</strong></h5> 
+                    <ul>
+                      <li><strong>Username</strong> must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>.</li>
+                      <li><strong>Passwords</strong> must match, and must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>.</li>
+                    </ul>
                   </div>
                 </div>";
           return false;
@@ -148,9 +151,9 @@
         && !empty($_POST["user_type"])
         && strlen($_POST["username"]) <= MAX_LENGTH
         && strlen($_POST["username"]) >= MIN_LENGTH
-        && preg_match(REGEX_MATCHER, $_POST["username"])
         && strlen($_POST["password"]) <= MAX_LENGTH
         && strlen($_POST["password"]) >= MIN_LENGTH
+        && preg_match(REGEX_MATCHER, $_POST["username"])
         && preg_match(REGEX_MATCHER, $_POST["password"])
         && ($_POST["password"] === $_POST["password_confirm"])
         && ($_POST["user_type"] === "Student") || ($_POST["user_type"] === "Staff"))
