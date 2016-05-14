@@ -71,18 +71,66 @@
 
 <!-- Begin PHP -->
 <?php
-  if(isset($_POST["register"])) 
+  class AccountRegistration
   {
-    $salt = "saltysalty";
-    $username = $_POST["username"];
-    $password_hash = crypt($_POST["password"], $salt);
-    $password_confirm_hash = crypt($_POST["passwordconfirm"], $salt);
-    $user_type = $_POST["usertype"];
-    echo $username, "<br>", $password_hash, "<br>", $password_confirm_hash, "<br>", $user_type;
-  } else 
-  {
-    return false;
+    public function __construct()
+    {
+      $this->registerUser();
+    }
+    
+    private function registerUser()
+    {
+      if ($this->validateFormData())
+      {
+        echo "Valid!";
+      } else 
+      {
+        return false;
+      }
+    } 
+    
+    /**
+     * Validates the user input on the registration form
+     * @return bool Returns whether the form is valid or not
+     */    
+    private function validateFormData()
+    {
+      define("MIN_LENGTH", 6);
+      define("MAX_LENGTH", 12);
+      define("REGEX_MATCHER", '/^[a-z0-9]{6,12}$/i');
+      
+      if(!empty($_POST["username"])
+        && strlen($_POST["username"]) <= MAX_LENGTH
+        && strlen($_POST["username"]) >= MIN_LENGTH
+        && preg_match(REGEX_MATCHER, $_POST["username"]))
+      {
+        echo $_POST["username"];
+        return true;
+      } else {
+        return false;
+      }
+    }
+    
+    function random()
+    {
+      if(isset($_POST["register"])) 
+      {
+        $salt = bin2hex(openssl_random_pseudo_bytes(4));
+        echo $salt, "<br>";
+        $username = $_POST["username"];
+        $password_hash = crypt($_POST["password"], $salt);
+        $password_confirm_hash = crypt($_POST["passwordconfirm"], $salt);
+        $user_type = $_POST["usertype"];
+        echo $username, "<br>", $password_hash, "<br>", $password_confirm_hash, "<br>", $user_type, "<br>";
+
+      } else 
+      {
+        return false;
+      }
+    }
+    
   }
+  $application = new AccountRegistration();
 ?>
 <!-- End PHP -->
 
