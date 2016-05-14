@@ -5,8 +5,8 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>Book Store: Get the London Book</title>
-  <meta name="description" content="Aston Book Store Project">
+  <title>Registration</title>
+  <meta name="description" content="Registration">
   <meta name="author" content="Karan Thaker">
 
   <!-- Mobile Specific Metas
@@ -31,42 +31,37 @@
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container">
-    <div class="row">
-      <!-- Title -->
-      <div class="eight columns" style="margin-top: 5%">
-        <h1>Book Store</h1>
-        
-        <ol class="breadcrumb">
-          <li class="active">Home</li>
-          <li><a href="#">Books</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ol>
-        
+  <div class="container">  
+    <!-- Title -->
+      <div class="row">
+        <div class="twelve columns" style="margin-top: 5%">
+          <h2 class="u-text-centre">Register</h2>
+        </div>
       </div>
       <!-- End Title -->
+    
       <!-- Login Form -->
-      <div class="four columns" style="margin-top: 5%">
-        <form id="login" action="../resources/php/login.php" method="post">
-            <label for="username">Username</label>
-            <input class="u-full-width" type="text" placeholder="Username" id="username" name="username">
+      <div id="loginForm" class="row">
+        <div class="four columns offset-by-one-third">
+          <form id="register" action="register.php" method="post">
+          <label for="username">Username</label>
+          <input class="u-full-width" type="text" placeholder="Username" id="username" name="username" required>
 
-            <label for="password">Password</label>
-            <input class="u-full-width" type="password" placeholder="Password" id="password" name="password">
+          <label for="password">Password</label>
+          <input class="u-full-width" type="password" placeholder="Password" id="password" name="password" required>
+          <input class="u-full-width" type="password" placeholder="Confirm" id="passwordConfirm" name="passwordConfirm" required>
 
-            <input class="button-primary u-full-width" type="submit" name="submit" value="Log In">
-            <a class="button u-full-width" href="register.html">Not a member?</a>
+          <label for="userType">User Type</label>
+          <select class="u-full-width" id="userType" required>
+            <option value="Option 1">Student</option>
+            <option value="Option 2">Staff</option>
+          </select>
+          <input class="button-primary u-full-width" type="submit" name="submit" value="Register">
+          <a class="button u-full-width" href="index.php">Cancel</a>
         </form>
+        </div>
       </div>
       <!-- End Login Form -->
-    </div>
-    
-    <div id="nav" class="row">
-      <div class="twelve columns">
-        
-      </div>
-    </div>
   </div>
 
 <!-- End Document
