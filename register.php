@@ -106,7 +106,7 @@
   { 
     public function __construct()
     {
-      $config = require_once("../resources/db/db.php");
+      $config = require_once("resources/db/db.php");
       
       if(isset($_POST["register"]))
       {
@@ -118,7 +118,7 @@
     {
         if($this->validateFormData())
         {
-          $db = new DatabaseHelper("../resources/configs/config.php");
+          $db = new DatabaseHelper("resources/configs/config.php");
           
           if($db->openConnection())
           {
