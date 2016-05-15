@@ -4,9 +4,9 @@
     private $connection;
     private $config;
     
-    public function __construct()
+    public function __construct($config_file_path)
     {
-      $this->config = require_once("E:/Servers/wamp64/www/book-store/resources/configs/config.php");
+      $this->config = require_once($config_file_path);
     }
     
     public function openConnection()
@@ -16,9 +16,14 @@
       {
         $this->connection = new PDO("mysql:host=".$config[DB_HOST].";dbname=".$config[DB_NAME], $config[DB_USER], $config[DB_PASS]);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return true;
       } catch (PDOException $ex)
       {
         $this->echoError($ex);
+      } finally
+      { 
+        $this->closeConnection();
+        return false;
       }
     }
     

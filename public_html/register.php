@@ -107,27 +107,36 @@
     public function __construct()
     {
       $config = require_once("../resources/db/db.php");
-      $db = new DatabaseHelper();
-      
-      $db->openConnection();
-      $db->closeConnection();
-      
+      $this->random();
       if(isset($_POST["register"]))
       {
+        
         $this->registerUser();
       }
     }
     
     private function registerUser()
     {
-        if ($this->validateFormData())
+        if($this->validateFormData())
         {
-          echo "<div class='container'>
-                  <div class='alert alert-success'>
-                    <a class='close' data-dismiss='alert'>&times;</a>
-                    <strong>Success!</strong> Form is valid!
-                  </div>
-                </div>";
+          $db = new DatabaseHelper("../resources/configs/config.php");
+          
+          if($db->openConnection())
+          {
+            $db->closeConnection();
+            echo "<div class='container'>
+                    <div class='alert alert-success'>
+                      <a class='close' data-dismiss='alert'>&times;</a>
+                      <strong>Success!</strong> Form is valid!
+                    </div>
+                  </div>";
+            echo "nice!";
+          } else
+          {
+            return false;
+          }
+          
+          
         } else 
         {
           echo "<div class='container'>
@@ -177,11 +186,11 @@
     {
       if(isset($_POST["register"])) 
       {
-        $salt = bin2hex(openssl_random_pseudo_bytes(4));
+        $salt = bin2hex(openssl_random_pseudo_bytes(22));
         echo $salt, "<br>";
         $username = $_POST["username"];
-        $password_hash = crypt($_POST["password"], $salt);
-        $password_confirm_hash = crypt($_POST["password_confirm"], $salt);
+        $password_hash = password_hash($_POST["password"], PASSWORD_BCRYPT, ["salt" => $salt]);
+        $password_confirm_hash = password_hash($_POST["password_confirm"], PASSWORD_BCRYPT, ["salt" => $salt]);
         $user_type = $_POST["user_type"];
         echo $username, "<br>", $password_hash, "<br>", $password_confirm_hash, "<br>", $user_type, "<br>";
 
