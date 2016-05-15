@@ -149,18 +149,16 @@
               if($statement->execute())
               {
                 echo "<div class='container'>
-                      <div class='alert alert-success'>
-                        <a class='close' data-dismiss='alert'>&times;</a>
-                        <strong>Success!</strong> Hash created! ".$password."
-                      </div>
-                    </div>";
-                  $db->closeConnection();
-                  return true;
+                        <div class='alert alert-success'>
+                          <a class='close' data-dismiss='alert'>&times;</a>
+                          <strong>Success!</strong> Your account has been created.
+                        </div>
+                      </div>";
+                $db->closeConnection();
+                return true;
               }
-              
-              
+              return false;
             }
-            
             echo "<div class='container'>
                       <div class='alert alert-error'>
                         <a class='close' data-dismiss='alert'>&times;</a>
