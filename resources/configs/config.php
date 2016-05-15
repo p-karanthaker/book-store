@@ -14,7 +14,5 @@
     DB_PASS => "user"
   );
 
-  
-
   return $db;
 ?>
