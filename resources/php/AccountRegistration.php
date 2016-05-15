@@ -1,8 +1,13 @@
 <?php
   class AccountRegistration
   { 
+    private $config;
     
+    public function __construct($config)
     {
+      $this->config = $config;
+      $database_helper = require_once("resources/db/DatabaseHelper.php");
+      
       if(isset($_POST["register"]))
       {
         $this->registerUser();
@@ -13,6 +18,7 @@
     {
         if($this->validateFormData())
         {
+          $db = new DatabaseHelper($this->config);
           
           if($db->openConnection())
           {

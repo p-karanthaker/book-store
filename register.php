@@ -68,29 +68,6 @@
         </div>
       </div>
       <!-- End Login Form -->
-      
-      <!-- Alert examples
-      <div class="alert alert-warning">
-        <a class="close" data-dismiss="alert">&times;</a>
-        <strong>Warning!</strong> This is a warning alert.
-      </div>
-
-      <div class="alert alert-success">
-        <a class="close" data-dismiss="alert">&times;</a>
-        <strong>Success!</strong> You successfully read this important alert message.
-      </div>
-
-      <div class="alert alert-error">
-        <a class="close" data-dismiss="alert">&times;</a>
-        <strong>Error!</strong> Change a few things up and try submitting again.
-      </div>
-
-      <div class="alert alert-info">
-        <a class="close" data-dismiss="alert">&times;</a>
-        <strong>Info!</strong> This alert needs your attention, but it's not super important.
-      </div>
-      -->
-      
     </div>
   </body>
   <!-- End Body-->
@@ -99,8 +76,9 @@
 
 <!-- Begin PHP -->
 <?php
-  $config = require_once("resources/configs/config.php");
+  $config = require_once("resources/configs/Config.php");
   $account_registration = require_once("resources/php/AccountRegistration.php");
+  $start = new AccountRegistration($config);
 ?>
 <!-- End PHP -->
 
