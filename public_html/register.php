@@ -107,10 +107,9 @@
     public function __construct()
     {
       $config = require_once("../resources/db/db.php");
-      $this->random();
+      
       if(isset($_POST["register"]))
       {
-        
         $this->registerUser();
       }
     }
@@ -123,20 +122,57 @@
           
           if($db->openConnection())
           {
-            $db->closeConnection();
+            $connection = $db->getConnection();
+            
+            /* gather details for html escaping*/
+            $username = htmlspecialchars($_POST["username"], ENT_QUOTES);
+            $user_type = htmlspecialchars($_POST["user_type"], ENT_QUOTES); 
+            
+            /* hash+salt password */
+            $salt = bin2hex(openssl_random_pseudo_bytes(22));
+            $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["salt" => $salt]);
+            
+            /* check user doesn't exist */
+            $statement = $connection->prepare("SELECT username FROM user WHERE username = :username");
+            $statement->bindValue(":username", $username);
+            $statement->execute();
+            
+            if($statement->rowCount() == 0)
+            {
+              $statement = $connection->prepare("INSERT INTO user (username, password_hash, password_salt, type)
+                                                 VALUES(:username, :password_hash, :password_salt, :type)");
+              $statement->bindParam(":username", $username);
+              $statement->bindParam(":password_hash", $password);
+              $statement->bindParam(":password_salt", $salt);
+              $statement->bindParam(":type", $user_type);
+              
+              if($statement->execute())
+              {
+                echo "<div class='container'>
+                      <div class='alert alert-success'>
+                        <a class='close' data-dismiss='alert'>&times;</a>
+                        <strong>Success!</strong> Hash created! ".$password."
+                      </div>
+                    </div>";
+                  $db->closeConnection();
+                  return true;
+              }
+              
+              
+            }
+            
             echo "<div class='container'>
-                    <div class='alert alert-success'>
-                      <a class='close' data-dismiss='alert'>&times;</a>
-                      <strong>Success!</strong> Form is valid!
-                    </div>
-                  </div>";
-            echo "nice!";
+                      <div class='alert alert-error'>
+                        <a class='close' data-dismiss='alert'>&times;</a>
+                        <strong>Error!</strong> User already exists, please try again.
+                      </div>
+                    </div>";
+            $db->closeConnection();
+            return false;
           } else
           {
             return false;
           }
-          
-          
         } else 
         {
           echo "<div class='container'>

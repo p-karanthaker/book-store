@@ -20,16 +20,17 @@
       } catch (PDOException $ex)
       {
         $this->echoError($ex);
-      } finally
-      { 
-        $this->closeConnection();
-        return false;
       }
     }
     
     public function closeConnection()
     {
       $this->connection = null;
+    }
+    
+    public function getConnection()
+    {
+      return $this->connection;
     }
     
     private function echoError(PDOException $ex)
