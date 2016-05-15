@@ -1,3 +1,0 @@
-<?
-	// Confiuration details...
-?>

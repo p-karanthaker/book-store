@@ -99,10 +99,19 @@
 
 <!-- Begin PHP -->
 <?php
+  // Load Configs
+  
+
   class AccountRegistration
-  {
+  { 
     public function __construct()
     {
+      $config = require_once("../resources/db/db.php");
+      $db = new DatabaseHelper();
+      
+      $db->openConnection();
+      $db->closeConnection();
+      
       if(isset($_POST["register"]))
       {
         $this->registerUser();
