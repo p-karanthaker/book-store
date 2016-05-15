@@ -4,9 +4,9 @@
     private $connection;
     private $config;
     
-    public function __construct($config_file_path)
+    public function __construct($config)
     {
-      $this->config = require_once($config_file_path);
+      $this->config = $config;
     }
     
     public function openConnection()
