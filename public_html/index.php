@@ -67,7 +67,12 @@
 
 <!-- Begin PHP -->
 <?php
+  $doc_root = $_SERVER["DOCUMENT_ROOT"];
+  $config_ini = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+  
+  var_dump($config_ini);
 
+  var_dump($config_ini["database_dev"]);
 ?>
 <!-- End PHP -->
 
