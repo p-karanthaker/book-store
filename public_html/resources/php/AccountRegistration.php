@@ -3,6 +3,7 @@
   $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
   $start = new AccountRegistration($config);
   $result = $start->getResult() ? "true" : "false";
+  header("Location: http://localhost/book-store/public_html/register.php?success=".$result, true, 303);
   
   class AccountRegistration
   { 
