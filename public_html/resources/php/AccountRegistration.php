@@ -6,7 +6,7 @@
     public function __construct($config)
     {
       $this->config = $config;
-      $database_helper = require_once("resources/db/DatabaseHelper.php");
+      $database_helper = require_once($this->config["paths"]["db_helper"]);
       
       if(isset($_POST["register"]))
       {

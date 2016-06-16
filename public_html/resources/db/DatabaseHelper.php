@@ -3,10 +3,18 @@
   { 
     private $connection;
     private $config;
+    private $db_host;
+    private $db_name;
+    private $db_user;
+    private $db_pass;
     
     public function __construct($config)
     {
       $this->config = $config;
+      $this->db_host = $this->config["database_dev"]["db_host"];
+      $this->db_name = $this->config["database_dev"]["db_name"];
+      $this->db_user = $this->config["database_dev"]["db_user"];
+      $this->db_pass = $this->config["database_dev"]["db_pass"];
     }
     
     public function openConnection()
@@ -14,7 +22,7 @@
       $config = $this->config;
       try
       {
-        $this->connection = new PDO("mysql:host=".$config[DB_HOST].";dbname=".$config[DB_NAME], $config[DB_USER], $config[DB_PASS]);
+        $this->connection = new PDO("mysql:host=".$this->db_host.";dbname=".$this->db_name, $this->db_user, $this->db_pass);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return true;
       } catch (PDOException $ex)

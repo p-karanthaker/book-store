@@ -76,8 +76,9 @@
 
 <!-- Begin PHP -->
 <?php
-  $config = require_once("resources/configs/Config.php");
-  $account_registration = require_once("resources/php/AccountRegistration.php");
+  $doc_root = $_SERVER["DOCUMENT_ROOT"];
+  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+  $account_registration = require_once($config["paths"]["user_registration"]);
   $start = new AccountRegistration($config);
 ?>
 <!-- End PHP -->
