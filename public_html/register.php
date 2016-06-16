@@ -1,3 +1,10 @@
+<!-- Begin PHP -->
+<?php
+  $doc_root = $_SERVER["DOCUMENT_ROOT"];
+  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+?>
+<!-- End PHP -->
+
 <!-- Begin HTML-->
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +56,7 @@
       <!-- Registration Form -->
       <div class="row">
         <div class="four columns offset-by-one-third">
-          <form name="registerform" action="register.php" method="post">
+          <form name="registerform" action="resources/php/AccountRegistration.php" method="post">
             <label for="username">Username</label>
             <input class="u-full-width" type="text" placeholder="Username" name="username" required>
 
@@ -73,14 +80,24 @@
   <!-- End Body-->
 </html>
 <!-- End HTML -->
-
-<!-- Begin PHP -->
 <?php
-  $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
-  $account_registration = require_once($config["paths"]["user_registration"]);
-  $start = new AccountRegistration($config);
+  if(isset($_GET["success"])) {
+    $result = $_GET["success"] === "true" ? true : false;
+    if ($result) {
+      echo "<div class='container'>
+          <div class='alert alert-success'>
+            <a class='close' data-dismiss='alert'>&times;</a>
+            <strong>Success!</strong> Your account has been created.
+          </div>
+        </div>";
+    } else {
+      echo "<div class='container'>
+              <div class='alert alert-error'>
+                <a class='close' data-dismiss='alert'>&times;</a>
+                <strong>Error!</strong> User already exists, please try again.
+              </div>
+            </div>";
+    }
+  }
 ?>
-<!-- End PHP -->
-
 <!-- End Document -->

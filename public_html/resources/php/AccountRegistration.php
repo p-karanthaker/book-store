@@ -1,12 +1,19 @@
 <?php
+  $doc_root = $_SERVER["DOCUMENT_ROOT"];
+  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+  $start = new AccountRegistration($config);
+  $result = $start->getResult() ? "true" : "false";
+  
   class AccountRegistration
   { 
     private $config;
+    private $result;
     
     public function __construct($config)
     {
+      $doc_root = $_SERVER["DOCUMENT_ROOT"];
       $this->config = $config;
-      $database_helper = require_once($this->config["paths"]["db_helper"]);
+      $database_helper = require_once($doc_root."book-store/public_html/".$this->config["paths"]["db_helper"]);
       
       if(isset($_POST["register"]))
       {
@@ -48,27 +55,20 @@
               
               if($statement->execute())
               {
-                echo "<div class='container'>
-                        <div class='alert alert-success'>
-                          <a class='close' data-dismiss='alert'>&times;</a>
-                          <strong>Success!</strong> Your account has been created.
-                        </div>
-                      </div>";
+                // Account created
+                $this->result = true;
                 $db->closeConnection();
                 return true;
               }
               return false;
             }
-            echo "<div class='container'>
-                      <div class='alert alert-error'>
-                        <a class='close' data-dismiss='alert'>&times;</a>
-                        <strong>Error!</strong> User already exists, please try again.
-                      </div>
-                    </div>";
+            // Account already exists
+            $this->result = false;
             $db->closeConnection();
             return false;
           } else
           {
+            $this->result = false;
             return false;
           }
         } else 
@@ -83,6 +83,7 @@
                     </ul>
                   </div>
                 </div>";
+          $this->result = false;
           return false;
         }
     } 
@@ -114,6 +115,11 @@
       } else {
         return false;
       }
+    }
+    
+    public function getResult() 
+    {
+      return $this->result;
     }
   }
 ?>
