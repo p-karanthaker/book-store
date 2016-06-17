@@ -44,14 +44,14 @@
       <!-- Login Form -->
       <div id="loginForm" class="row">
         <div class="four columns offset-by-one-third">
-          <form id="login" action="login.php" method="post">
+          <form id="loginForm" action="resources/php/AccountLogin.php" method="post">
               <label for="username">Username</label>
               <input class="u-full-width" type="text" placeholder="Username" id="username" name="username">
 
               <label for="password">Password</label>
               <input class="u-full-width" type="password" placeholder="Password" id="password" name="password">
 
-              <input class="button-primary u-full-width" type="submit" name="submit" value="Sign In">
+              <input class="button-primary u-full-width" type="submit" name="login" value="Sign In">
               <a class="button u-full-width" href="register.php">Not a member?</a>
           </form>
         </div>
@@ -65,35 +65,11 @@
 
 <!-- Begin PHP -->
 <?php
-  function login()
+  session_start();
+  if(isset($_SESSION["message"]))
   {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-    
-    if(authenticate($username, $password))
-    {
-      echo "Username: ", $username, "<br>";
-      echo "Password: ", $password, "<br>";
-    } else
-    {
-      echo "Invalid!";
-    }
-  }
-
-  function authenticate($username, $password)
-  {
-    if($password != $username)
-    {
-      return true;
-    } else
-    {
-      return false;
-    }
-  }
-  
-  if(isset($_POST['submit']))
-  {
-     login();
+    echo $_SESSION["message"];
+    $_SESSION["message"] = null;
   }
 ?>
 <!-- End PHP -->

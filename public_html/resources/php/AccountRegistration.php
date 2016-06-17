@@ -9,7 +9,6 @@
   class AccountRegistration
   { 
     private $config;
-    private $result;
     private $message;
     
     public function __construct($config)
@@ -73,17 +72,16 @@
             return false;
           } else
           {
-            $this->result = false;
             return false;
           }
         } else 
         {
           // Invalid form data
-          $array = array
+          $msg_details = array
             ("<strong>Username</strong> must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
             ,"<strong>Passwords</strong> must match, and must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
             );
-          $this->message->warning($array, true);
+          $this->message->warning($msg_details, true);
           return false;
         }
     } 
@@ -115,11 +113,6 @@
       } else {
         return false;
       }
-    }
-    
-    public function getResult() 
-    {
-      return $this->result;
     }
   }
 ?>
