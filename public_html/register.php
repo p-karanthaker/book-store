@@ -1,10 +1,3 @@
-<!-- Begin PHP -->
-<?php
-  $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
-?>
-<!-- End PHP -->
-
 <!-- Begin HTML-->
 <!DOCTYPE html>
 <html lang="en">
@@ -80,6 +73,8 @@
   <!-- End Body-->
 </html>
 <!-- End HTML -->
+
+<!-- Begin PHP -->
 <?php
   session_start();
   if(isset($_SESSION["message"]))
@@ -88,4 +83,6 @@
     $_SESSION["message"] = null;
   }
 ?>
+<!-- End PHP -->
+
 <!-- End Document -->
