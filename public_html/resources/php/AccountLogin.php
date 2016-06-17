@@ -29,9 +29,11 @@
     {
       if($this->validateFormData())
       {
-        if($this->authenticate())
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        if($this->authenticate($username, $password))
         {
-          
+          $this->message->success(array("Welcome back <strong>$username</strong>."));
           return true;
         } else
         {
@@ -39,15 +41,53 @@
         }
       }
       // Invalid form data / authentication failed
-      $msg_details = array("Username or Password is invalid.");
-      $this->message->error($msg_details, true);
+      $msg_details = array("Login failed. Username or Password is invalid.");
+      $this->message->error($msg_details, false);
       return false;
-      $this->message->info(array("Logging in...", false));
     }
 
     private function authenticate($username, $password)
     {
-      
+      $db = new DatabaseHelper($this->config);
+      if($db->openConnection())
+      {
+        $connection = $db->getConnection();
+        $statement = $connection->prepare("SELECT password_hash, password_salt FROM user WHERE username = :username");
+        $statement->bindValue(":username", $username);
+        $statement->execute();
+        
+        // Check if account was found
+        if($statement->rowCount() == 0)
+        {
+          // Account not found
+          $db->closeConnection();
+          return false;
+        }
+        
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+        var_dump($results);
+        // Verify password hash
+        $db_password_hash = $results["password_hash"];
+        $db_password_salt = $results["password_salt"];
+        
+        /* hash+salt password */
+        $salt = $db_password_salt;
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT, ["salt" => $salt]);
+        
+        if(hash_equals($db_password_hash, $hashed_password))
+        {
+          // Authentication success
+          $db->closeConnection();
+          return true;
+        }
+        
+        // Authentication failed
+        $db->closeConnection();
+        return false;
+      } else
+      {
+        return false;
+      }
     }
     
     /**
