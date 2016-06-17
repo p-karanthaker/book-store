@@ -8,6 +8,8 @@
     private $db_user;
     private $db_pass;
     
+    private $messages;
+    
     public function __construct($config)
     {
       $this->config = $config;
@@ -15,6 +17,9 @@
       $this->db_name = $this->config["database_dev"]["db_name"];
       $this->db_user = $this->config["database_dev"]["db_user"];
       $this->db_pass = $this->config["database_dev"]["db_pass"];
+      $doc_root = $_SERVER["DOCUMENT_ROOT"];
+      $messages = require_once($doc_root.$this->config["paths"]["messages"]);
+      $this->message = new Messages();
     }
     
     public function openConnection()
@@ -43,14 +48,8 @@
     
     private function echoError(PDOException $ex)
     {
-      echo "<div class='container'>
-              <div class='alert alert-error alert-block'>
-                <a class='close' data-dismiss='alert'>&times;</a>
-                <h4><strong>Error!</strong></h4>
-                <p>Database operation failed. Please try again later.</br></p>"
-                ."<strong>Error Details:</strong> ".$ex->getMessage()."
-              </div>
-            </div>";
+      $array = array("<p>Database operation failed. Please try again later.</br></p><strong>Error Details:</strong> ".$ex->getMessage());
+      $this->message->error($array, true);
     }
     
   }
