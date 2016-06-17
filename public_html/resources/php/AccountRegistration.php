@@ -2,19 +2,23 @@
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
   $start = new AccountRegistration($config);
-  $result = $start->getResult() ? "true" : "false";
-  header("Location: http://localhost/book-store/public_html/register.php?success=".$result, true, 303);
-  
+
+  header("Location: http://localhost/".$config["paths"]["register"], true, 303);
+  die();
+
   class AccountRegistration
   { 
     private $config;
     private $result;
+    private $message;
     
     public function __construct($config)
     {
       $doc_root = $_SERVER["DOCUMENT_ROOT"];
       $this->config = $config;
-      $database_helper = require_once($doc_root."book-store/public_html/".$this->config["paths"]["db_helper"]);
+      $database_helper = require_once($doc_root.$this->config["paths"]["db_helper"]);
+      $messages = require_once($doc_root.$this->config["paths"]["messages"]);
+      $this->message = new Messages();
       
       if(isset($_POST["register"]))
       {
@@ -57,14 +61,14 @@
               if($statement->execute())
               {
                 // Account created
-                $this->result = true;
+                $this->message->success(array("Your account has been created."), false);
                 $db->closeConnection();
                 return true;
               }
               return false;
             }
             // Account already exists
-            $this->result = false;
+            $this->message->error(array("User already exists, please try again."), false);
             $db->closeConnection();
             return false;
           } else
@@ -74,17 +78,12 @@
           }
         } else 
         {
-          echo "<div class='container'>
-                  <div class='alert alert-error alert-block'>
-                    <a class='close' data-dismiss='alert'>&times;</a>
-                    <h5><strong>Invalid Input!</strong></h5> 
-                    <ul>
-                      <li><strong>Username</strong> must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>.</li>
-                      <li><strong>Passwords</strong> must match, and must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>.</li>
-                    </ul>
-                  </div>
-                </div>";
-          $this->result = false;
+          // Invalid form data
+          $array = array
+            ("<strong>Username</strong> must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
+            ,"<strong>Passwords</strong> must match, and must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
+            );
+          $this->message->warning($array, true);
           return false;
         }
     } 

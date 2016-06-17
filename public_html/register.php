@@ -81,23 +81,11 @@
 </html>
 <!-- End HTML -->
 <?php
-  if(isset($_GET["success"])) {
-    $result = $_GET["success"] === "true" ? true : false;
-    if ($result) {
-      echo "<div class='container'>
-          <div class='alert alert-success'>
-            <a class='close' data-dismiss='alert'>&times;</a>
-            <strong>Success!</strong> Your account has been created.
-          </div>
-        </div>";
-    } else {
-      echo "<div class='container'>
-              <div class='alert alert-error'>
-                <a class='close' data-dismiss='alert'>&times;</a>
-                <strong>Error!</strong> User already exists, please try again.
-              </div>
-            </div>";
-    }
+  session_start();
+  if(isset($_SESSION["message"]))
+  {
+    echo $_SESSION["message"];
+    $_SESSION["message"] = null;
   }
 ?>
 <!-- End Document -->
