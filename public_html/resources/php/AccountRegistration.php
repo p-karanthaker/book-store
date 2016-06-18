@@ -60,14 +60,14 @@
               if($statement->execute())
               {
                 // Account created
-                $this->message->success(array("Your account has been created."), false);
+                $this->message->createMessage("Success!", array("Your account has been created."), "success");
                 $db->closeConnection();
                 return true;
               }
               return false;
             }
             // Account already exists
-            $this->message->error(array("User already exists, please try again."), false);
+            $this->message->createMessage("Error!", array("User already exists, please try again."), "error");
             $db->closeConnection();
             return false;
           } else
@@ -81,7 +81,7 @@
             ("<strong>Username</strong> must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
             ,"<strong>Passwords</strong> must match, and must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
             );
-          $this->message->warning($msg_details, true);
+          $this->message->createMessage("Invalid Fields!", $msg_details, "warning", true);
           return false;
         }
     } 

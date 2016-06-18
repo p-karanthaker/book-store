@@ -33,7 +33,7 @@
         $password = $_POST["password"];
         if($this->authenticate($username, $password))
         {
-          $this->message->success(array("Welcome back <strong>$username</strong>."));
+          $this->message->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
           return true;
         } else
         {
@@ -41,8 +41,8 @@
         }
       }
       // Invalid form data / authentication failed
-      $msg_details = array("Login failed. Username or Password is invalid.");
-      $this->message->error($msg_details, false);
+      $msg_details = array("Username or Password is invalid.");
+      $this->message->createMessage("Login Failed!", $msg_details, "error");
       return false;
     }
 
@@ -65,8 +65,8 @@
         }
         
         $results = $statement->fetch(PDO::FETCH_ASSOC);
-        var_dump($results);
-        // Verify password hash
+        
+        // Fetch database results
         $db_password_hash = $results["password_hash"];
         $db_password_salt = $results["password_salt"];
         

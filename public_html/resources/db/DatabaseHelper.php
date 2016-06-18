@@ -48,8 +48,8 @@
     
     private function echoError(PDOException $ex)
     {
-      $msg_details = array("<p>Database operation failed. Please try again later.</br></p><strong>Error Details:</strong> ".$ex->getMessage());
-      $this->message->error($msg_details, true);
+      $msg_details = array("<p>Please try again later.</br></p><strong>Error Details:</strong> ".$ex->getMessage());
+      $this->message->createMessage("Database Operation Failed", $msg_details, "error", true);
     }
     
   }

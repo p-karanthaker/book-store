@@ -9,111 +9,57 @@
       $_SESSION["message"] = null;
     }
     
-    public function info($message, $isBlock = false)
-    {
-      if(!$isBlock)
+    public function createMessage($title, $message, $type, $isBlock = false) {
+      $alertClass;
+      $titleAndMessage = "<strong>";
+      switch($type)
       {
-        $this->message = "<div class='container'>
-                            <div class='alert alert-info'>
-                             <a class='close' data-dismiss='alert'>&times;</a>
-                             <strong>Info:</strong> $message[0]
-                            </div>
-                           </div>";
-      } else
-      {
-        $msg = "";
-        foreach ($message as $value) {
-          $msg .= "<li>$value</li>";
-        }
-        $this->message ="<div class='container'>
-                           <div class='alert alert-info alert-block'>
-                             <a class='close' data-dismiss='alert'>&times;</a>
-                             <h5><strong>Information</strong></h5> 
-                             <ul>$msg</ul>
-                           </div>
-                         </div>";
+        case "info":
+          $alertClass = "alert-info";
+          $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
+          break;
+        case "success":
+          $alertClass = "alert-success";
+          $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
+          break;
+        case "warning":
+          $alertClass = "alert-warning";
+          $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
+          break;
+        case "error":
+          $alertClass = "alert-error";
+          $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
+          break;
+        default:
+          $alertClass = "alert-warning";
+          $titleAndMessage .= "<h5>Invalid Message Type!</h5> </br>Your request has still been processed. </br>Valid message types are:";
+          $message = array("<strong>info</strong>"
+                           ,"<strong>success</strong>"
+                           ,"<strong>warning</strong>"
+                           ,"<strong>error</strong>");
+          $isBlock = true;
+          break;
       }
-      $_SESSION["message"] = $this->message;
-    }
-    
-    public function success($message, $isBlock = false)
-    {
-      if(!$isBlock)
+      $titleAndMessage .= "</strong>";
+      
+      if($isBlock)
       {
-        $this->message = "<div class='container'>
-                            <div class='alert alert-success'>
-                             <a class='close' data-dismiss='alert'>&times;</a>
-                             <strong>Success!</strong> $message[0]
-                            </div>
-                           </div>";
-      } else
-      {
-        $msg = "";
+        $alertClass .= " alert-block";
+        $titleAndMessage .= "<ul>";
         foreach ($message as $value) {
-          $msg .= "<li>$value</li>";
+          $titleAndMessage .= "<li>$value</li>";
         }
-        $this->message ="<div class='container'>
-                           <div class='alert alert-success alert-block'>
-                             <a class='close' data-dismiss='alert'>&times;</a>
-                             <h5><strong>Success!</strong></h5> 
-                             <ul>$msg</ul>
-                           </div>
-                         </div>";
+        $titleAndMessage .= "</ul>";
+      } else 
+      {
+        $titleAndMessage .= " $message[0]";
       }
-      $_SESSION["message"] = $this->message;
-    }
-    
-    public function warning($message, $isBlock = false)
-    {
-      if(!$isBlock)
-      {
-        $this->message = "<div class='container'>
-                            <div class='alert alert-warning'>
-                             <a class='close' data-dismiss='alert'>&times;</a>
-                             <strong>Warning!</strong> $message[0]
-                            </div>
-                           </div>";
-      } else
-      {
-        $msg = "";
-        foreach ($message as $value) {
-          $msg .= "<li>$value</li>";
-        }
-        $this->message ="<div class='container'>
-                           <div class='alert alert-warning alert-block'>
-                             <a class='close' data-dismiss='alert'>&times;</a>
-                             <h5><strong>Warning!</strong></h5> 
-                             <ul>$msg</ul>
-                           </div>
-                         </div>";
-      }
-      $_SESSION["message"] = $this->message;
-    }
-    
-    public function error($message, $isBlock = false)
-    {
-      if(!$isBlock)
-      {
-        $this->message = "<div class='container'>
-                            <div class='alert alert-error'>
-                             <a class='close' data-dismiss='alert'>&times;</a>
-                             <strong>Error!</strong> $message[0]
-                            </div>
-                           </div>";
-      } else
-      {
-        $msg = "";
-        foreach ($message as $value) {
-          $msg .= "<li>$value</li>";
-        }
-        $this->message ="<div class='container'>
-                           <div class='alert alert-error alert-block'>
-                             <a class='close' data-dismiss='alert'>&times;</a>
-                             <h5><strong>Error!</strong></h5> 
-                             <ul>$msg</ul>
-                           </div>
-                         </div>";
-      }
+      $this->message = "<div class='container'>
+                          <div class='alert $alertClass'>
+                            <a class='close' data-dismiss='alert'>&times;</a>
+                            $titleAndMessage
+                          </div>
+                        </div>";
       $_SESSION["message"] = $this->message;
     }
   }
