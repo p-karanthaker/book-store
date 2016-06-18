@@ -41,8 +41,6 @@
         }
       }
       // Invalid form data / authentication failed
-      $msg_details = array("Username or Password is invalid.");
-      $this->message->createMessage("Login Failed!", $msg_details, "error");
       return false;
     }
 
@@ -82,6 +80,8 @@
         }
         
         // Authentication failed
+        $msg_details = array("Username or Password is invalid.");
+        $this->message->createMessage("Login Failed!", $msg_details, "error");
         $db->closeConnection();
         return false;
       } else
