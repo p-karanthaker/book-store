@@ -1,20 +1,31 @@
 <?php
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
-  $start = new AccountRegistration($config);
+  $register = new AccountRegistration($config);
 
-  header("Location: http://localhost/".$config["paths"]["register"], true, 303);
+  $result = $register->getResult();
+
+  if($result)
+  {
+    header("Location: http://localhost/".$config["paths"]["index"], true, 303);
+  } else
+  {
+    header("Location: http://localhost/".$config["paths"]["register"], true, 303);
+  }
+
   die();
 
   class AccountRegistration
   { 
     private $config;
     private $message;
+    private $result;
     
     public function __construct($config)
     {
       $doc_root = $_SERVER["DOCUMENT_ROOT"];
       $this->config = $config;
+      $this->result = false;
       $database_helper = require_once($doc_root.$this->config["paths"]["db_helper"]);
       $messages = require_once($doc_root.$this->config["paths"]["messages"]);
       $this->message = new Messages();
@@ -62,6 +73,7 @@
                 // Account created
                 $this->message->createMessage("Success!", array("Your account has been created."), "success");
                 $db->closeConnection();
+                $this->result = true;
                 return true;
               }
               return false;
@@ -113,6 +125,11 @@
       } else {
         return false;
       }
+    }
+    
+    public function getResult()
+    {
+      return $this->result;
     }
   }
 ?>

@@ -1,20 +1,29 @@
 <?php
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
-  $start = new AccountLogin($config);
-  
-  header("Location: http://localhost/".$config["paths"]["login"], true, 303);
+  $login = new AccountLogin($config);
+  $result = $login->getResult();
+
+  if($result)
+  {
+    header("Location: http://localhost/".$config["paths"]["index"], true, 303);
+  } else
+  {
+    header("Location: http://localhost/".$config["paths"]["login"], true, 303);
+  }
   die();
 
   class AccountLogin
   {
     private $config;
     private $message;
+    private $result;
     
     public function __construct($config)
     {
       $doc_root = $_SERVER["DOCUMENT_ROOT"];
       $this->config = $config;
+      $this->result = false;
       $database_helper = require_once($doc_root.$this->config["paths"]["db_helper"]);
       $messages = require_once($doc_root.$this->config["paths"]["messages"]);
       $this->message = new Messages();
@@ -34,6 +43,7 @@
         if($this->authenticate($username, $password))
         {
           $this->message->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
+          $this->result = true;
           return true;
         } else
         {
@@ -113,6 +123,11 @@
       } else {
         return false;
       }
+    }
+    
+    public function getResult()
+    {
+      return $this->result;
     }
   }
 ?>
