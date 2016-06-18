@@ -23,7 +23,7 @@
     {
       $doc_root = $_SERVER["DOCUMENT_ROOT"];
       $this->config = $config;
-      $this->result = false;
+      
       $database_helper = require_once($doc_root.$this->config["paths"]["db_helper"]);
       $messages = require_once($doc_root.$this->config["paths"]["messages"]);
       $this->message = new Messages();
@@ -50,7 +50,9 @@
           // Authentication failed...drop down into default return.
         }
       }
-      // Invalid form data / authentication failed
+      // Invalid form data / authentication failed / db connection failed
+      $msg_details = array("Username or Password is invalid.");
+      $this->message->createMessage("Login Failed!", $msg_details, "error");
       return false;
     }
 
@@ -90,8 +92,6 @@
         }
         
         // Authentication failed
-        $msg_details = array("Username or Password is invalid.");
-        $this->message->createMessage("Login Failed!", $msg_details, "error");
         $db->closeConnection();
         return false;
       } else
