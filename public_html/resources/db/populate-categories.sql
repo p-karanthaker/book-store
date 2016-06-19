@@ -1,0 +1,11 @@
+INSERT INTO category VALUES (1,'Business & Economics');
+INSERT INTO category VALUES (2,'History');
+INSERT INTO category VALUES (3,'Computers');
+INSERT INTO category VALUES (4,'Mathematics');
+INSERT INTO category VALUES (5,'Photography');
+INSERT INTO category VALUES (6,'Art');
+INSERT INTO category VALUES (7,'Music');
+INSERT INTO category VALUES (8,'Religion');
+INSERT INTO category VALUES (9,'Science');
+INSERT INTO category VALUES (10,'Nature');
+INSERT INTO category VALUES (11,'Medical');

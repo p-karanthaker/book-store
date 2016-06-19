@@ -27,7 +27,7 @@ CREATE TABLE Books
 	authors VARCHAR(100),
 	quantity INT NOT NULL DEFAULT '0',
 	price DECIMAL(13,2) NOT NULL DEFAULT '0.00',
-	description VARCHAR(500),
+	description VARCHAR(5000),
 	photo VARCHAR(500)
 );
 
