@@ -3,8 +3,7 @@
     session_start();
     if(isset($_SESSION["message"]))
     {
-      echo "</br>";
-      echo $_SESSION["message"];
+      echo "</br>".$_SESSION["message"];
       $_SESSION["message"] = null;
     }
 ?>
@@ -53,15 +52,25 @@
     <div class="container">
       <div class="row">
         <!-- Title -->
-        <div class="two-thirds column" style="margin-top: 5%">
+        <div class="nine columns" style="margin-top: 5%">
           <h1>Book Store</h1>
         </div>
         <!-- End Title -->
         <!-- Log In -->
         <!-- TODO: If there is a session, then show "Sign Out" and "My Account" -->
-        <div class="one-third column" style="margin-top: 5%">
-          <a class="button button-primary u-full-width" href="login.php">Sign In</a>
-          <a class="button button-primary u-full-width" href="login.php">My Account</a>
+        <div class="three columns" style="margin-top: 5%">
+          <?php 
+            if(isset($_SESSION["user_session"]))
+            {
+              echo "<a class='button button-primary u-full-width' href='account.php'>My Account</a>";
+              echo "<form id='logoutForm' action='resources/php/AccountLogin.php' method='post'>
+                      <input class='button-primary u-full-width' type='submit' name='logout' value='Sign Out'>
+                    </form>";
+            } else
+            {
+              echo "<a class='button button-primary u-full-width' href='login.php'>Sign In</a>";
+            }
+          ?>
         </div>
         <!-- End Login -->
       </div>

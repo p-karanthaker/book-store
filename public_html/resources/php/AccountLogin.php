@@ -31,6 +31,17 @@
       if(isset($_POST['login']))
       {
          $this->doLogin();
+      } else if(isset($_POST['logout']))
+      {
+        $_SESSION = array();
+        if (ini_get("session.use_cookies")) {
+          $params = session_get_cookie_params();
+          setcookie(session_name(), '', time() - 42000, $params["user_session"], $params["message"]);
+        }
+        $this->message->createMessage("Goodbye!", array("You have been signed out. Please visit again soon!"), "info");
+        $this->result = true;
+      } else {
+        $this->result = false;
       }
     }
     
@@ -44,6 +55,7 @@
         {
           $this->message->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
           $this->result = true;
+          $_SESSION["user_session"] = $username;
           return true;
         } else
         {
@@ -67,30 +79,25 @@
         $statement->execute();
         
         // Check if account was found
-        if($statement->rowCount() == 0)
+        if($statement->rowCount() == 1)
         {
-          // Account not found
-          $db->closeConnection();
-          return false;
+          $results = $statement->fetch(PDO::FETCH_ASSOC);
+        
+          // Fetch database results
+          $db_password_hash = $results["password_hash"];
+          $db_password_salt = $results["password_salt"];
+
+          /* hash+salt password */
+          $salt = $db_password_salt;
+          $hashed_password = password_hash($password, PASSWORD_BCRYPT, ["salt" => $salt]);
+
+          if(hash_equals($db_password_hash, $hashed_password))
+          {
+            // Authentication success
+            $db->closeConnection();
+            return true;
+          }
         }
-        
-        $results = $statement->fetch(PDO::FETCH_ASSOC);
-        
-        // Fetch database results
-        $db_password_hash = $results["password_hash"];
-        $db_password_salt = $results["password_salt"];
-        
-        /* hash+salt password */
-        $salt = $db_password_salt;
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT, ["salt" => $salt]);
-        
-        if(hash_equals($db_password_hash, $hashed_password))
-        {
-          // Authentication success
-          $db->closeConnection();
-          return true;
-        }
-        
         // Authentication failed
         $db->closeConnection();
         return false;

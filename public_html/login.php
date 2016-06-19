@@ -1,3 +1,17 @@
+<!-- Begin PHP -->
+<?php
+  session_start();
+  
+  $doc_root = $_SERVER["DOCUMENT_ROOT"];
+  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+
+  if(isset($_SESSION["user_session"]))
+  {
+    header("Location: http://localhost/".$config["paths"]["index"], true, 303);
+  }
+?>
+<!-- End PHP -->
+
 <!-- Begin HTML -->
 <!DOCTYPE html>
 <html lang="en">
@@ -51,10 +65,10 @@
         <div class="four columns offset-by-one-third">
           <form id="loginForm" action="resources/php/AccountLogin.php" method="post">
               <label for="username">Username</label>
-              <input class="u-full-width" type="text" placeholder="Username" id="username" name="username">
+              <input class="u-full-width" type="text" placeholder="Username" id="username" name="username" required>
 
               <label for="password">Password</label>
-              <input class="u-full-width" type="password" placeholder="Password" id="password" name="password">
+              <input class="u-full-width" type="password" placeholder="Password" id="password" name="password" required>
 
               <input class="button-primary u-full-width" type="submit" name="login" value="Sign In">
               <a class="button u-full-width" href="register.php">Not a member?</a>
@@ -70,7 +84,6 @@
 
 <!-- Begin PHP -->
 <?php
-  session_start();
   if(isset($_SESSION["message"]))
   {
     echo $_SESSION["message"];
