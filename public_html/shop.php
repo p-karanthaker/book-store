@@ -1,11 +1,27 @@
 <!-- Begin PHP -->
 <?php
-    session_start();
-    if(isset($_SESSION["message"]))
+  if(isset($_SESSION["message"]))
+  {
+    echo "</br>".$_SESSION["message"];
+    $_SESSION["message"] = null;
+  }
+
+  $doc_root = $_SERVER["DOCUMENT_ROOT"];
+  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+  $database_helper = require_once($doc_root.$config["paths"]["db_helper"]);
+  
+  $db = new DatabaseHelper($config);
+  $results = "";
+  if($db->openConnection())
+  {
+    $connection = $db->getConnection();
+    $statement = $connection->prepare("SELECT title, authors, quantity, price FROM books");
+    if($statement->execute())
     {
-      echo "</br>".$_SESSION["message"];
-      $_SESSION["message"] = null;
+      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+  }
+
 ?>
 <!-- End PHP -->
 
@@ -76,23 +92,24 @@
           <table class="u-full-width" id="table">
             <thead>
               <tr>
-                <th>Fruit</th>
-                <th>Colour</th>
+                <th>Title</th>
+                <th>Authors</th>
+                <th>Quantity</th>
+                <th>Price</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Apple</td>
-                <td>Green</td>
-              </tr>
-              <tr>
-                <td>Grapes</td>
-                <td>Green</td>
-              </tr>
-              <tr>
-                <td>Orange</td>
-                <td>Orange</td>
-              </tr>
+              <?php
+                foreach($results as $arr)
+                {
+                  echo "<tr>";
+                  foreach($arr as $value)
+                  {
+                    echo "<td>".utf8_encode($value)."</td>";
+                  }
+                  echo "</tr>";
+                }
+              ?>
             </tbody>
           </table>
         </div>

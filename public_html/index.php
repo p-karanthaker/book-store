@@ -1,11 +1,11 @@
 <!-- Begin PHP -->
 <?php
-    session_start();
-    if(isset($_SESSION["message"]))
-    {
-      echo "</br>".$_SESSION["message"];
-      $_SESSION["message"] = null;
-    }
+  session_start();
+  if(isset($_SESSION["message"]))
+  {
+    echo "</br>".$_SESSION["message"];
+    $_SESSION["message"] = null;
+  }
 ?>
 <!-- End PHP -->
 

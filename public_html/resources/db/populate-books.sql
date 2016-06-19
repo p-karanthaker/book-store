@@ -99,7 +99,7 @@ VALUES      ('High Availability',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Dio''s Roman History"', 
+VALUES      ('Dio''s Roman History', 
              'Cassius Dio Cocceianus', 
              10, 
              6, 
@@ -109,7 +109,7 @@ VALUES      (' "Dio''s Roman History"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Native American Renaissance"', 
+VALUES      ('Native American Renaissance', 
              'Kenneth Lincoln', 
              10, 
              32, 
@@ -119,7 +119,7 @@ VALUES      (' "Native American Renaissance"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The Return of Lucretius to Renaissance Florence"', 
+VALUES      ('The Return of Lucretius to Renaissance Florence', 
              'Alison Brown', 
              10, 
              7, 
@@ -129,7 +129,7 @@ VALUES      (' "The Return of Lucretius to Renaissance Florence"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Building New Deal Liberalism"', 
+VALUES      ('Building New Deal Liberalism', 
              'Jason Scott Smith', 
              10, 
              90, 
@@ -139,7 +139,7 @@ VALUES      (' "Building New Deal Liberalism"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Western Political Theory in the Face of the Future"', 
+VALUES      ('Western Political Theory in the Face of the Future', 
              'John Dunn', 
              10, 
              2, 
@@ -150,7 +150,7 @@ VALUES      (' "Western Political Theory in the Face of the Future"',
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
 VALUES      ( 
-' "Gender Equality and United Nations Peace Operations in Timor Leste"', 
+'Gender Equality and United Nations Peace Operations in Timor Leste', 
 'Louise Olsson', 
 10, 
 75, 
@@ -160,7 +160,7 @@ VALUES      (
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The Reign of Elizabeth I"', 
+VALUES      ('The Reign of Elizabeth I', 
              'John Alexander Guy, Folger Institute', 
              10, 
              70, 
@@ -170,7 +170,7 @@ VALUES      (' "The Reign of Elizabeth I"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "A Moment''s Notice"', 
+VALUES      ('A Moment''s Notice', 
              'Carol J. Greenhouse', 
              10, 
              25, 
@@ -180,7 +180,7 @@ VALUES      (' "A Moment''s Notice"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Poems and Poetical Fragments"', 
+VALUES      ('Poems and Poetical Fragments', 
              'Nicander of Colophon, A. S. F. Gow', 
              10, 
              58, 
@@ -190,7 +190,7 @@ VALUES      (' "Poems and Poetical Fragments"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The New Cambridge Medieval History: Volume 5, C.1198-c.1300"', 
+VALUES      ('The New Cambridge Medieval History: Volume 5, C.1198-c.1300', 
              'David Abulafia', 
              10, 
              28, 
@@ -200,7 +200,7 @@ VALUES      (' "The New Cambridge Medieval History: Volume 5, C.1198-c.1300"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Computational Geometry"', 
+VALUES      ('Computational Geometry', 
              'Mark de Berg', 
              10, 
              80, 
@@ -210,7 +210,7 @@ VALUES      (' "Computational Geometry"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Combinatorial Species and Tree-like Structures"', 
+VALUES      ('Combinatorial Species and Tree-like Structures', 
              'François Bergeron, Gilbert Labelle, Pierre Leroux', 
              10, 
              28, 
@@ -220,7 +220,7 @@ VALUES      (' "Combinatorial Species and Tree-like Structures"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Multiple Comparisons"', 
+VALUES      ('Multiple Comparisons', 
              'Jason Hsu', 
              10, 
              88, 
@@ -230,17 +230,17 @@ VALUES      (' "Multiple Comparisons"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Let''s Review"', 
+VALUES      ('Let''s Review', 
              'Lawrence S. Leff', 
              10, 
              10, 
-'(back cover) An ideal companion to high school geometry textbooks, this volume covers all topics prescribed by the New York State Board of Regents for the new Geometry exam. For Students: Easy-to-read topic summaries Step-by-step demonstration examples Review of all required Geometry topics Hundreds of exercises with answers for practice and review Glossary of Geometry terms In-depth Regents exam preparation, including problems similar to those you''ll find on the actual Regents exam For Teachers: A valuable lesson-planning aid A helpful source of practice and test questions' 
+'An ideal companion to high school geometry textbooks, this volume covers all topics prescribed by the New York State Board of Regents for the new Geometry exam. For Students: Easy-to-read topic summaries Step-by-step demonstration examples Review of all required Geometry topics Hundreds of exercises with answers for practice and review Glossary of Geometry terms In-depth Regents exam preparation, including problems similar to those you''ll find on the actual Regents exam For Teachers: A valuable lesson-planning aid A helpful source of practice and test questions' 
              , 
 'http://books.google.co.uk/books/content?id=9DZn3AHe5AwC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api' 
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Algebraic Cycles, Sheaves, Shtukas, and Moduli"', 
+VALUES      ('Algebraic Cycles, Sheaves, Shtukas, and Moduli', 
              'Piotr Pragacz', 
              10, 
              24, 
@@ -250,7 +250,7 @@ VALUES      (' "Algebraic Cycles, Sheaves, Shtukas, and Moduli"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Lie Groups, Lie Algebras, and Cohomology"', 
+VALUES      ('Lie Groups, Lie Algebras, and Cohomology', 
              'Anthony W. Knapp', 
              10, 
              27, 
@@ -260,7 +260,7 @@ VALUES      (' "Lie Groups, Lie Algebras, and Cohomology"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Clifford Algebra to Geometric Calculus"', 
+VALUES      ('Clifford Algebra to Geometric Calculus', 
              'David Hestenes, Garret Sobczyk', 
              10, 
              34, 
@@ -270,7 +270,7 @@ VALUES      (' "Clifford Algebra to Geometric Calculus"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Pierre-Simon Laplace Philosophical Essay on Probabilities"', 
+VALUES      ('Pierre-Simon Laplace Philosophical Essay on Probabilities', 
              'Pierre-Simon Laplace', 
              10, 
              54, 
@@ -280,7 +280,7 @@ VALUES      (' "Pierre-Simon Laplace Philosophical Essay on Probabilities"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Schaum''s Outline of Advanced Calculus, Third Edition"', 
+VALUES      ('Schaum''s Outline of Advanced Calculus, Third Edition', 
              'Robert Wrede, Murray Spiegel', 
              10, 
              34, 
@@ -290,7 +290,7 @@ VALUES      (' "Schaum''s Outline of Advanced Calculus, Third Edition"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "An Introduction to Quantum Stochastic Calculus"', 
+VALUES      ('An Introduction to Quantum Stochastic Calculus', 
              'K. R. Parthasarathy', 
              10, 
              25, 
@@ -300,7 +300,7 @@ VALUES      (' "An Introduction to Quantum Stochastic Calculus"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Each Wild Idea"', 
+VALUES      ('Each Wild Idea', 
              'Geoffrey Batchen', 
              10, 
              28, 
@@ -309,7 +309,7 @@ VALUES      (' "Each Wild Idea"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Photography"', 
+VALUES      ('Photography', 
              'John Freeman', 
              10, 
              38, 
@@ -319,7 +319,7 @@ VALUES      (' "Photography"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Photography in Print"', 
+VALUES      ('Photography in Print', 
              'Vicki Goldberg', 
              10, 
              65, 
@@ -329,7 +329,7 @@ VALUES      (' "Photography in Print"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Basics Film-Making 04: The Language of Film"', 
+VALUES      ('Basics Film-Making 04: The Language of Film', 
              'Robert Edgar-Hunt, John Marland, Steven Rawle', 
              10, 
              56, 
@@ -339,7 +339,7 @@ VALUES      (' "Basics Film-Making 04: The Language of Film"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "La fotografía paso a paso"', 
+VALUES      ('La fotografía paso a paso', 
              'Michael John Langford, Michael Langford', 
              10, 
              8, 
@@ -349,7 +349,7 @@ VALUES      (' "La fotografía paso a paso"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Ansel Adams"', 
+VALUES      ('Ansel Adams', 
              'Anne Hammond, Ansel Adams', 
              10, 
              66, 
@@ -359,7 +359,7 @@ VALUES      (' "Ansel Adams"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Travelin'' Man"', 
+VALUES      ('Travelin'' Man', 
              'Tom Weschler, Gary Graff', 
              10, 
              63, 
@@ -369,7 +369,7 @@ VALUES      (' "Travelin'' Man"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The Daguerreotype"', 
+VALUES      ('The Daguerreotype', 
              'M. Susan Barger, William B. White', 
              10, 
              65, 
@@ -379,7 +379,7 @@ VALUES      (' "The Daguerreotype"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Alexander McQueen"', 
+VALUES      ('Alexander McQueen', 
              'Kristin Knox', 
              10, 
              84, 
@@ -389,7 +389,7 @@ VALUES      (' "Alexander McQueen"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Langford''s Starting Photography"', 
+VALUES      ('Langford''s Starting Photography', 
              'Michael John Langford, Philip Andrews', 
              10, 
              75, 
@@ -399,7 +399,7 @@ VALUES      (' "Langford''s Starting Photography"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Advances in Genetic Programming"', 
+VALUES      ('Advances in Genetic Programming', 
              'Kenneth E. Kinnear', 
              10, 
              13, 
@@ -409,7 +409,7 @@ VALUES      (' "Advances in Genetic Programming"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Bi-level Strategies in Semi-infinite Programming"', 
+VALUES      ('Bi-level Strategies in Semi-infinite Programming', 
              'Oliver Stein', 
              10, 
              70, 
@@ -419,7 +419,7 @@ VALUES      (' "Bi-level Strategies in Semi-infinite Programming"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Postmortems from Game Developer"', 
+VALUES      ('Postmortems from Game Developer', 
              'Austin Grossman', 
              10, 
              58, 
@@ -429,7 +429,7 @@ VALUES      (' "Postmortems from Game Developer"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Programming Language Processors in Java"', 
+VALUES      ('Programming Language Processors in Java', 
              'David Anthony Watt, Deryck F. Brown', 
              10, 
              98, 
@@ -439,7 +439,7 @@ VALUES      (' "Programming Language Processors in Java"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Game Design"', 
+VALUES      ('Game Design', 
              'Richard Rouse, Steve Ogden', 
              10, 
              95, 
@@ -449,7 +449,7 @@ VALUES      (' "Game Design"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The Peter Norton Programmer''s guide to the IBM PC."', 
+VALUES      ('The Peter Norton Programmer''s guide to the IBM PC.', 
              'Peter Norton', 
              10, 
              21, 
@@ -459,7 +459,7 @@ VALUES      (' "The Peter Norton Programmer''s guide to the IBM PC."',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Assembly language programming for the 80386"', 
+VALUES      ('Assembly language programming for the 80386', 
              'Judi N. Fernández, Ruth Ashley', 
              10, 
              84, 
@@ -469,7 +469,7 @@ VALUES      (' "Assembly language programming for the 80386"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Programming and Problem Solving Through "C" Language"', 
+VALUES      ('Programming and Problem Solving Through "C" Language', 
              'Harsha Priya, R. Ranjeet', 
              10, 
              95, 
@@ -478,7 +478,7 @@ VALUES      (' "Programming and Problem Solving Through "C" Language"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "DOS programming"', 
+VALUES      ('DOS programming', 
              'Kris A. Jamsa', 
              10, 
              84, 
@@ -488,7 +488,7 @@ VALUES      (' "DOS programming"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Advanced BASIC step by step"', 
+VALUES      ('Advanced BASIC step by step', 
              'Vern McDermott, Diana Fisher', 
              10, 
              5, 
@@ -498,7 +498,7 @@ VALUES      (' "Advanced BASIC step by step"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "A Car Seat in My Convertible?"', 
+VALUES      ('A Car Seat in My Convertible?', 
              'Sharon Hoffman', 
              10, 
              43, 
@@ -508,7 +508,7 @@ VALUES      (' "A Car Seat in My Convertible?"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Creeds of the Churches"', 
+VALUES      ('Creeds of the Churches', 
              'John H. Leith', 
              10, 
              31, 
@@ -518,7 +518,7 @@ VALUES      (' "Creeds of the Churches"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The Jewish Study Bible"', 
+VALUES      ('The Jewish Study Bible', 
              'Adele Berlin, Marc Zvi Brettler, Michael A. Fishbane', 
              10, 
              100, 
@@ -528,7 +528,7 @@ VALUES      (' "The Jewish Study Bible"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Art in Action"', 
+VALUES      ('Art in Action', 
              'Nicholas Wolterstorff', 
              10, 
              76, 
@@ -538,7 +538,7 @@ VALUES      (' "Art in Action"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Passionate Conviction"', 
+VALUES      ('Passionate Conviction', 
              'Paul Copan, William Lane Craig', 
              10, 
              90, 
@@ -548,7 +548,7 @@ VALUES      (' "Passionate Conviction"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The Child in Christian Thought"', 
+VALUES      ('The Child in Christian Thought', 
              'Marcia J. Bunge', 
              10, 
              81, 
@@ -558,7 +558,7 @@ VALUES      (' "The Child in Christian Thought"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The Other Christs"', 
+VALUES      ('The Other Christs', 
              'Candida R. Moss', 
              10, 
              55, 
@@ -568,7 +568,7 @@ VALUES      (' "The Other Christs"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Matsuri"', 
+VALUES      ('Matsuri', 
              'Michael Ashkenazi', 
              10, 
              53, 
@@ -578,7 +578,7 @@ VALUES      (' "Matsuri"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Clinical Handbook of Pastoral Counseling"', 
+VALUES      ('Clinical Handbook of Pastoral Counseling', 
              'Robert J. Wicks, Richard D. Parsons', 
              10, 
              66, 
@@ -588,7 +588,7 @@ VALUES      (' "Clinical Handbook of Pastoral Counseling"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Between Athens and Jerusalem"', 
+VALUES      ('Between Athens and Jerusalem', 
              'John J. Collins', 
              10, 
              23, 
@@ -598,7 +598,7 @@ VALUES      (' "Between Athens and Jerusalem"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Neem"', 
+VALUES      ('Neem', 
              'Office of Intl. Affairs, National Research Council', 
              10, 
              84, 
@@ -607,7 +607,7 @@ VALUES      (' "Neem"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Computational Geometry"', 
+VALUES      ('Computational Geometry', 
              'Mark de Berg', 
              10, 
              96, 
@@ -617,7 +617,7 @@ VALUES      (' "Computational Geometry"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Mammal Species of the World"', 
+VALUES      ('Mammal Species of the World', 
              'Don E. Wilson, DeeAnn M. Reeder', 
              10, 
              11, 
@@ -627,7 +627,7 @@ VALUES      (' "Mammal Species of the World"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Gravel-bed rivers"', 
+VALUES      ('Gravel-bed rivers', 
              'Richard David Hey, James C. Bathurst, Colin R. Thorne', 
              10, 
              49, 
@@ -637,7 +637,7 @@ VALUES      (' "Gravel-bed rivers"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The End of Time"', 
+VALUES      ('The End of Time', 
              'Julian Barbour', 
              10, 
              47, 
@@ -647,11 +647,10 @@ VALUES      (' "The End of Time"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      ( 
-' "Barron''s New York State Grade 8 Intermediate-Level Science Test"', 
-'Edward J. Denecke, Jr.', 
-10, 
-23, 
+VALUES      ('Barron''s New York State Grade 8 Intermediate-Level Science Test', 
+             'Edward J. Denecke, Jr.', 
+             10, 
+             23, 
 'This newly revised edition, with extensive, updated subject reviews and practice questions following every chapter, prepares eighth-grade students for the required New York State Intermediate-Level Science Test. It presents one full-length practice exam with answers. Topic reviews cover all New York State Intermediate-Level Core Curriculum topics in the Living Environment and Physical Setting, including fundamentals of astronomy, geology, meteorology, chemistry, and physics. This review book also features many instructive line illustrations that help students visualize science concepts.'
              , 
 'http://books.google.co.uk/books/content?id=dbF6g4geyfsC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api' 
@@ -659,7 +658,7 @@ VALUES      (
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
 VALUES      ( 
-' "The Collected Papers of Albert Einstein: The early years, 1879-1902"', 
+'The Collected Papers of Albert Einstein: The early years, 1879-1902', 
 'Albert Einstein, Anna Beck, Peter Havas', 
 10, 
 47, 
@@ -669,7 +668,7 @@ VALUES      (
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Introduction to Spectroscopy"', 
+VALUES      ('Introduction to Spectroscopy', 
              'Donald Pavia, Gary Lampman, George Kriz, James Vyvyan', 
              10, 
              76, 
@@ -679,7 +678,7 @@ VALUES      (' "Introduction to Spectroscopy"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "Análisis de Orina y de los Líquidos Corporales"', 
+VALUES      ('Análisis de Orina y de los Líquidos Corporales', 
              'Susan King Strasinger, Marjorie Schaub Di Lorenzo', 
              10, 
              28, 
@@ -689,7 +688,7 @@ VALUES      (' "Análisis de Orina y de los Líquidos Corporales"',
 ); 
 
 INSERT INTO books (title, authors, quantity, price, description, photo) 
-VALUES      (' "The Material Basis of Evolution"', 
+VALUES      ('The Material Basis of Evolution', 
              'Richard Goldschmidt', 
              10, 
              80, 
