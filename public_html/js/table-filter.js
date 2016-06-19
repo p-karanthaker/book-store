@@ -1,13 +1,11 @@
-window.onload = function() {
+window.onload = function () {
   var $rows = $('#table tbody tr');
-  $('#search').keyup(function() {
-      var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-          reg = RegExp(val, 'i'),
-          text;
+  $('#search').keyup(function () {
+      var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 
-      $rows.show().filter(function() {
-          text = $(this).text().replace(/\s+/g, ' ');
-          return !reg.test(text);
-      }).hide();
+    $rows.show().filter(function () {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+    }).hide();
   });
 };
