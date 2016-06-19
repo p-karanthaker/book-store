@@ -62,7 +62,6 @@
           <?php 
             if(isset($_SESSION["user_session"]))
             {
-              echo "<a class='button button-primary u-full-width' href='account.php'>My Account</a>";
               echo "<form id='logoutForm' action='resources/php/AccountLogin.php' method='post'>
                       <input class='button-primary u-full-width' type='submit' name='logout' value='Sign Out'>
                     </form>";
@@ -81,6 +80,7 @@
           <li class="active">Home</li>
           <li><a href="#">Books</a></li>
           <li><a href="#">Basket</a></li>
+          <?php echo isset($_SESSION["user_session"]) ? "<li><a href='account.php'>My Account</a></li>" : ""; ?>
         </ol>
           </div>
       </div>
