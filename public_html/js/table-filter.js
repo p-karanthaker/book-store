@@ -37,7 +37,7 @@ function categoryFilter() {
 
 function showBookDetails() {
   $('tr#books').click( function() {
-    var bookId = $(this).find('td').attr('bookId');
+    var bookId = $(this).find('td').attr('data-book-id');
     if(bookId == "") {
       // display error 
     } else {

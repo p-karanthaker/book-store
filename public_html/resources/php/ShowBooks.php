@@ -42,7 +42,7 @@
         foreach($results as $arr)
         {
           echo "<tr id='books'>";
-          echo "<td bookId=".$arr['book_id'].">".utf8_encode($arr['title'])."</td>";        
+          echo "<td data-book-id=".$arr['book_id'].">".utf8_encode($arr['title'])."</td>";        
           echo "<td>".utf8_encode($arr['authors'])."</td>";
           echo "<td>".utf8_encode($arr['category'])."</td>";
           echo "<td>".utf8_encode($arr['quantity'])."</td>";
