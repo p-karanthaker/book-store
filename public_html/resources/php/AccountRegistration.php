@@ -1,4 +1,5 @@
 <?php
+  session_start();
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
   $register = new AccountRegistration($config);

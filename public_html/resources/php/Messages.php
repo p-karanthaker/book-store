@@ -5,7 +5,6 @@
     
     public function __construct()
     {
-      session_start();
       $_SESSION["message"] = null;
     }
     

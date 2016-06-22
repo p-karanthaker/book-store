@@ -1,7 +1,7 @@
 <!-- Begin PHP -->
 <?php
   session_start();
-  
+
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
 
@@ -19,7 +19,7 @@
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>Book-Store: Sign In</title>
+    <title>Sign In</title>
     <meta name="description" content="Aston Book Store Project">
     <meta name="author" content="Karan Thaker">
 

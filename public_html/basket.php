@@ -1,26 +1,28 @@
 <!-- Begin PHP -->
 <?php
   session_start();
-
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+  $messages = require_once($doc_root.$config["paths"]["messages"]);
 
-  if(isset($_SESSION["user_session"]))
+  if(isset($_SESSION["message"]))
   {
-    header("Location: http://localhost/".$config["paths"]["index"], true, 303);
+    echo "<br />".$_SESSION["message"];
+    $_SESSION["message"] = null;
   }
 ?>
 <!-- End PHP -->
 
-<!-- Begin HTML-->
+<!-- Begin HTML -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>Registration</title>
-    <meta name="description" content="Registration">
+    <title>Book Store: Get the London Book</title>
+    <meta name="description" content="Aston Book Store Project">
     <meta name="author" content="Karan Thaker">
 
     <!-- Mobile Specific Metas
@@ -35,66 +37,66 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
-    
+
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/table-filter.js"></script>
+    
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/png" href="img/layout/favicon.ico">
 
   </head>
   <!-- End Head -->
-  <body>
+  <body onload="categoryFilter()">
 
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <div class="container">  
-      <!-- Title -->
+    <div class="container">
       <div class="row">
+        <!-- Title -->
         <div class="twelve columns" style="margin-top: 5%">
-          <h2 class="u-text-centre">Register</h2>
+          <h1>My Basket</h1>
         </div>
+        <!-- End Title -->
       </div>
-      <!-- End Title -->
 
-      <!-- Registration Form -->
       <div class="row">
-        <div class="four columns offset-by-one-third">
-          <form name="registerform" action="resources/php/AccountRegistration.php" method="post">
-            <label for="username">Username</label>
-            <input class="u-full-width" type="text" placeholder="Username" name="username" required>
-
-            <label for="password">Password</label>
-            <input class="u-full-width" type="password" placeholder="Password" name="password" required>
-            <input class="u-full-width" type="password" placeholder="Confirm" name="password_confirm" required>
-
-            <label for="user_type">User Type</label>
-            <select class="u-full-width" name="user_type" required>
-              <option value="Student">Student</option>
-              <option value="Staff">Staff</option>
-            </select>
-            <input class="button-primary u-full-width" type="submit" name="register" value="Register">
-            <a class="button u-full-width" href="index.php">Cancel</a>
-        </form>
+        <div class="twelve columns">
+          <ol class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="shop.php">Shop</a></li>
+            <li class="active">Basket</li>
+            <li><a href='account.php'>My Account</a></li>
+          </ol>
         </div>
       </div>
-      <!-- End Login Form -->
+      
+      <div class="row">
+        <div class="twelve columns">
+          <?php
+            if(!isset($_SESSION['user_session']))
+            {
+              $message = new Messages();
+              $message->createMessage("Access Denied!", array("You must be logged in to view this page."), "error");
+              echo $_SESSION["message"];
+              $_SESSION["message"] = null;
+              die();
+            }
+          ?>
+        </div>
+      </div>
     </div>
   </body>
-  <!-- End Body-->
+  <!-- End Body -->
 </html>
 <!-- End HTML -->
 
 <!-- Begin PHP -->
 <?php
-  if(isset($_SESSION["message"]))
-  {
-    echo $_SESSION["message"];
-    $_SESSION["message"] = null;
-  }
+
 ?>
 <!-- End PHP -->
 

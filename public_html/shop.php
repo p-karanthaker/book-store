@@ -1,8 +1,13 @@
 <!-- Begin PHP -->
 <?php
+  session_start();
+  $doc_root = $_SERVER["DOCUMENT_ROOT"];
+  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+  $messages = require_once($doc_root.$config["paths"]["messages"]);
+
   if(isset($_SESSION["message"]))
   {
-    echo "</br>".$_SESSION["message"];
+    echo "<br />".$_SESSION["message"];
     $_SESSION["message"] = null;
   }
 ?>
@@ -63,30 +68,30 @@
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
             <li class="active">Shop</li>
-            <li><a href="#">Basket</a></li>
-            <?php echo isset($_SESSION["user_session"]) ? "<li><a href='account.php'>My Account</a></li>" : ""; ?>
+            <li><a href="basket.php">Basket</a></li>
+            <li><a href='account.php'>My Account</a></li>
           </ol>
         </div>
       </div>
-
-      
       
       <div class="row">
         <div class="twelve columns">
+          <?php
+            if(!isset($_SESSION['user_session']))
+            {
+              $message = new Messages();
+              $message->createMessage("Access Denied!", array("You must be logged in to view this page."), "error");
+              echo $_SESSION["message"];
+              $_SESSION["message"] = null;
+              die();
+            }
+          ?>
+          
           <div id='bookDetails' class="w3-card-4">
-            <header class="w3-container-header w3-blue"><h3 id='bookTitle'>Title</h3></header>
-              <div class="w3-container-central">
-              <h4>Description</h4>
-              <p id='bookDescription'>Book details will appear here by clicking the row of the book.</p>
-              <label class="u-pull-left">Quantity: </label><p id='bookQuantity'>5</p>
-              <label class="u-pull-left">Price: £</label><p id='bookPrice'>5</p>
-              </div>
-            <footer class="w3-container-footer">
-              <form method="post" action="">
-                <input id='addToBasket' class="button-primary" type="button" value="Add To Basket">
-                <input id='addQuantity' type='number' value='1' min='1' max="9">
-              </form>
-            </footer>
+            <header class="w3-container-header w3-blue"><h3 id='bookTitle'>Details</h3></header>
+            <div class="w3-container-central">
+            <p id='bookDescription'>View book details and Add to Basket here by clicking on a book.</p>
+            </div>
           </div>
           <br />
         

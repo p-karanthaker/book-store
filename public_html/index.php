@@ -1,11 +1,9 @@
 <!-- Begin PHP -->
 <?php
   session_start();
-  if(isset($_SESSION["message"]))
-  {
-    echo "</br>".$_SESSION["message"];
-    $_SESSION["message"] = null;
-  }
+  $doc_root = $_SERVER["DOCUMENT_ROOT"];
+  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+  $messages = require_once($doc_root.$config["paths"]["messages"]);
 ?>
 <!-- End PHP -->
 
@@ -79,8 +77,8 @@
         <ol class="breadcrumb">
           <li class="active">Home</li>
           <li><a href="shop.php">Shop</a></li>
-          <li><a href="#">Basket</a></li>
-          <?php echo isset($_SESSION["user_session"]) ? "<li><a href='account.php'>My Account</a></li>" : ""; ?>
+          <li><a href="basket.php">Basket</a></li>
+          <li><a href='account.php'>My Account</a></li>
         </ol>
           </div>
       </div>
@@ -93,7 +91,11 @@
 
 <!-- Begin PHP -->
 <?php
-
+  if(isset($_SESSION["message"]))
+  {
+    echo "<br />".$_SESSION["message"];
+    $_SESSION["message"] = null;
+  }
 ?>
 <!-- End PHP -->
 
