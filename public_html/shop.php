@@ -45,7 +45,7 @@
 
   </head>
   <!-- End Head -->
-  <body onload="categoryFilter();">
+  <body onload="categoryFilter()">
 
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->

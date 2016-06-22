@@ -27,9 +27,9 @@ function categoryFilter() {
   xmlhttp.onreadystatechange = function () {
     if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       $('tbody').html(xmlhttp.responseText);
+      filterTable(); // Reload filterTable so live search continues.
     }
   };
-  xmlhttp.open("get", "resources/php/ShowBooks.php?Category="+category, false);
+  xmlhttp.open("get", "resources/php/ShowBooks.php?Category="+category, true);
   xmlhttp.send();
-  filterTable(); // Reload filterTable so live search continues.
 }
