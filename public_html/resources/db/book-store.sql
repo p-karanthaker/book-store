@@ -43,7 +43,8 @@ CREATE TABLE Basket
 (
 	basket_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	user_id INT NOT NULL,
-	FOREIGN KEY(user_id) REFERENCES User(user_id)
+	FOREIGN KEY(user_id) REFERENCES User(user_id),
+	UNIQUE KEY `user_id_UNIQUE` (user_id)
 );
 
 CREATE TABLE BasketItem
