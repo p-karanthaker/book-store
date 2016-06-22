@@ -27,9 +27,31 @@ function categoryFilter() {
   xmlhttp.onreadystatechange = function () {
     if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       $('tbody').html(xmlhttp.responseText);
-      filterTable(); // Reload filterTable so live search continues.
+      filterTable(); // Reload filterTable so live search continues.showBookDetails()
+      showBookDetails();
     }
   };
   xmlhttp.open("get", "resources/php/ShowBooks.php?Category="+category, true);
   xmlhttp.send();
+}
+
+function showBookDetails() {
+  $('tr#books').click( function() {
+    var bookId = $(this).find('td').attr('bookId');
+    if(bookId == "") {
+      // display error 
+    } else {
+      xmlhttp = new XMLHttpRequest();
+    }
+
+    xmlhttp.onreadystatechange = function () {
+      if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        $('#bookDetails').html(xmlhttp.responseText);
+      }
+    };
+  xmlhttp.open("get", "resources/php/ShowBooks.php?Book="+bookId, true);
+  xmlhttp.send();
+  }).hover( function() {
+      $(this).toggleClass('hover');
+  });
 }

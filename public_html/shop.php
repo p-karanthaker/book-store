@@ -69,8 +69,27 @@
         </div>
       </div>
 
+      
+      
       <div class="row">
         <div class="twelve columns">
+          <div id='bookDetails' class="w3-card-4">
+            <header class="w3-container-header w3-blue"><h3 id='bookTitle'>Title</h3></header>
+              <div class="w3-container-central">
+              <h4>Description</h4>
+              <p id='bookDescription'>Book details will appear here by clicking the row of the book.</p>
+              <label class="u-pull-left">Quantity: </label><p id='bookQuantity'>5</p>
+              <label class="u-pull-left">Price: £</label><p id='bookPrice'>5</p>
+              </div>
+            <footer class="w3-container-footer">
+              <form method="post" action="">
+                <input id='addToBasket' class="button-primary" type="button" value="Add To Basket">
+                <input id='addQuantity' type='number' value='1' min='1' max="9">
+              </form>
+            </footer>
+          </div>
+          <br />
+        
           <input class="u-full-width" type="text" id="search" placeholder="Start typing to search">
           <label>Filter By Category: 
             <select id="category" name="category" onchange="categoryFilter()">
