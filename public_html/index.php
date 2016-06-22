@@ -78,7 +78,7 @@
         <div class="twelve columns">
         <ol class="breadcrumb">
           <li class="active">Home</li>
-          <li><a href="shop.php">Books</a></li>
+          <li><a href="shop.php">Shop</a></li>
           <li><a href="#">Basket</a></li>
           <?php echo isset($_SESSION["user_session"]) ? "<li><a href='account.php'>My Account</a></li>" : ""; ?>
         </ol>

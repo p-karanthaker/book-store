@@ -5,23 +5,6 @@
     echo "</br>".$_SESSION["message"];
     $_SESSION["message"] = null;
   }
-
-  $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
-  $database_helper = require_once($doc_root.$config["paths"]["db_helper"]);
-  
-  $db = new DatabaseHelper($config);
-  $results = "";
-  if($db->openConnection())
-  {
-    $connection = $db->getConnection();
-    $statement = $connection->prepare("SELECT title, authors, quantity, price FROM books");
-    if($statement->execute())
-    {
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-  }
-
 ?>
 <!-- End PHP -->
 
@@ -62,7 +45,7 @@
 
   </head>
   <!-- End Head -->
-  <body>
+  <body onload="categoryFilter();">
 
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -70,7 +53,7 @@
       <div class="row">
         <!-- Title -->
         <div class="twelve columns" style="margin-top: 5%">
-          <h1>Book Store</h1>
+          <h1>Shop</h1>
         </div>
         <!-- End Title -->
       </div>
@@ -79,7 +62,7 @@
         <div class="twelve columns">
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li class="active">Books</li>
+            <li class="active">Shop</li>
             <li><a href="#">Basket</a></li>
             <?php echo isset($_SESSION["user_session"]) ? "<li><a href='account.php'>My Account</a></li>" : ""; ?>
           </ol>
@@ -88,28 +71,34 @@
 
       <div class="row">
         <div class="twelve columns">
-          <input class="u-full-width" type="text" id="search" placeholder="Type to search">
+          <input class="u-full-width" type="text" id="search" placeholder="Start typing to search">
+          <label>Filter By Category: 
+            <select id="category" name="category" onchange="categoryFilter()">
+              <option value="all" selected>All</option>
+              <option value="1">Business &amp; Economics</option>
+              <option value="2">History</option>
+              <option value="3">Computers</option>
+              <option value="4">Mathematics</option>
+              <option value="5">Photography</option>
+              <option value="6">Art</option>
+              <option value="7">Music</option>
+              <option value="8">Religion</option>
+              <option value="9">Science</option>
+              <option value="10">Nature</option>
+              <option value="11">Medical</option>
+            </select>
+          </label>
           <table class="u-full-width" id="table">
             <thead>
               <tr>
                 <th>Title</th>
                 <th>Authors</th>
+                <th>Category</th>
                 <th>Quantity</th>
                 <th>Price</th>
               </tr>
             </thead>
             <tbody>
-              <?php
-                foreach($results as $arr)
-                {
-                  echo "<tr>";
-                  foreach($arr as $value)
-                  {
-                    echo "<td>".utf8_encode($value)."</td>";
-                  }
-                  echo "</tr>";
-                }
-              ?>
             </tbody>
           </table>
         </div>
