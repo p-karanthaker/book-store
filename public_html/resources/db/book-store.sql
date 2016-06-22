@@ -1,9 +1,4 @@
 -- Tables to create in DB
--- user (userID, password, type, balance)
--- books (bookID, title, authors, catID, quantity, price, description, photo)
--- basket (orderID, userID, bookID, quantity, cost, date)
--- category (catID, name)
-
 CREATE TABLE User 
 (
 	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
@@ -12,13 +7,13 @@ CREATE TABLE User
 	password_salt CHAR(44),
 	type ENUM('STUDENT', 'STAFF'), 
 	balance DECIMAL(13,2) NOT NULL DEFAULT '0.00'
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE Category
 (
 	cat_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE Books
 (
@@ -29,7 +24,7 @@ CREATE TABLE Books
 	price DECIMAL(13,2) NOT NULL DEFAULT '0.00',
 	description VARCHAR(5000),
 	photo VARCHAR(500)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE BookCategory
 (
@@ -37,7 +32,7 @@ CREATE TABLE BookCategory
 	cat_id INT NOT NULL,
 	FOREIGN KEY(book_id) REFERENCES Books(book_id),
 	FOREIGN KEY(cat_id) REFERENCES Category(cat_id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE Basket
 (
@@ -45,7 +40,7 @@ CREATE TABLE Basket
 	user_id INT NOT NULL,
 	FOREIGN KEY(user_id) REFERENCES User(user_id),
 	UNIQUE KEY `user_id_UNIQUE` (user_id)
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE BasketItem
 (
@@ -55,7 +50,7 @@ CREATE TABLE BasketItem
 	FOREIGN KEY(book_id) REFERENCES Books(book_id),
 	quantity INT NOT NULL DEFAULT '0',
 	cost DECIMAL(13,2) NOT NULL DEFAULT '0.00'
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE Orders
 (
@@ -64,7 +59,7 @@ CREATE TABLE Orders
 	FOREIGN KEY(user_id) REFERENCES User(user_id),
 	active BOOLEAN NOT NULL DEFAULT true,
 	date DATETIME
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE OrderItem
 (
@@ -73,7 +68,5 @@ CREATE TABLE OrderItem
 	quantity INT NOT NULL,
 	cost DECIMAL(13,2) NOT NULL,
 	FOREIGN KEY(order_id) REFERENCES Orders(order_id),
-	FOREIGN KEY(book_id) REFERENCES Books(book_id),
-	FOREIGN KEY(quantity) REFERENCES BasketItem(quantity),
-	FOREIGN KEY(cost) REFERENCES BasketItem(cost)
-);
+	FOREIGN KEY(book_id) REFERENCES Books(book_id)
+) ENGINE = InnoDB;
