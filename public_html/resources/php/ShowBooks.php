@@ -32,8 +32,8 @@
       if($this->db->openConnection())
       {
         $connection = $this->db->getConnection();
-        $statement = $connection->prepare("CALL GetBooksByCategory(?)");
-        $statement->bindParam(1, $category, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT, 4000);
+        $statement = $connection->prepare("CALL GetBooksByCategory(:book_category)");
+        $statement->bindParam(':book_category', $category, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT);
         if($statement->execute())
         {
           $results = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -61,8 +61,8 @@
       if($this->db->openConnection())
       {
         $connection = $this->db->getConnection();
-        $statement = $connection->prepare("CALL GetBookById(?)");
-        $statement->bindParam(1, $bookId, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT, 4000);
+        $statement = $connection->prepare("CALL GetBookById(:book_id)");
+        $statement->bindParam(':book_id', $bookId, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
         if($statement->execute())
         {
           $results = $statement->fetch(PDO::FETCH_ASSOC);

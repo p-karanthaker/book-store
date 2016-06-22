@@ -76,7 +76,7 @@
       {
         $connection = $db->getConnection();
         $statement = $connection->prepare("SELECT user_id, password_hash, password_salt FROM user WHERE username = :username");
-        $statement->bindValue(":username", $username);
+        $statement->bindParam(":username", $username);
         $statement->execute();
         
         // Check if account was found
