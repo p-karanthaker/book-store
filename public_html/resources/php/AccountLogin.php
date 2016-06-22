@@ -57,7 +57,6 @@
         {
           $this->message->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
           $this->result = true;
-          $_SESSION["user_session"] = $username;
           return true;
         } else
         {
@@ -76,7 +75,7 @@
       if($db->openConnection())
       {
         $connection = $db->getConnection();
-        $statement = $connection->prepare("SELECT password_hash, password_salt FROM user WHERE username = :username");
+        $statement = $connection->prepare("SELECT user_id, password_hash, password_salt FROM user WHERE username = :username");
         $statement->bindValue(":username", $username);
         $statement->execute();
         
@@ -86,6 +85,7 @@
           $results = $statement->fetch(PDO::FETCH_ASSOC);
         
           // Fetch database results
+          $db_user_id = $results["user_id"];
           $db_password_hash = $results["password_hash"];
           $db_password_salt = $results["password_salt"];
 
@@ -96,6 +96,8 @@
           if(hash_equals($db_password_hash, $hashed_password))
           {
             // Authentication success
+            $user_session = array($db_user_id, $username);
+            $_SESSION["user_session"] = $user_session;
             $db->closeConnection();
             return true;
           }
