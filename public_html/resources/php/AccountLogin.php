@@ -96,7 +96,7 @@
           if(hash_equals($db_password_hash, $hashed_password))
           {
             // Authentication success
-            $user_session = array($db_user_id, $username);
+            $user_session = array("user_id"=>$db_user_id, "username"=>$username);
             $_SESSION["user_session"] = $user_session;
             $db->closeConnection();
             return true;

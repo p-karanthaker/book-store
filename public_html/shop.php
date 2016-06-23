@@ -41,6 +41,7 @@
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/shop.js"></script>
     
@@ -93,6 +94,7 @@
             <p id='bookDescription'>View book details and Add to Basket here by clicking on a book.</p>
             </div>
           </div>
+          <div id='alert-section'></div>
           <br />
         
           <input class="u-full-width" type="text" id="search" placeholder="Start typing to search">

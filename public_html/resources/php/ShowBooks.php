@@ -1,4 +1,5 @@
 <?php
+  session_start();
   $books = new ShowBooks();
   
   class ShowBooks 
@@ -77,8 +78,7 @@
         echo "</div>";
         echo "<footer class='w3-container-footer'>";
         echo "<form method='post' action=''>";
-        echo "<input id='addToBasket' class='button-primary' type='button' value='Add To Basket'>";
-        echo "<input id='addQuantity' type='number' value='1' min='1' max=".utf8_encode($results['quantity']).">";
+        echo "<input id='addToBasket' data-book-id=".$results['book_id']." class='button-primary' type='button' value='Add To Basket'>";
         echo "</form>";
         echo "</footer>";
       }

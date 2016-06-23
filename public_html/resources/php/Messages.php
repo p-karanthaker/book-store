@@ -8,7 +8,7 @@
       $_SESSION["message"] = null;
     }
     
-    public function createMessage($title, $message, $type, $isBlock = false) {
+    public function createMessage($title, $message, $type, $isBlock = false, $inSessionVar = true) {
       $alertClass;
       $titleAndMessage = "<strong>";
       switch($type)
@@ -59,7 +59,13 @@
                             $titleAndMessage
                           </div>
                         </div>";
-      $_SESSION["message"] = $this->message;
+      if($inSessionVar)
+      {
+        $_SESSION["message"] = $this->message;
+      } else
+      {
+        return $this->message;
+      }
     }
   }
 ?>
