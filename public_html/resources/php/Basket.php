@@ -25,6 +25,9 @@
         {
           echo $message->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", false, false);
         }
+      } else if(isset($_POST['DispBasket']))
+      {
+        $this->showBasket($_SESSION['user_session']['user_id']);
       }
       $this->db->closeConnection();
     }
@@ -46,6 +49,30 @@
           }
         }
         return false;
+      }
+    }
+    
+    private function showBasket($user_id)
+    {
+      $results = "";
+      if($this->db->openConnection())
+      {
+        $connection = $this->db->getConnection();
+        $statement = $connection->prepare("CALL GetBasketByUserId(:user_id)");
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
+        if($statement->execute())
+        {
+          $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        foreach($results as $arr)
+        {
+          echo "<tr id='basket-items'>";
+          echo "<td data-book-id=".$arr['book_id'].">".utf8_encode($arr['title'])."</td>";
+          echo "<td><input id='quantity' type='number' value='".utf8_encode($arr['quantity'])."' min='0' max='".utf8_encode($arr['quantity'])."'/></td>";
+          echo "<td>".utf8_encode($arr['price'])."</td>";
+          echo "</tr>";
+        }
       }
     }
     

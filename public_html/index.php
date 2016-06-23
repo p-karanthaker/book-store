@@ -74,15 +74,30 @@
 
       <div class="row">
         <div class="twelve columns">
-        <ol class="breadcrumb">
-          <li class="active">Home</li>
-          <li><a href="shop.php">Shop</a></li>
-          <li><a href="basket.php">Basket</a></li>
-          <li><a href='account.php'>My Account</a></li>
-        </ol>
-          </div>
+          <ol class="breadcrumb">
+            <li class="active">Home</li>
+            <li><a href="shop.php">Shop</a></li>
+            <li><a href="basket.php">Basket</a></li>
+            <li><a href='account.php'>My Account</a></li>
+          </ol>
+        </div>
       </div>
-
+      
+      <?php 
+            if(!isset($_SESSION["user_session"]))
+            {
+              echo "<div class='row'>";
+              echo "<h3>Welcome to the Book Store!</h3>";
+              echo "<p><a href='login.php'>Sign In</a> or <a href='register.php'>Register</a> to start shopping.</p>";
+              echo "</div>";
+            } else
+            {
+              echo "<div class='row'>";
+              echo "<h3>Hi ".$_SESSION['user_session']['username']."!</h3>";
+              echo "<p>Start shopping <a href='shop.php'>here</a> now.</p>";
+              echo "</div>";
+            }
+      ?>
     </div>
   </body>
   <!-- End Body -->

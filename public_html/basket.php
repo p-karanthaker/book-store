@@ -42,7 +42,7 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/table-filter.js"></script>
+    <script src="js/basket.js"></script>
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -50,7 +50,7 @@
 
   </head>
   <!-- End Head -->
-  <body onload="categoryFilter()">
+  <body onload="showBasket()">
 
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -98,6 +98,8 @@
             <tbody>
             </tbody>
           </table>
+          <input id='checkoutNow' class='button-primary u-pull-right' type='button' value='Checkout'>
+          <input id='updateBasket' type="submit" value="Update Basket">
         </div>
       </div>
     </div>

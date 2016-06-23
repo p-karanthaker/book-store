@@ -72,6 +72,7 @@
 
               <input class="button-primary u-full-width" type="submit" name="login" value="Sign In">
               <a class="button u-full-width" href="register.php">Not a member?</a>
+              <a class="button u-full-width" href="index.php">Cancel</a>
           </form>
         </div>
       </div>
