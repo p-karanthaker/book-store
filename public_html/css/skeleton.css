@@ -371,6 +371,14 @@ form {
 .u-text-centre {
   text-align: center;
 }
+.u-float-bottom {
+  position: absolute;
+  bottom: 5px;
+}
+.u-float-top {
+  position: absolute;
+  top: 5px;
+}
 
 
 /* Navbar

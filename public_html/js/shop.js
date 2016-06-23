@@ -63,21 +63,22 @@ function categoryFilter() {
 $(document).on('click', '#addToBasket', function () {
   addToBasket();
 });
+
 function addToBasket() {
   var bookId = $('#addToBasket').attr('data-book-id'), xmlhttp;
-  alert(bookId);
   if (bookId === "") {
-    // display error 
+    // display error
+    alert("empty");
   } else {
     xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        $('#basket-alert-section').show().html(xmlhttp.responseText);
+        $('#basket-alert-section').fadeOut(3000);
+      }
+    };
+    xmlhttp.open("post", "resources/php/Basket.php", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlhttp.send("Book=" + bookId);
   }
-  xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      $('#alert-section').html(xmlhttp.responseText);
-      $('#alert-section').fadeOut(2000);
-    }
-  };
-  xmlhttp.open("post", "resources/php/Basket.php", true);
-  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xmlhttp.send("Book=" + bookId);
 }

@@ -41,7 +41,7 @@
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="js/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>-->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/shop.js"></script>
     
@@ -87,6 +87,7 @@
               die();
             }
           ?>
+          <div id='basket-alert-section' class="u-float-top u-full-width u-text-center"></div>
           
           <div id='bookDetails' class="w3-card-4">
             <header class="w3-container-header w3-blue"><h3 id='bookTitle'>Details</h3></header>
@@ -94,7 +95,7 @@
             <p id='bookDescription'>View book details and Add to Basket here by clicking on a book.</p>
             </div>
           </div>
-          <div id='alert-section'></div>
+          
           <br />
         
           <input class="u-full-width" type="text" id="search" placeholder="Start typing to search">
