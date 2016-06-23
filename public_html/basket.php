@@ -86,6 +86,18 @@
               die();
             }
           ?>
+          
+          <table class="u-full-width" id="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
