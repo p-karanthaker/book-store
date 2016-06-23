@@ -9,7 +9,7 @@
     public function __construct()
     {
       $doc_root = $_SERVER["DOCUMENT_ROOT"];
-      $config = parse_ini_file($doc_root."book-store/public_html/resources/configs/config.ini", true);
+      $config = parse_ini_file($doc_root."resources/configs/config.ini", true);
       $database_helper = require_once($doc_root.$config["paths"]["db_helper"]);
       $this->db = new DatabaseHelper($config);
       
