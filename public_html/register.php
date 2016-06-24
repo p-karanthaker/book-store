@@ -7,7 +7,7 @@
 
   if(isset($_SESSION["user_session"]))
   {
-    header("Location: ".$config["paths"]["host"].$config["paths"]["index"], true, 303);
+    header("Location: index.php"/*.$config["paths"]["host"].$config["paths"]["index"]*/, true, 303);
   }
 ?>
 <!-- End PHP -->
