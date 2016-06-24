@@ -87,13 +87,9 @@
           // Fetch database results
           $db_user_id = $results["user_id"];
           $db_password_hash = $results["password_hash"];
-          $db_password_salt = $results["password_salt"];
+          // $db_password_salt = $results["password_salt"];
 
-          /* hash+salt password */
-          $salt = $db_password_salt;
-          $hashed_password = password_hash($password, PASSWORD_BCRYPT, ["salt" => $salt]);
-
-          if(hash_equals($db_password_hash, $hashed_password))
+          if(password_verify($password, $db_password_hash))
           {
             // Authentication success
             $user_session = array("user_id"=>$db_user_id, "username"=>$username);
