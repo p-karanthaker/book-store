@@ -8,7 +8,7 @@ function showBasket() {
       $('tbody').html(xmlhttp.responseText);
     }
   };
-  xmlhttp.open("post", "resources/php/Basket.php", true);
+  xmlhttp.open("post", "/resources/php/Basket.php", true);
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xmlhttp.send("DispBasket=true");
 }

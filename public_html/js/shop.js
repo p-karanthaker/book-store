@@ -30,7 +30,7 @@ function showBookDetails() {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
       }
     };
-    xmlhttp.open("get", "resources/php/ShowBooks.php?Book=" + bookId, true);
+    xmlhttp.open("get", "/resources/php/ShowBooks.php?Book=" + bookId, true);
     xmlhttp.send();
   }).hover(function () {
     $(this).toggleClass('hover');
@@ -56,7 +56,7 @@ function categoryFilter() {
       showBookDetails();
     }
   };
-  xmlhttp.open("get", "resources/php/ShowBooks.php?Category=" + category, true);
+  xmlhttp.open("get", "/resources/php/ShowBooks.php?Category=" + category, true);
   xmlhttp.send();
 }
 
@@ -77,7 +77,7 @@ function addToBasket() {
         $('#basket-alert-section').fadeOut(3000);
       }
     };
-    xmlhttp.open("post", "resources/php/Basket.php", true);
+    xmlhttp.open("post", "/resources/php/Basket.php", true);
     xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmlhttp.send("Book=" + bookId);
   }
