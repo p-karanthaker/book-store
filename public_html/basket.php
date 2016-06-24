@@ -2,7 +2,7 @@
 <?php
   session_start();
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."resources/configs/config.ini", true);
+  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
   $messages = require_once($doc_root.$config["paths"]["messages"]);
 
   if(isset($_SESSION["message"]))
@@ -35,18 +35,18 @@
 
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/basket.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/basket.js"></script>
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="img/layout/favicon.ico">
+    <link rel="icon" type="image/png" href="/img/layout/favicon.ico">
 
   </head>
   <!-- End Head -->
@@ -69,7 +69,7 @@
             <li><a href="index.php">Home</a></li>
             <li><a href="shop.php">Shop</a></li>
             <li class="active">Basket</li>
-            <li><a href='account.php'>My Account</a></li>
+            <li><a href="account.php">My Account</a></li>
           </ol>
         </div>
       </div>
@@ -77,7 +77,7 @@
       <div class="row">
         <div class="twelve columns">
           <?php
-            if(!isset($_SESSION['user_session']))
+            if(!isset($_SESSION["user_session"]))
             {
               $message = new Messages();
               $message->createMessage("Access Denied!", array("You must be logged in to view this page."), "error");
@@ -98,8 +98,8 @@
             <tbody>
             </tbody>
           </table>
-          <input id='checkoutNow' class='button-primary u-pull-right' type='button' value='Checkout'>
-          <input id='updateBasket' type="submit" value="Update Basket">
+          <input id="checkoutNow" class="button-primary u-pull-right" type="button" value="Checkout">
+          <input id="updateBasket" type="submit" value="Update Basket">
         </div>
       </div>
     </div>

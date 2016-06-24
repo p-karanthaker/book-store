@@ -1,17 +1,17 @@
 <?php
   session_start();
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."resources/configs/config.ini", true);
+  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
   $register = new AccountRegistration($config);
 
   $result = $register->getResult();
 
   if($result)
   {
-    header("Location: http://localhost/".$config["paths"]["index"], true, 303);
+    header("Location: ".$config["paths"]["host"].$config["paths"]["index"], true, 303);
   } else
   {
-    header("Location: http://localhost/".$config["paths"]["register"], true, 303);
+    header("Location: ".$config["paths"]["host"].$config["paths"]["register"], true, 303);
   }
 
   die();
@@ -107,7 +107,7 @@
     {
       define("MIN_LENGTH", 6);
       define("MAX_LENGTH", 12);
-      define("REGEX_MATCHER", '/^[a-z0-9]{6,12}$/i');
+      define("REGEX_MATCHER", "/^[a-z0-9]{6,12}$/i");
       
       if(!empty($_POST["username"])
         && !empty($_POST["password"])

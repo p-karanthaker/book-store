@@ -2,7 +2,7 @@
 <?php
   session_start();
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."resources/configs/config.ini", true);
+  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
   $messages = require_once($doc_root.$config["paths"]["messages"]);
 
   if(isset($_SESSION["message"]))
@@ -35,19 +35,18 @@
 
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="js/jquery.min.js"></script>
-    <!--<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>-->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/shop.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/shop.js"></script>
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="img/layout/favicon.ico">
+    <link rel="icon" type="image/png" href="/img/layout/favicon.ico">
 
   </head>
   <!-- End Head -->
@@ -70,7 +69,7 @@
             <li><a href="index.php">Home</a></li>
             <li class="active">Shop</li>
             <li><a href="basket.php">Basket</a></li>
-            <li><a href='account.php'>My Account</a></li>
+            <li><a href="account.php">My Account</a></li>
           </ol>
         </div>
       </div>
@@ -78,7 +77,7 @@
       <div class="row">
         <div class="twelve columns">
           <?php
-            if(!isset($_SESSION['user_session']))
+            if(!isset($_SESSION["user_session"]))
             {
               $message = new Messages();
               $message->createMessage("Access Denied!", array("You must be logged in to view this page."), "error");
@@ -87,12 +86,12 @@
               die();
             }
           ?>
-          <div id='basket-alert-section' class="u-float-top u-full-width u-text-center"></div>
+          <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
           
-          <div id='bookDetails' class="w3-card-4">
-            <header class="w3-container-header w3-blue"><h3 id='bookTitle'>Details</h3></header>
+          <div id="bookDetails" class="w3-card-4">
+            <header class="w3-container-header w3-blue"><h3 id="bookTitle">Details</h3></header>
             <div class="w3-container-central">
-            <p id='bookDescription'>View book details and Add to Basket here by clicking on a book.</p>
+            <p id="bookDescription">View book details and Add to Basket here by clicking on a book.</p>
             </div>
           </div>
           

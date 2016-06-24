@@ -2,7 +2,7 @@
 <?php
   session_start();
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."resources/configs/config.ini", true);
+  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
   $messages = require_once($doc_root.$config["paths"]["messages"]);
 ?>
 <!-- End PHP -->
@@ -29,17 +29,17 @@
 
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="img/layout/favicon.ico">
+    <link rel="icon" type="image/png" href="/img/layout/favicon.ico">
 
   </head>
   <!-- End Head -->
@@ -60,7 +60,7 @@
           <?php 
             if(isset($_SESSION["user_session"]))
             {
-              echo "<form id='logoutForm' action='resources/php/AccountLogin.php' method='post'>
+              echo "<form id='logoutForm' action='/resources/php/AccountLogin.php' method='post'>
                       <input class='button-primary u-full-width' type='submit' name='logout' value='Sign Out'>
                     </form>";
             } else
@@ -78,7 +78,7 @@
             <li class="active">Home</li>
             <li><a href="shop.php">Shop</a></li>
             <li><a href="basket.php">Basket</a></li>
-            <li><a href='account.php'>My Account</a></li>
+            <li><a href="account.php">My Account</a></li>
           </ol>
         </div>
       </div>

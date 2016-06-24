@@ -1,17 +1,17 @@
 <?php
   session_start();
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."resources/configs/config.ini", true);
+  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
   $login = new AccountLogin($config);
 
   $result = $login->getResult();
 
   if($result)
   {
-    header("Location: http://localhost/".$config["paths"]["index"], true, 303);
+    header("Location: ".$config["paths"]["host"].$config["paths"]["index"], true, 303);
   } else
   {
-    header("Location: http://localhost/".$config["paths"]["login"], true, 303);
+    header("Location: ".$config["paths"]["host"].$config["paths"]["login"], true, 303);
   }
   die();
 
@@ -30,15 +30,15 @@
       $messages = require_once($doc_root.$this->config["paths"]["messages"]);
       $this->message = new Messages();
       
-      if(isset($_POST['login']))
+      if(isset($_POST["login"]))
       {
          $this->doLogin();
-      } else if(isset($_POST['logout']))
+      } else if(isset($_POST["logout"]))
       {
         $_SESSION = array();
         if (ini_get("session.use_cookies")) {
           $params = session_get_cookie_params();
-          setcookie(session_name(), '', time() - 42000, $params["user_session"], $params["message"]);
+          setcookie(session_name(), "", time() - 42000, $params["user_session"], $params["message"]);
         }
         $this->message->createMessage("Goodbye!", array("You have been signed out. Please visit again soon!"), "info");
         $this->result = true;
@@ -119,7 +119,7 @@
     {
       define("MIN_LENGTH", 6);
       define("MAX_LENGTH", 12);
-      define("REGEX_MATCHER", '/^[a-z0-9]{6,12}$/i');
+      define("REGEX_MATCHER", "/^[a-z0-9]{6,12}$/i");
       
       if(!empty($_POST["username"])
         && !empty($_POST["password"])

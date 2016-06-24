@@ -7,7 +7,7 @@
 
   if(isset($_SESSION["user_session"]))
   {
-    header("Location: http://localhost/".$config["paths"]["index"], true, 303);
+    header("Location: ".$config["paths"]["host"].$config["paths"]["index"], true, 303);
   }
 ?>
 <!-- End PHP -->
@@ -33,17 +33,17 @@
 
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
     
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="img/layout/favicon.ico">
+    <link rel="icon" type="image/png" href="/img/layout/favicon.ico">
 
   </head>
   <!-- End Head -->
@@ -63,7 +63,7 @@
       <!-- Registration Form -->
       <div class="row">
         <div class="four columns offset-by-one-third">
-          <form name="registerform" action="resources/php/AccountRegistration.php" method="post">
+          <form name="registerform" action="/resources/php/AccountRegistration.php" method="post">
             <label for="username">Username</label>
             <input class="u-full-width" type="text" placeholder="Username" name="username" required>
 

@@ -9,15 +9,15 @@
     public function __construct()
     {
       $doc_root = $_SERVER["DOCUMENT_ROOT"];
-      $config = parse_ini_file($doc_root."resources/configs/config.ini", true);
+      $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
       $database_helper = require_once($doc_root.$config["paths"]["db_helper"]);
       $this->db = new DatabaseHelper($config);
       
       $category = "";
-      if(isset($_GET['Category']))
+      if(isset($_GET["Category"]))
       {
-        $this->getBooksByCategory($_GET['Category']);
-      } else if(isset($_GET['Book']))
+        $this->getBooksByCategory($_GET["Category"]);
+      } else if(isset($_GET["Book"]))
       {
         $this->getBookDetails();
       }
@@ -26,15 +26,15 @@
     
     private function getBooksByCategory($category)
     {
-      $category = $_GET['Category'];
-      $category = $category == "All" ? "" : $_GET['Category'];
+      $category = $_GET["Category"];
+      $category = $category == "All" ? "" : $_GET["Category"];
 
       $results = "";
       if($this->db->openConnection())
       {
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBooksByCategory(:book_category)");
-        $statement->bindParam(':book_category', $category, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT);
+        $statement->bindParam(":book_category", $category, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT);
         if($statement->execute())
         {
           $results = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -55,15 +55,15 @@
     
     private function getBookDetails()
     {
-      $bookId = $_GET['Book'];
-      $bookId = $bookId == "" ? "1" : $_GET['Book'];
+      $bookId = $_GET["Book"];
+      $bookId = $bookId == "" ? "1" : $_GET["Book"];
 
       $results = "";
       if($this->db->openConnection())
       {
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBookById(:book_id)");
-        $statement->bindParam(':book_id', $bookId, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
+        $statement->bindParam(":book_id", $bookId, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
         if($statement->execute())
         {
           $results = $statement->fetch(PDO::FETCH_ASSOC);
