@@ -79,7 +79,9 @@ function addToBasket(uid) {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         $("#basket-alert-section").append("<div id=alert" + uid + ">" + xmlhttp.responseText + "</div>");
         $("#basket-alert-section > div#alert".concat(uid)).show();
-        $("#basket-alert-section > div#alert".concat(uid)).fadeOut(2000);
+        $("#basket-alert-section > div#alert".concat(uid)).fadeOut(3000, function () {
+        $(this).remove(); 
+      });
       }
     };
     xmlhttp.open("post", "/resources/php/Basket.php", true);
