@@ -50,6 +50,7 @@ function updateBasket() {
 
 $(document).on('click', '#emptyBasket', function () {
   emptyBasket();
+  uid++;
 });
 
 function emptyBasket() {

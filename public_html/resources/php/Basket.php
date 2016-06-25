@@ -36,15 +36,17 @@
         {
           $arr = explode(",", $_POST["updateBasket"]);
           $books = array_chunk($arr, 2);
+          $updated = false;
           foreach($books as $book)
           {
-            if($this->updateBasket($user_id, $book[0], $book[1]))
-            {
-              echo $message->createMessage("Info:", array("Your basket has been updated."), "info", ["inSessionVar" => false, "dismissable" => false]);
-            } else
-            {
-              echo $message->createMessage("Info:", array("Nothing to update."), "info", ["inSessionVar" => false, "dismissable" => false]);
-            }
+            $updated = $this->updateBasket($user_id, $book[0], $book[1]);
+          }
+          if($updated)
+          {
+            echo $message->createMessage("Info:", array("Your basket has been updated."), "info", ["inSessionVar" => false, "dismissable" => false]);
+          } else 
+          {
+            echo $message->createMessage("Info:", array("Nothing to update."), "info", ["inSessionVar" => false, "dismissable" => false]);
           }
         }
       } else if(isset($_POST["emptyBasket"]))
@@ -124,13 +126,7 @@
           
           if($statement->execute())
           {
-            if($statement->rowCount() > 0)
-            {
-              return true;
-            } else
-            {
-              return false;
-            }
+            return true;
           }
         }
         return false;
