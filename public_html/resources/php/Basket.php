@@ -22,10 +22,10 @@
       {
         if($this->addToBasket($user_id, $_POST["bookId"]))
         {
-          echo $message->createMessage("Added", array($_POST['bookTitle']." to your basket."), "success", false, false);
+          echo $message->createMessage("Added", array($_POST['bookTitle']." to your basket."), "success", ["inSessionVar" => false, "dismissable" => false]);
         } else
         {
-          echo $message->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", false, false);
+          echo $message->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
         }
       } else if(isset($_POST["showBasket"]))
       {

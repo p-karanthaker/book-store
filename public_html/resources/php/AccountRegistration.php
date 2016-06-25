@@ -94,7 +94,7 @@
             ("<strong>Username</strong> must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
             ,"<strong>Passwords</strong> must match, and must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
             );
-          $this->message->createMessage("Invalid Fields!", $msg_details, "warning", true);
+          $this->message->createMessage("Invalid Fields!", $msg_details, "warning", ["isBlock" => true]);
           return false;
         }
     } 

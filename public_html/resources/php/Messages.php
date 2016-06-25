@@ -8,30 +8,31 @@
       $_SESSION["message"] = null;
     }
     
-    public function createMessage($title, $message, $type, $isBlock = false, $inSessionVar = true) {
+    public function createMessage($title, $message, $type, $options = array()) {      
+      $isBlock = array_key_exists("isBlock", $options) ? $options["isBlock"] : false;
+      $inSessionVar = array_key_exists("inSessionVar", $options) ? $options["inSessionVar"] : true;
+      $dismissable = array_key_exists("dismissable", $options) ? $options["dismissable"] : true;
+      
       $alertClass;
       $titleAndMessage = "<strong>";
+      $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
       switch($type)
       {
         case "info":
           $alertClass = "alert-info";
-          $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
           break;
         case "success":
           $alertClass = "alert-success";
-          $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
           break;
         case "warning":
           $alertClass = "alert-warning";
-          $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
           break;
         case "error":
           $alertClass = "alert-error";
-          $titleAndMessage .= $isBlock ? "<h5>$title</h5>" : "$title";
           break;
         default:
           $alertClass = "alert-warning";
-          $titleAndMessage .= "<h5>Invalid Message Type!</h5> </br>Your request has still been processed. </br>Valid message types are:";
+          $titleAndMessage = "<strong><h5>Invalid Message Type!</h5> </br>Your request has still been processed. </br>Valid message types are:";
           $message = array("<strong>info</strong>"
                            ,"<strong>success</strong>"
                            ,"<strong>warning</strong>"
@@ -53,9 +54,15 @@
       {
         $titleAndMessage .= " $message[0]";
       }
+      
+      $dismissElement = "";
+      if($dismissable)
+      {
+        $dismissElement = "<a class='close' data-dismiss='alert'>&times;</a>";
+      }
       $this->message = "<div class='container'>
                           <div class='alert $alertClass'>
-                            <a class='close' data-dismiss='alert'>&times;</a>
+                            $dismissElement
                             $titleAndMessage
                           </div>
                         </div>";
