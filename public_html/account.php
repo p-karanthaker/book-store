@@ -74,7 +74,7 @@
             if(!isset($_SESSION['user_session']))
             {
               $message = new Messages();
-              $message->createMessage("Access Denied!", array("You must be logged in to view this page."), "error");
+              $message->createMessage("Access Denied!", array("You must be logged in to view this page."), "error", ["dismissable" => false]);
               echo $_SESSION["message"];
               $_SESSION["message"] = null;
               die();
