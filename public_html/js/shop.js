@@ -60,11 +60,13 @@ function categoryFilter() {
   xmlhttp.send();
 }
 
+var uid = 0;
 $(document).on('click', '#addToBasket', function () {
-  addToBasket();
+  addToBasket(uid);
+  uid++;
 });
 
-function addToBasket() {
+function addToBasket(uid) {
   var bookId = $('#addToBasket').attr('data-book-id')
   var bookTitle = $('#bookTitle').text()
   var xmlhttp;
@@ -75,8 +77,9 @@ function addToBasket() {
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        $('#basket-alert-section').show().html(xmlhttp.responseText);
-        $('#basket-alert-section').fadeOut(3000);
+        $("#basket-alert-section").append("<div id=alert" + uid + ">" + xmlhttp.responseText + "</div>");
+        $("#basket-alert-section > div#alert".concat(uid)).show();
+        $("#basket-alert-section > div#alert".concat(uid)).fadeOut(2000);
       }
     };
     xmlhttp.open("post", "/resources/php/Basket.php", true);
