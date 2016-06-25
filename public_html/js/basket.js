@@ -10,9 +10,54 @@ function showBasket() {
   };
   xmlhttp.open("post", "/resources/php/Basket.php", true);
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xmlhttp.send("DispBasket=true");
+  xmlhttp.send("showBasket");
 }
 
-$(document).on('click', '#addToBasket', function () {
-  addToBasket();
+function getBasketDetails() {
+  var data = [];
+  var dataRows = $('.basket-items > tr#items');
+  dataRows.each(function (index, value) {
+    data.push($(this).attr("data-book-id"));
+    data.push($(this).find("#quantity").val());
+  });
+  return data;
+}
+
+$(document).on('click', '#updateBasket', function () {
+  updateBasket();
 });
+
+function updateBasket() {
+  "use strict";
+  var xmlhttp;
+  xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      showBasket();
+    }
+  };
+  var data = getBasketDetails();
+  xmlhttp.open("post", "/resources/php/Basket.php", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlhttp.send("updateBasket=" + data);
+}
+
+$(document).on('click', '#emptyBasket', function () {
+  emptyBasket();
+});
+
+function emptyBasket() {
+  "use strict";
+  var xmlhttp;
+  xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      showBasket();
+    }
+  };
+  xmlhttp.open("post", "/resources/php/Basket.php", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlhttp.send("emptyBasket");
+}

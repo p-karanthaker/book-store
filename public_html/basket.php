@@ -95,11 +95,12 @@
                 <th>Price</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="basket-items">
             </tbody>
           </table>
-          <input id="checkoutNow" class="button-primary u-pull-right" type="button" value="Checkout">
-          <input id="updateBasket" type="submit" value="Update Basket">
+          <input id="checkoutNow" name="checkoutNow" class="button-primary u-pull-right" type="button" value="Checkout">
+          <input id="updateBasket" name="updateBasket" type="submit" value="Update Basket">
+          <input id="emptyBasket" name="emptyBasket" type="submit" value="Empty Basket">
         </div>
       </div>
     </div>

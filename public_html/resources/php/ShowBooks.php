@@ -47,7 +47,7 @@
           echo "<td>".utf8_encode($arr['authors'])."</td>";
           echo "<td>".utf8_encode($arr['category'])."</td>";
           echo "<td>".utf8_encode($arr['quantity'])."</td>";
-          echo "<td>".utf8_encode($arr['price'])."</td>";
+          echo "<td>£".utf8_encode($arr['price'])."</td>";
           echo "</tr>";
         }
       }

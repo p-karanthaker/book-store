@@ -65,7 +65,9 @@ $(document).on('click', '#addToBasket', function () {
 });
 
 function addToBasket() {
-  var bookId = $('#addToBasket').attr('data-book-id'), xmlhttp;
+  var bookId = $('#addToBasket').attr('data-book-id')
+  var bookTitle = $('#bookTitle').text()
+  var xmlhttp;
   if (bookId === "") {
     // display error
     alert("empty");
@@ -79,6 +81,6 @@ function addToBasket() {
     };
     xmlhttp.open("post", "/resources/php/Basket.php", true);
     xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xmlhttp.send("Book=" + bookId);
+    xmlhttp.send("bookId=" + bookId + "&bookTitle=" + bookTitle);
   }
 }
