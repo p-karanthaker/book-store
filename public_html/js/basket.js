@@ -10,7 +10,7 @@ function showBasket() {
   };
   xmlhttp.open("post", "/resources/php/Basket.php", true);
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xmlhttp.send("showBasket");
+  xmlhttp.send("showBasket=" + true);
 }
 
 function getBasketDetails() {
@@ -68,5 +68,5 @@ function emptyBasket() {
   };
   xmlhttp.open("post", "/resources/php/Basket.php", true);
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xmlhttp.send("emptyBasket");
+  xmlhttp.send("emptyBasket=" + true);
 }
