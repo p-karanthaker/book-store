@@ -23,8 +23,10 @@ function getBasketDetails() {
   return data;
 }
 
+var uid = 0;
 $(document).on('click', '#updateBasket', function () {
   updateBasket();
+  uid++;
 });
 
 function updateBasket() {
@@ -34,6 +36,9 @@ function updateBasket() {
 
   xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      $("#basket-alert-section").append("<div id=alert" + uid + ">" + xmlhttp.responseText + "</div>");
+      $("#basket-alert-section > div#alert".concat(uid)).show();
+      $("#basket-alert-section > div#alert".concat(uid)).fadeOut(3000);
       showBasket();
     }
   };
@@ -54,6 +59,9 @@ function emptyBasket() {
 
   xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      $("#basket-alert-section").append("<div id=alert" + uid + ">" + xmlhttp.responseText + "</div>");
+      $("#basket-alert-section > div#alert".concat(uid)).show();
+      $("#basket-alert-section > div#alert".concat(uid)).fadeOut(3000);
       showBasket();
     }
   };

@@ -32,16 +32,30 @@
         $this->showBasket($user_id);
       } else if(isset($_POST["updateBasket"]))
       {
-        $arr = explode(",", $_POST["updateBasket"]);
-        $books = array_chunk($arr, 2);
-        
-        foreach($books as $book)
+        if(!empty($_POST["updateBasket"]))
         {
-          $this->updateBasket($user_id, $book[0], $book[1]);
+          $arr = explode(",", $_POST["updateBasket"]);
+          $books = array_chunk($arr, 2);
+          foreach($books as $book)
+          {
+            if($this->updateBasket($user_id, $book[0], $book[1]))
+            {
+              echo $message->createMessage("Info:", array("Your basket has been updated."), "info", ["inSessionVar" => false, "dismissable" => false]);
+            } else
+            {
+              echo $message->createMessage("Info:", array("Nothing to update."), "info", ["inSessionVar" => false, "dismissable" => false]);
+            }
+          }
         }
       } else if(isset($_POST["emptyBasket"]))
       {
-        $this->emptyBasket($user_id);
+        if($this->emptyBasket($user_id))
+        {
+          echo $message->createMessage("Info:", array("Your basket has been emptied."), "info", ["inSessionVar" => false, "dismissable" => false]);
+        } else
+        {
+          echo $message->createMessage("Error!", array("Unable to empty your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
+        }
       }
       $this->db->closeConnection();
     }
@@ -110,7 +124,13 @@
           
           if($statement->execute())
           {
-            return true;
+            if($statement->rowCount() > 0)
+            {
+              return true;
+            } else
+            {
+              return false;
+            }
           }
         }
         return false;

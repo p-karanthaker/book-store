@@ -87,6 +87,8 @@
             }
           ?>
           
+          <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
+          
           <table class="u-full-width" id="table">
             <thead>
               <tr>
