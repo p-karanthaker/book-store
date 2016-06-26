@@ -103,6 +103,10 @@
           <input id="checkoutNow" name="checkoutNow" class="button-primary u-pull-right" type="button" value="Checkout">
           <input id="updateBasket" name="updateBasket" type="submit" value="Update Basket">
           <input id="emptyBasket" name="emptyBasket" type="submit" value="Empty Basket">
+          
+          <div id="orderDetails" class="w3-card-4">
+            
+          </div>
         </div>
       </div>
     </div>

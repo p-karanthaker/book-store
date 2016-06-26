@@ -74,3 +74,23 @@ function emptyBasket() {
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xmlhttp.send("emptyBasket=" + true);
 }
+
+$(document).on('click', '#checkoutNow', function () {
+  checkout();
+});
+
+function checkout() {
+  "use strict";
+  var xmlhttp;
+  xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      $('#orderDetails').html(xmlhttp.responseText);
+      showBasket();
+    }
+  };
+  xmlhttp.open("post", "/resources/php/Order.php", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlhttp.send("placeOrder=" + true);
+}

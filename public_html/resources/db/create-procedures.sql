@@ -119,9 +119,51 @@ BEGIN
 	END IF;
 END$$
 
+DELIMITER $$
+CREATE FUNCTION `PlaceOrder`(user_id INT) RETURNS int(11)
+BEGIN
+	-- Check if basket has items
+	SET @basketItemCount = 
+	(
+		SELECT count(*) FROM basketitem
+		INNER JOIN basket
+		ON basket.basket_id = basketitem.basket_id
+		WHERE basket.user_id = user_id
+	);
+
+	-- If basket has items then...
+	IF @basketItemCount > 0 THEN
+		-- Insert a new order into the order table
+		SET @orderTime = NOW();
+		INSERT INTO orders (user_id, active, `date`)
+		VALUES (user_id, true, @orderTime);
+		
+		SET @orderId = LAST_INSERT_ID();
+		-- Insert items from basket into the order item table
+		INSERT INTO orderitem (order_id, book_id, quantity, cost)
+		SELECT  @orderId,
+				bi.book_id,
+				COUNT(bi.book_id) AS 'quantity',
+				SUM(bi.cost) AS 'price'
+		FROM basket bsk
+		INNER JOIN basketitem bi
+			ON bi.basket_id = bsk.basket_id
+		INNER JOIN books b
+			ON b.book_id = bi.book_id
+		WHERE bsk.user_id = user_id
+		GROUP BY book_id;
+		
+		-- Empty the basket and return the order id
+		CALL EmptyBasket(user_id);
+		RETURN @orderId;
+	END IF;
+	RETURN null;
+END$$
+
 GRANT EXECUTE ON PROCEDURE book_store.AddItemToBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBasketByUserId TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBookById TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBooksByCategory TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.RemoveItemFromBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.EmptyBasket TO 'bs_user'@'localhost';
+GRANT EXECUTE ON FUNCTION book_store.PlaceOrder TO 'bs_user'@'localhost';
