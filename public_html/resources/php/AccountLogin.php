@@ -75,7 +75,7 @@
       if($db->openConnection())
       {
         $connection = $db->getConnection();
-        $statement = $connection->prepare("SELECT user_id, password_hash, `type` FROM user WHERE username = :username");
+        $statement = $connection->prepare("SELECT user_id, password_hash, type FROM user WHERE username = :username");
         $statement->bindParam(":username", $username);
         $statement->execute();
         

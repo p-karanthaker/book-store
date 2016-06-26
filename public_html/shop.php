@@ -70,6 +70,7 @@
             <li class="active">Shop</li>
             <li><a href="basket.php">Basket</a></li>
             <li><a href="account.php">My Account</a></li>
+            <?php isset($_SESSION["user_session"]) && $_SESSION["user_session"]["user_type"] == "STAFF" ? print_r("<li><a href='staff.php'>Staff</a></li>") : "" ?>
           </ol>
         </div>
       </div>

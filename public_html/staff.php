@@ -4,12 +4,6 @@
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
   $messages = require_once($doc_root.$config["paths"]["messages"]);
-
-  if(isset($_SESSION["message"]))
-  {
-    echo "<br />".$_SESSION["message"];
-    $_SESSION["message"] = null;
-  }
 ?>
 <!-- End PHP -->
 
@@ -21,7 +15,7 @@
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>Book Store: Get the London Book</title>
+    <title>Staff Console</title>
     <meta name="description" content="Aston Book Store Project">
     <meta name="author" content="Karan Thaker">
 
@@ -42,7 +36,7 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="/js/basket.js"></script>
+    <script src="/js/table-filter.js"></script>
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -50,7 +44,7 @@
 
   </head>
   <!-- End Head -->
-  <body onload="showBasket()">
+  <body onload="categoryFilter()">
 
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -58,7 +52,7 @@
       <div class="row">
         <!-- Title -->
         <div class="twelve columns" style="margin-top: 5%">
-          <h1>My Basket</h1>
+          <h1>Staff Console</h1>
         </div>
         <!-- End Title -->
       </div>
@@ -68,9 +62,9 @@
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
             <li><a href="shop.php">Shop</a></li>
-            <li class="active">Basket</li>
+            <li><a href="basket.php">Basket</a></li>
             <li><a href="account.php">My Account</a></li>
-            <?php isset($_SESSION["user_session"]) && $_SESSION["user_session"]["user_type"] == "STAFF" ? print_r("<li><a href='staff.php'>Staff</a></li>") : "" ?>
+            <li class="active">Staff</li>
           </ol>
         </div>
       </div>
@@ -78,36 +72,15 @@
       <div class="row">
         <div class="twelve columns">
           <?php
-            if(!isset($_SESSION["user_session"]))
+            if(!isset($_SESSION["user_session"]) || (isset($_SESSION["user_session"]) && $_SESSION["user_session"]["user_type"] != "STAFF"))
             {
               $message = new Messages();
-              $message->createMessage("Access Denied!", array("You must be logged in to view this page."), "error", ["dismissable" => false]);
+              $message->createMessage("Access Denied!", array("Only members of staff can access this page."), "error", ["dismissable" => false]);
               echo $_SESSION["message"];
               $_SESSION["message"] = null;
               die();
             }
           ?>
-          
-          <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
-          
-          <table class="u-full-width" id="table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Quantity</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody class="basket-items">
-            </tbody>
-          </table>
-          <input id="checkoutNow" name="checkoutNow" class="button-primary u-pull-right" type="button" value="Checkout">
-          <input id="updateBasket" name="updateBasket" type="submit" value="Update Basket">
-          <input id="emptyBasket" name="emptyBasket" type="submit" value="Empty Basket">
-          
-          <div id="orderDetails" class="w3-card-4">
-            
-          </div>
         </div>
       </div>
     </div>
@@ -118,7 +91,11 @@
 
 <!-- Begin PHP -->
 <?php
-
+  if(isset($_SESSION["message"]))
+  {
+    echo "<br />".$_SESSION["message"];
+    $_SESSION["message"] = null;
+  }
 ?>
 <!-- End PHP -->
 
