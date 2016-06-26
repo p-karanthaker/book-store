@@ -4,7 +4,6 @@ CREATE TABLE `user`
 	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	username VARCHAR(12), 
 	password_hash CHAR(60),
-	password_salt CHAR(44),
 	`type` ENUM('STUDENT', 'STAFF'), 
 	balance DECIMAL(13,2) NOT NULL DEFAULT '0.00'
 ) ENGINE = InnoDB;
