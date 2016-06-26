@@ -75,7 +75,7 @@
       if($db->openConnection())
       {
         $connection = $db->getConnection();
-        $statement = $connection->prepare("SELECT user_id, password_hash, password_salt FROM user WHERE username = :username");
+        $statement = $connection->prepare("SELECT user_id, password_hash, `type` FROM user WHERE username = :username");
         $statement->bindParam(":username", $username);
         $statement->execute();
         
@@ -87,12 +87,13 @@
           // Fetch database results
           $db_user_id = $results["user_id"];
           $db_password_hash = $results["password_hash"];
+          $db_user_type = $results["type"];
           // $db_password_salt = $results["password_salt"];
 
           if(password_verify($password, $db_password_hash))
           {
             // Authentication success
-            $user_session = array("user_id"=>$db_user_id, "username"=>$username);
+            $user_session = array("user_id"=>$db_user_id, "username"=>$username, "user_type"=>$db_user_type);
             $_SESSION["user_session"] = $user_session;
             $db->closeConnection();
             return true;

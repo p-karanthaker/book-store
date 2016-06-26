@@ -94,20 +94,25 @@
         {
           $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         }
-        $totalPrice = 0;
-        foreach($results as $arr)
+        if(!empty($results))
         {
-          echo "<tr id='items' data-book-id=".utf8_encode($arr['book_id']).">";
-          echo "<td id='bookTitle'>".utf8_encode($arr['title'])."</td>";
-          echo "<td><input id='quantity' type='number' value='".utf8_encode($arr['quantity'])."' min='0' max='".utf8_encode($arr['quantity'])."'/></td>";
-          echo "<td id='bookPrice'>£".utf8_encode($arr['price'])."</td>";
-          echo "</tr>";
-          $totalPrice += utf8_encode($arr['price']);
+          $totalPrice = 0;
+          foreach($results as $arr)
+          {
+            echo "<tr id='items' data-book-id=".utf8_encode($arr['book_id']).">";
+            echo "<td id='bookTitle'>".utf8_encode($arr['title'])."</td>";
+            echo "<td><input id='quantity' type='number' value='".utf8_encode($arr['quantity'])."' min='0' max='".utf8_encode($arr['quantity'])."'/></td>";
+            echo "<td id='bookPrice'>£".utf8_encode($arr['price'])."</td>";
+            echo "</tr>";
+            $totalPrice += utf8_encode($arr['price']);
+          }
+          echo "<tr id='totalPrice'>";
+          echo "<td></td>";
+          echo "<td><strong>Total<strong></td>";
+          echo "<td>£".$totalPrice."</td>";
+        } else {
+          echo "<div><h3>Your basket is empty.</h3></div>";
         }
-        echo "<tr id='totalPrice'>";
-        echo "<td></td>";
-        echo "<td><strong>Total<strong></td>";
-        echo "<td>£".$totalPrice."</td>";
       }
     }
     
