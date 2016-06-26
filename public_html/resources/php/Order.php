@@ -32,9 +32,8 @@
               $order_total = 0;
               echo "<header class='w3-container-header w3-blue'><h3 id='orderId'>Order #".$this->order_id."</h3></header>";
               echo "<div class='w3-container-central'>";
-              echo "<h4>Details</h4>";
-              echo "<p class='orderDescription'>Your order has been placed!</p>";
-              echo "<p class='orderDescription'>Quote your Order number to a member of staff when you visit in store to complete your purchase.</p>";
+              echo "<h4>Thank you ".$_SESSION['user_session']['username'].", your order has been placed!</h4>";
+              echo "<p class='orderDescription'>Quote your order number to a member of staff when you visit in store to complete your purchase.</p>";
               echo "<table>
                       <tbody>";
               foreach($this->result as $arr)
