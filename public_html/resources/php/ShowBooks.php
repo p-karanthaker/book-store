@@ -75,12 +75,9 @@
         echo "<p id='bookDescription'>".utf8_encode($results['description'])."</p>";
         echo "<label class='u-pull-left'>Quantity: </label><p id='bookQuantity'>".utf8_encode($results['quantity'])."</p>";
         echo "<label class='u-pull-left'>Price: £</label><p id='bookPrice'>".utf8_encode($results['price'])."</p>";
-        echo "</div>";
-        echo "<footer class='w3-container-footer'>";
-        echo "<form method='post' action=''>";
         echo "<input id='addToBasket' data-book-id=".$results['book_id']." class='button-primary' type='button' value='Add To Basket'>";
-        echo "</form>";
-        echo "</footer>";
+        echo "</div>";
+        echo "<footer class='w3-container-footer w3-blue'>Categories: ".$results['category']."</footer>";
       }
     }
     
