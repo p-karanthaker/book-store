@@ -52,8 +52,7 @@
             $user_type = htmlspecialchars($_POST["user_type"], ENT_QUOTES); 
             
             /* hash+salt password */
-            $salt = bin2hex(openssl_random_pseudo_bytes(22));
-            $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["salt" => $salt]);
+            $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
             
             /* check user doesn't exist */
             $statement = $connection->prepare("SELECT username FROM user WHERE username = :username");
@@ -62,11 +61,10 @@
             
             if($statement->rowCount() == 0)
             {
-              $statement = $connection->prepare("INSERT INTO user (username, password_hash, password_salt, type)
-                                                 VALUES(:username, :password_hash, :password_salt, :type)");
+              $statement = $connection->prepare("INSERT INTO user (username, password_hash, type)
+                                                 VALUES(:username, :password_hash, :type)");
               $statement->bindParam(":username", $username);
               $statement->bindParam(":password_hash", $password);
-              $statement->bindParam(":password_salt", $salt);
               $statement->bindParam(":type", $user_type);
               
               if($statement->execute())

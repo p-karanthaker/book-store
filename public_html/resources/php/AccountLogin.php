@@ -88,7 +88,6 @@
           $db_user_id = $results["user_id"];
           $db_password_hash = $results["password_hash"];
           $db_user_type = $results["type"];
-          // $db_password_salt = $results["password_salt"];
 
           if(password_verify($password, $db_password_hash))
           {
