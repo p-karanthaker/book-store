@@ -95,6 +95,25 @@ BEGIN
 END$$
 
 DELIMITER $$
+CREATE PROCEDURE `GetOrderById`(IN order_id INT)
+BEGIN
+	SELECT 
+		o.order_id,
+		b.title,
+		oi.quantity,
+		oi.cost,
+		o.`date`
+	FROM
+		orders o
+	INNER JOIN orderitem oi
+		ON oi.order_id = o.order_id
+	INNER JOIN books b
+		ON b.book_id = oi.book_id
+	WHERE
+		oi.order_id LIKE order_id;
+END$$
+
+DELIMITER $$
 CREATE PROCEDURE `RemoveItemFromBasket`(IN user_id INT, IN book_id INT, IN new_amount INT)
 BEGIN
 	DECLARE remove_limit INT;
@@ -164,6 +183,7 @@ GRANT EXECUTE ON PROCEDURE book_store.AddItemToBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBasketByUserId TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBookById TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBooksByCategory TO 'bs_user'@'localhost';
+GRANT EXECUTE ON PROCEDURE book_store.GetOrderById TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.RemoveItemFromBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.EmptyBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON FUNCTION book_store.PlaceOrder TO 'bs_user'@'localhost';
