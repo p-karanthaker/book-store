@@ -5,7 +5,7 @@ function showBasket() {
 
   xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      $('tbody').html(xmlhttp.responseText);
+      $(".basket-items").html(xmlhttp.responseText);
     }
   };
   xmlhttp.open("post", "/resources/php/Basket.php", true);

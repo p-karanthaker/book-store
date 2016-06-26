@@ -7,6 +7,7 @@
   {
     private $db;
     private $result = "";
+    private $order_id;
     
     public function __construct()
     {
@@ -23,13 +24,34 @@
       {
         if($this->placeOrder($user_id))
         {
-          if($this->result != null)
+          if($this->order_id != null)
           {
-            echo "<header class='w3-container-header w3-blue'><h3 id='orderId'>Order #".$this->result."</h3></header>";
-            echo "<div class='w3-container-central'>";
-            echo "<h4>Details</h4>";
-            echo "<p id='orderDescription'>Your order has been placed!</p>";
-            echo "</div>";
+            if($this->getOrderDetails($this->order_id))
+            {
+              $order_date = "";
+              $order_total = 0;
+              echo "<header class='w3-container-header w3-blue'><h3 id='orderId'>Order #".$this->order_id."</h3></header>";
+              echo "<div class='w3-container-central'>";
+              echo "<h4>Details</h4>";
+              echo "<p class='orderDescription'>Your order has been placed!</p>";
+              echo "<p class='orderDescription'>Quote your Order number to a member of staff when you visit in store to complete your purchase.</p>";
+              echo "<table>
+                      <tbody>";
+              foreach($this->result as $arr)
+              {
+                echo "<tr>
+                        <td>".utf8_encode($arr['title'])."</td>
+                        <td>".utf8_encode($arr['quantity'])."</td>
+                        <td>£".utf8_encode($arr['cost'])."</td>
+                      </tr>";
+                $order_date = utf8_encode($arr['date']);
+                $order_total += utf8_encode($arr['cost']);
+              }
+              echo "</tbody></table>";
+              echo "<h5>Amount Due: £$order_total</h5>";
+              echo "</div>";
+              echo "<footer class='w3-container-footer w3-blue'>Ordered On: ".$order_date."</footer>";
+            }
           }
         } else
         {
@@ -49,7 +71,23 @@
         if($statement->execute())
         {
           $results = $statement->fetch(PDO::FETCH_ASSOC);
-          $this->result = $results["PlaceOrder('$user_id')"];
+          $this->order_id = $results["PlaceOrder('$user_id')"];
+          return true;
+        }
+      }
+      return false;
+    }
+    
+    private function getOrderDetails($order_id)
+    {
+       if($this->db->openConnection())
+      {
+        $connection = $this->db->getConnection();
+        $statement = $connection->prepare("CALL GetOrderById(:order_id)");
+        $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
+        if($statement->execute())
+        {
+          $this->result = $statement->fetchAll(PDO::FETCH_ASSOC);
           return true;
         }
       }
