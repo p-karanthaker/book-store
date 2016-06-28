@@ -64,7 +64,7 @@
     
     private function addToBasket($user_id, $book_id)
     {
-      if(is_int($book_id))
+      if(is_int(intval($book_id)))
       {
         $results = "";
         if($this->db->openConnection())
