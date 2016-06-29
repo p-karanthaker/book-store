@@ -31,6 +31,7 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/skeleton.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -74,7 +75,7 @@
             if(!isset($_SESSION['user_session']))
             {
               $message = new Messages();
-              $message->createMessage("Access Denied!", array("You must be logged in to view this page."), "error", ["dismissable" => false]);
+              $message->createMessage("<i class='icon-lock'></i>", array("You must be logged in to view this page."), "error", ["dismissable" => false]);
               echo $_SESSION["message"];
               $_SESSION["message"] = null;
               die();
