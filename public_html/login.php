@@ -35,6 +35,7 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/skeleton.css">
+    <script src="https://use.fontawesome.com/824b9bf6de.js"></script>
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->

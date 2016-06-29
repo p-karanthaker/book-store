@@ -37,7 +37,7 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/skeleton.css">
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/824b9bf6de.js"></script>
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -82,7 +82,7 @@
             if(!isset($_SESSION["user_session"]))
             {
               $message = new Messages();
-              $message->createMessage("<i class='icon-lock'></i>", array("You must be logged in to view this page."), "error", ["dismissable" => false]);
+              $message->createMessage("<i class='fa fa-lock'></i>", array("You must be logged in to view this page."), "error", ["dismissable" => false]);
               echo $_SESSION["message"];
               $_SESSION["message"] = null;
               die();
@@ -102,9 +102,9 @@
             <tbody class="basket-items">
             </tbody>
           </table>
-          <input id="checkoutNow" name="checkoutNow" class="button-primary u-pull-right" type="button" value="Checkout">
-          <input id="updateBasket" name="updateBasket" type="submit" value="Update Basket">
-          <input id="emptyBasket" name="emptyBasket" type="submit" value="Empty Basket">
+          <button id="checkoutNow" name="checkoutNow" class="button-primary u-pull-right" type="submit"><i class="fa fa-shopping-basket fa-lg" aria-hidden="true"></i> Checkout</button>
+          <button id="updateBasket" type="submit"><i class="fa fa-refresh fa-lg" aria-hidden="true"></i> Update Basket</button>
+          <button id="emptyBasket" type="submit"><i class="fa fa-trash fa-lg" aria-hidden="true"></i> Empty Basket</button>
           
           <div id="orderDetails" class="w3-card-4">
             

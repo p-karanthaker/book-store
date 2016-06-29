@@ -31,7 +31,7 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/skeleton.css">
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/824b9bf6de.js"></script>
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -76,7 +76,7 @@
             if(!isset($_SESSION["user_session"]) || (isset($_SESSION["user_session"]) && $_SESSION["user_session"]["user_type"] != "STAFF"))
             {
               $message = new Messages();
-              $message->createMessage("<i class='icon-lock'></i>", array("Only members of staff can access this page."), "error", ["dismissable" => false]);
+              $message->createMessage("<i class='fa fa-lock'></i>", array("Only members of staff can access this page."), "error", ["dismissable" => false]);
               echo $_SESSION["message"];
               $_SESSION["message"] = null;
               die();
@@ -99,11 +99,11 @@
               <div>
                 <input id="newAuthor" type="text" placeholder="Author">
                 <span>
-                  <button id="addAuthor" type="button"><i class="icon-plus icon-large"></i></button>
+                  <button id="addAuthor" type="button"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></button>
                 </span>
               </div>
               <textarea id="authorList" class="u-full-width" placeholder="Authors..." style="resize:none" disabled></textarea>
-              <button id="removeAuthor" class="u-full-width" type="button"><i class="icon-trash icon-large"> </i>Remove Last Author</button>
+              <button id="removeAuthor" class="u-full-width" type="button"><i class="fa fa-trash fa-lg"></i> Remove Last Author</button>
               <label>Description</label>
               <textarea id="description" class="u-full-width" placeholder="Description..." style="resize:none"></textarea>
               <!-- Placeholder for Category selection -->

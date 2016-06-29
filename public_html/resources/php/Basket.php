@@ -118,7 +118,7 @@
     
     private function updateBasket($user_id, $book_id, $new_amount)
     {
-      if(is_int($book_id) && is_int($new_amount))
+      if(is_int(intval($book_id)) && is_int(intval($new_amount)))
       {
         $results = "";
         if($this->db->openConnection())
