@@ -7,19 +7,27 @@ function addNewBook() {
 }
 
 $(document).on('click', '#addAuthor', function () {
-  if($("#newAuthor").val() != "") {
-    addAuthor($("#newAuthor").val());
-  }
-  $("#newAuthor").val("");
+  addAuthor();
 });
 
-function addAuthor(author) {
-  var authorList = $("#authorList");
-  if(authorList.val() == "") {
-    authorList.val(authorList.val() + author);
-  } else {
-    authorList.val(authorList.val() + ", " + author);
+$(document).on('keyup', '#newAuthor', function (e) {
+  var code = e.which;
+  if(code===13) {
+    addAuthor();
   }
+});
+
+function addAuthor() {
+  var author = $("#newAuthor").val();
+  if(author != "") {
+    var authorList = $("#authorList");
+    if(authorList.val() == "") {
+      authorList.val(authorList.val() + author);
+    } else {
+      authorList.val(authorList.val() + ", " + author);
+    }
+  }
+  $("#newAuthor").val("");
 }
 
 $(document).on('click', '#removeAuthor', function () {

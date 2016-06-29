@@ -43,7 +43,7 @@
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="/img/layout/favicon.ico">
+    <link rel="icon" href="<?php echo $config["paths"]["host"].$config["paths"]["favicon"]; ?>">
 
   </head>
   <!-- End Head -->

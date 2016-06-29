@@ -41,7 +41,7 @@
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="/img/layout/favicon.ico">
+    <link rel="icon" href="<?php echo $config["paths"]["host"].$config["paths"]["favicon"]; ?>">
 
   </head>
   <!-- End Head -->
@@ -95,7 +95,7 @@
             <div id="addBookPanel">
               <h2>Add New Book</h2>
               <label>Title</label><input class="u-full-width" type="text" placeholder="Title" name="bookTitle" required>
-              <label>Add Author</label>
+              <label>Authors</label>
               <div>
                 <input id="newAuthor" type="text" placeholder="Author">
                 <span>
@@ -106,14 +106,15 @@
               <button id="removeAuthor" class="u-full-width" type="button"><i class="icon-trash icon-large"> </i>Remove Last Author</button>
               <label>Description</label>
               <textarea id="description" class="u-full-width" placeholder="Description..." style="resize:none"></textarea>
+              <!-- Placeholder for Category selection -->
               <div class="row">
                 <div class="one-half column">
                   <label>Quantity</label>
-                  <input type="number" min="1" max="100" value="1"/>
+                  <input class="u-full-width" type="number" min="1" max="100" value="1"/>
                 </div>
                 <div class="one-half column">
-                  <label>Price</label>
-                  <i class="icon-gbp icon"> </i><input type="number" min="1" max="100" value="1"/>
+                  <label>Price <i class="icon-gbp icon"></i></label>
+                  <input class="u-full-width" type="number" min="1" max="100" value="1"/>
                 </div>
                 <input id="addNewBook" class="button-primary u-full-width" type="submit" name="register" value="Add New Book">
               </div>

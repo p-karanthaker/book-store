@@ -47,17 +47,16 @@ function categoryFilter() {
     // display error 
   } else {
     xmlhttp = new XMLHttpRequest();
-  }
-
-  xmlhttp.onreadystatechange = function () {
+    xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      $('tbody').html(xmlhttp.responseText);
-      filterTable(); // Reload filterTable so live search continues.showBookDetails()
-      showBookDetails();
-    }
-  };
-  xmlhttp.open("get", "/resources/php/ShowBooks.php?Category=" + category, true);
-  xmlhttp.send();
+        $('tbody').html(xmlhttp.responseText);
+        filterTable(); // Reload filterTable so live search continues.showBookDetails()
+        showBookDetails();
+      }
+    };
+    xmlhttp.open("get", "/resources/php/ShowBooks.php?Category=" + category, true);
+    xmlhttp.send();
+  }
 }
 
 var uid = 0;
