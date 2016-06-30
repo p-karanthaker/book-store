@@ -25,7 +25,7 @@
     private function getBooksByCategory($category)
     {
       $category = $_GET["Category"];
-      $category = $category == "All" ? "" : $_GET["Category"];
+      $category = $category == "All" ? "" : $category;
 
       $results = "";
       try
@@ -58,7 +58,7 @@
     private function getBookDetails()
     {
       $bookId = $_GET["Book"];
-      $bookId = $bookId == "" ? "1" : $_GET["Book"];
+      $bookId = ctype_digit($bookId) ? $bookId : 1;
 
       $results = "";
       try

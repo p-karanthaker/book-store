@@ -51,7 +51,7 @@
     
     private function addToBasket($user_id, $book_id)
     {
-      if(is_int(intval($book_id)))
+      if(ctype_digit($book_id))
       {
         try
         {
@@ -113,7 +113,7 @@
     
     private function updateBasket($user_id, $book_id, $new_amount)
     {
-      if(is_int(intval($book_id)) && is_int(intval($new_amount)))
+      if(ctype_digit($book_id) && ctype_digit($new_amount))
       {
         $results = "";
         try
