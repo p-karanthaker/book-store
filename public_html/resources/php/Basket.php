@@ -1,32 +1,26 @@
 <?php
   session_start();
+  require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
   $basket = new Basket();
   die();
 
   class Basket
   {
-    private $db;    
+    private $messages;
+    private $db;  
     
     public function __construct()
     {
-      $doc_root = $_SERVER["DOCUMENT_ROOT"];
-      $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
-      $database_helper = require_once($doc_root.$config["paths"]["db_helper"]);
-      $messages = require_once($doc_root.$config["paths"]["messages"]);
-      $message = new Messages();
-      $this->db = new DatabaseHelper($config);
+      global $messages;
+      global $db;
+      $this->messages = $messages;
+      $this->db = $db;
       
       $category = "";
       $user_id = $_SESSION["user_session"]["user_id"];
       if(isset($_POST["bookId"]))
       {
-        if($this->addToBasket($user_id, $_POST["bookId"]))
-        {
-          echo $message->createMessage("Added", array($_POST['bookTitle']." to your basket."), "success", ["inSessionVar" => false, "dismissable" => false]);
-        } else
-        {
-          echo $message->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
-        }
+        $this->addToBasket($user_id, $_POST["bookId"]);
       } else if(isset($_POST["showBasket"]))
       {
         $this->showBasket($user_id);
@@ -43,42 +37,40 @@
           }
           if($updated)
           {
-            echo $message->createMessage("Info:", array("Your basket has been updated."), "info", ["inSessionVar" => false, "dismissable" => false]);
+            echo $this->messages->createMessage("Info:", array("Your basket has been updated."), "info", ["inSessionVar" => false, "dismissable" => false]);
           } else 
           {
-            echo $message->createMessage("Info:", array("Nothing to update."), "info", ["inSessionVar" => false, "dismissable" => false]);
+            echo $this->messages->createMessage("Info:", array("Nothing to update."), "info", ["inSessionVar" => false, "dismissable" => false]);
           }
         }
       } else if(isset($_POST["emptyBasket"]))
       {
-        if($this->emptyBasket($user_id))
-        {
-          echo $message->createMessage("Info:", array("Your basket has been emptied."), "info", ["inSessionVar" => false, "dismissable" => false]);
-        } else
-        {
-          echo $message->createMessage("Error!", array("Unable to empty your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
-        }
+        $this->emptyBasket($user_id);
       }
-      $this->db->closeConnection();
     }
     
     private function addToBasket($user_id, $book_id)
     {
       if(is_int(intval($book_id)))
       {
-        $results = "";
-        if($this->db->openConnection())
+        try
         {
+          $results = "";
           $connection = $this->db->getConnection();
           $statement = $connection->prepare("CALL AddItemToBasket(:user_id, :book_id)");
           $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
           $statement->bindParam(":book_id", $book_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
           if($statement->execute())
           {
+            echo $this->messages->createMessage("Added", array($_POST['bookTitle']." to your basket."), "success", ["inSessionVar" => false, "dismissable" => false]);
             return true;
           }
+          echo $this->messages->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
+          return false;
+        } catch (PDOException $ex)
+        {
+          return false;
         }
-        return false;
       }
     }
     
@@ -87,7 +79,6 @@
       $results = "";
       try
       {
-        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBasketByUserId(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -127,7 +118,6 @@
         $results = "";
         try
         {
-          $this->db->openConnection();
           $connection = $this->db->getConnection();
           $statement = $connection->prepare("CALL RemoveItemFromBasket(:user_id, :book_id, :new_amount)");
           $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -150,15 +140,17 @@
       $results = "";
       try
       {
-        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL EmptyBasket(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
 
         if($statement->execute())
         {
+          echo $this->messages->createMessage("Info:", array("Your basket has been emptied."), "info", ["inSessionVar" => false, "dismissable" => false]);
           return true;
         }
+        echo $this->messages->createMessage("Error!", array("Unable to empty your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
+        return false;
       } catch (PDOException $ex)
       {
         return false;

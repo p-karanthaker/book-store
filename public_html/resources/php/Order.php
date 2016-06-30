@@ -1,22 +1,22 @@
 <?php
   session_start();
+  require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
   $order = new Order();
   die();
 
   class Order
   {
+    private $messages;
     private $db;
     private $result = "";
     private $order_id;
     
     public function __construct()
     {
-      $doc_root = $_SERVER["DOCUMENT_ROOT"];
-      $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
-      $database_helper = require_once($doc_root.$config["paths"]["db_helper"]);
-      $messages = require_once($doc_root.$config["paths"]["messages"]);
-      $message = new Messages();
-      $this->db = new DatabaseHelper($config);
+      global $messages;
+      global $db;
+      $this->messages = $messages;
+      $this->db = $db;
       
       $user_id = $_SESSION["user_session"]["user_id"];
       
@@ -54,17 +54,15 @@
           }
         } else
         {
-          echo $message->createMessage("Error!", array("We were unable to process the order. Please try again later."), "success", ["inSessionVar" => false, "dismissable" => false]); 
+          echo $this->messages->createMessage("Error!", array("We were unable to process the order. Please try again later."), "success", ["inSessionVar" => false, "dismissable" => false]); 
         }
       }
-      $this->db->closeConnection();
     }
     
     private function placeOrder($user_id)
     {
       try
       {
-        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("SELECT PlaceOrder(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -84,7 +82,6 @@
     {
       try
       {
-        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetOrderById(:order_id)");
         $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);

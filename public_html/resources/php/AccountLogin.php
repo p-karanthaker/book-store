@@ -1,8 +1,7 @@
 <?php
   session_start();
-  $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
-  $login = new AccountLogin($config);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
+  $login = new AccountLogin();
 
   $result = $login->getResult();
 
@@ -17,18 +16,16 @@
 
   class AccountLogin
   {
-    private $config;
-    private $message;
+    private $messages;
+    private $db;
     private $result;
     
-    public function __construct($config)
+    public function __construct()
     {
-      $doc_root = $_SERVER["DOCUMENT_ROOT"];
-      $this->config = $config;
-      
-      $database_helper = require_once($doc_root.$this->config["paths"]["db_helper"]);
-      $messages = require_once($doc_root.$this->config["paths"]["messages"]);
-      $this->message = new Messages();
+      global $messages;
+      global $db;
+      $this->messages = $messages;
+      $this->db = $db;
       
       if(isset($_POST["login"]))
       {
@@ -40,7 +37,7 @@
           $params = session_get_cookie_params();
           setcookie(session_name(), "", time() - 42000, $params["user_session"], $params["message"]);
         }
-        $this->message->createMessage("Goodbye!", array("You have been signed out. Please visit again soon!"), "info");
+        $this->messages->createMessage("Goodbye!", array("You have been signed out. Please visit again soon!"), "info");
         $this->result = true;
       } else {
         $this->result = false;
@@ -55,7 +52,7 @@
         $password = $_POST["password"];
         if($this->authenticate($username, $password))
         {
-          $this->message->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
+          $this->messages->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
           $this->result = true;
           return true;
         } else
@@ -65,17 +62,15 @@
       }
       // Invalid form data / authentication failed / db connection failed
       $msg_details = array("Username or Password is invalid.");
-      $this->message->createMessage("Login Failed!", $msg_details, "error");
+      $this->messages->createMessage("Login Failed!", $msg_details, "error");
       return false;
     }
 
     private function authenticate($username, $password)
     {
-      $db = new DatabaseHelper($this->config);
       try
       {
-        $db->openConnection();
-        $connection = $db->getConnection();
+        $connection = $this->db->getConnection();
         $statement = $connection->prepare("SELECT user_id, password_hash, type FROM user WHERE username = :username");
         $statement->bindParam(":username", $username);
         $statement->execute();
@@ -95,7 +90,6 @@
             // Authentication success
             $user_session = array("user_id"=>$db_user_id, "username"=>$username, "user_type"=>$db_user_type);
             $_SESSION["user_session"] = $user_session;
-            $db->closeConnection();
             return true;
           }
         }
@@ -103,9 +97,6 @@
       } catch (PDOException $ex)
       {
         return false;
-      } finally
-      {
-        $db->closeConnection();
       }
     }
     

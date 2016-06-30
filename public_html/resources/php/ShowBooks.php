@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
   $books = new ShowBooks();
   
   class ShowBooks 
@@ -8,10 +9,8 @@
     
     public function __construct()
     {
-      $doc_root = $_SERVER["DOCUMENT_ROOT"];
-      $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
-      $database_helper = require_once($doc_root.$config["paths"]["db_helper"]);
-      $this->db = new DatabaseHelper($config);
+      global $db;
+      $this->db = $db;
       
       $category = "";
       if(isset($_GET["Category"]))
@@ -21,7 +20,6 @@
       {
         $this->getBookDetails();
       }
-      $this->db->closeConnection();
     }
     
     private function getBooksByCategory($category)
@@ -32,7 +30,6 @@
       $results = "";
       try
       {
-        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBooksByCategory(:book_category)");
         $statement->bindParam(":book_category", $category, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT);
@@ -66,7 +63,6 @@
       $results = "";
       try
       {
-        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBookById(:book_id)");
         $statement->bindParam(":book_id", $bookId, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);

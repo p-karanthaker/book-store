@@ -1,8 +1,7 @@
 <?php
   session_start();
-  $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
-  $register = new AccountRegistration($config);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
+  $register = new AccountRegistration();
 
   $result = $register->getResult();
 
@@ -18,19 +17,16 @@
 
   class AccountRegistration
   { 
-    private $config;
-    private $message;
+    private $messages;
+    private $db;
     private $result;
     
-    public function __construct($config)
-    {
-      $doc_root = $_SERVER["DOCUMENT_ROOT"];
-      $this->config = $config;
-      
-      $database_helper = require_once($doc_root.$this->config["paths"]["db_helper"]);
-      $messages = require_once($doc_root.$this->config["paths"]["messages"]);
-      $this->message = new Messages();
-      
+    public function __construct()
+    { 
+      global $messages;
+      global $db;
+      $this->messages = $messages;
+      $this->db = $db;
       if(isset($_POST["register"]))
       {
         $this->registerUser();
@@ -40,13 +36,10 @@
     private function registerUser()
     {
         if($this->validateFormData())
-        {
-          $db = new DatabaseHelper($this->config);
-          
+        { 
           try
           {
-            $db->openConnection();
-            $connection = $db->getConnection();
+            $connection = $this->db->getConnection();
 
             /* gather details for html escaping*/
             $username = htmlspecialchars($_POST["username"], ENT_QUOTES);
@@ -70,20 +63,16 @@
 
               $statement->execute();
               // Account created
-              $this->message->createMessage("Success!", array("Your account has been created."), "success");
-              $db->closeConnection();
+              $this->messages->createMessage("Success!", array("Your account has been created."), "success");
               $this->result = true;
               return true;
             }
             // Account already exists
-            $this->message->createMessage("Error!", array("User already exists, please try again."), "error");
+            $this->messages->createMessage("Error!", array("User already exists, please try again."), "error");
             return false;
           } catch (PDOException $ex)
           {
             return false;
-          } finally
-          {
-            $db->closeConnection();
           }
         } else 
         {
@@ -92,7 +81,7 @@
             ("<strong>Username</strong> must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
             ,"<strong>Passwords</strong> must match, and must be <strong>6-12</strong> characters long using only <strong>alphanumerics</strong>."
             );
-          $this->message->createMessage("Invalid Fields!", $msg_details, "warning", ["isBlock" => true]);
+          $this->messages->createMessage("Invalid Fields!", $msg_details, "warning", ["isBlock" => true]);
           return false;
         }
     } 
