@@ -64,8 +64,10 @@
           if($statement->execute())
           {
             echo $this->messages->createMessage("Added", array($_POST['bookTitle']." to your basket."), "success", ["inSessionVar" => false, "dismissable" => false]);
+          } else
+          {
+            echo $this->messages->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
           }
-          echo $this->messages->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
         } catch (PDOException $ex)
         {
           $this->db->showError($ex, false);
@@ -158,10 +160,11 @@
         if($statement->execute())
         {
           echo $this->messages->createMessage("Info:", array("Your basket has been emptied."), "info", ["inSessionVar" => false, "dismissable" => false]);
-          return true;
         }
-        echo $this->messages->createMessage("Error!", array("Unable to empty your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
-        return false;
+        else
+        {
+          echo $this->messages->createMessage("Error!", array("Unable to empty your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
+        }
       } catch (PDOException $ex)
       {
         $this->db->showError($ex, false);
