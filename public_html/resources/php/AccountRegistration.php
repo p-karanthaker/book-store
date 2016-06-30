@@ -43,22 +43,23 @@
         {
           $db = new DatabaseHelper($this->config);
           
-          if($db->openConnection())
+          try
           {
+            $db->openConnection();
             $connection = $db->getConnection();
-            
+
             /* gather details for html escaping*/
             $username = htmlspecialchars($_POST["username"], ENT_QUOTES);
             $user_type = htmlspecialchars($_POST["user_type"], ENT_QUOTES); 
-            
+
             /* hash+salt password */
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
-            
+
             /* check user doesn't exist */
             $statement = $connection->prepare("SELECT username FROM user WHERE username = :username");
             $statement->bindValue(":username", $username);
             $statement->execute();
-            
+
             if($statement->rowCount() == 0)
             {
               $statement = $connection->prepare("INSERT INTO user (username, password_hash, type)
@@ -66,24 +67,23 @@
               $statement->bindParam(":username", $username);
               $statement->bindParam(":password_hash", $password);
               $statement->bindParam(":type", $user_type);
-              
-              if($statement->execute())
-              {
-                // Account created
-                $this->message->createMessage("Success!", array("Your account has been created."), "success");
-                $db->closeConnection();
-                $this->result = true;
-                return true;
-              }
-              return false;
+
+              $statement->execute();
+              // Account created
+              $this->message->createMessage("Success!", array("Your account has been created."), "success");
+              $db->closeConnection();
+              $this->result = true;
+              return true;
             }
             // Account already exists
             $this->message->createMessage("Error!", array("User already exists, please try again."), "error");
-            $db->closeConnection();
             return false;
-          } else
+          } catch (PDOException $ex)
           {
             return false;
+          } finally
+          {
+            $db->closeConnection();
           }
         } else 
         {

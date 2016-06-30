@@ -72,8 +72,9 @@
     private function authenticate($username, $password)
     {
       $db = new DatabaseHelper($this->config);
-      if($db->openConnection())
+      try
       {
+        $db->openConnection();
         $connection = $db->getConnection();
         $statement = $connection->prepare("SELECT user_id, password_hash, type FROM user WHERE username = :username");
         $statement->bindParam(":username", $username);
@@ -98,12 +99,13 @@
             return true;
           }
         }
-        // Authentication failed
-        $db->closeConnection();
         return false;
-      } else
+      } catch (PDOException $ex)
       {
         return false;
+      } finally
+      {
+        $db->closeConnection();
       }
     }
     

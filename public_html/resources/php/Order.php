@@ -62,8 +62,9 @@
     
     private function placeOrder($user_id)
     {
-      if($this->db->openConnection())
+      try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("SELECT PlaceOrder(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -73,14 +74,17 @@
           $this->order_id = $results["PlaceOrder('$user_id')"];
           return true;
         }
+      } catch (PDOException $ex)
+      {
+        return false;
       }
-      return false;
     }
     
     private function getOrderDetails($order_id)
     {
-       if($this->db->openConnection())
+      try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetOrderById(:order_id)");
         $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -89,8 +93,10 @@
           $this->result = $statement->fetchAll(PDO::FETCH_ASSOC);
           return true;
         }
+      } catch (PDOException $ex)
+      {
+        return false;
       }
-      return false;
     }
   }
 ?>

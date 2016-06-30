@@ -85,8 +85,9 @@
     private function showBasket($user_id)
     {
       $results = "";
-      if($this->db->openConnection())
+      try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBasketByUserId(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -113,6 +114,9 @@
         } else {
           echo "<div><h3>Your basket is empty.</h3></div>";
         }
+      } catch (PDOException $ex)
+      {
+        return false;
       }
     }
     
@@ -121,8 +125,9 @@
       if(is_int(intval($book_id)) && is_int(intval($new_amount)))
       {
         $results = "";
-        if($this->db->openConnection())
+        try
         {
+          $this->db->openConnection();
           $connection = $this->db->getConnection();
           $statement = $connection->prepare("CALL RemoveItemFromBasket(:user_id, :book_id, :new_amount)");
           $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -133,16 +138,19 @@
           {
             return true;
           }
+        } catch (PDOException $ex)
+        {
+          return false;
         }
-        return false;
       }
     }
     
     private function emptyBasket($user_id)
     {
       $results = "";
-      if($this->db->openConnection())
+      try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL EmptyBasket(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -151,8 +159,10 @@
         {
           return true;
         }
+      } catch (PDOException $ex)
+      {
+        return false;
       }
-      return false;
     }
     
   }

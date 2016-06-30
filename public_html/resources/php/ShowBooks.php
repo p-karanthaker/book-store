@@ -30,8 +30,9 @@
       $category = $category == "All" ? "" : $_GET["Category"];
 
       $results = "";
-      if($this->db->openConnection())
+      try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBooksByCategory(:book_category)");
         $statement->bindParam(":book_category", $category, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT);
@@ -50,6 +51,10 @@
           echo "<td>£".utf8_encode($arr['price'])."</td>";
           echo "</tr>";
         }
+        return true;
+      } catch (PDOException $ex)
+      {
+        return false;
       }
     }
     
@@ -59,8 +64,9 @@
       $bookId = $bookId == "" ? "1" : $_GET["Book"];
 
       $results = "";
-      if($this->db->openConnection())
+      try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBookById(:book_id)");
         $statement->bindParam(":book_id", $bookId, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -78,6 +84,10 @@
         echo "<input id='addToBasket' data-book-id=".$results['book_id']." class='button-primary' type='button' value='Add To Basket'>";
         echo "</div>";
         echo "<footer class='w3-container-footer w3-blue'>Categories: ".$results['category']."</footer>";
+        return true;
+      } catch (PDOException $ex)
+      {
+        return false;
       }
     }
     
