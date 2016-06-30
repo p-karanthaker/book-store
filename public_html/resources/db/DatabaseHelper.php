@@ -22,20 +22,12 @@
       $this->db_name = $config["database_dev"]["db_name"];
       $this->db_user = $config["database_dev"]["db_user"];
       $this->db_pass = $config["database_dev"]["db_pass"];
-      $this->openConnection();
     }
     
-    private function openConnection()
+    public function openConnection()
     {
-      try
-      {
-        $this->connection = new PDO("mysql:host=".$this->db_host.";dbname=".$this->db_name, $this->db_user, $this->db_pass);
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return true;
-      } catch (PDOException $ex)
-      {
-        $this->echoError($ex);
-      }
+      $this->connection = new PDO("mysql:host=".$this->db_host.";dbname=".$this->db_name, $this->db_user, $this->db_pass);
+      $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     
     public function closeConnection()
@@ -48,10 +40,16 @@
       return $this->connection;
     }
     
-    private function echoError(PDOException $ex)
+    public function showError(PDOException $ex, $inSessionVar = true)
     {
       $msg_details = array("<p>Please try again later.</br></p><strong>Error Details:</strong> ".$ex->getMessage());
-      $this->messages->createMessage("Database Operation Failed", $msg_details, "error", ["isBlock" => true]);
+      if($inSessionVar == false)
+      {
+        echo $this->messages->createMessage("Database Operation Failed", $msg_details, "error", ["isBlock" => true, "inSessionVar" => false]);
+      } else
+      {
+        $this->messages->createMessage("Database Operation Failed", $msg_details, "error", ["isBlock" => true]);
+      }
     }
     
   }
