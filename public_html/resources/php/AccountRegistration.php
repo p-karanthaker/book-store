@@ -39,6 +39,7 @@
         { 
           try
           {
+            $this->db->openConnection();
             $connection = $this->db->getConnection();
 
             /* gather details for html escaping*/
@@ -72,7 +73,10 @@
             return false;
           } catch (PDOException $ex)
           {
-            return false;
+            $this->db->showError($ex);
+          } finally
+          {
+            $this->db->closeConnection();
           }
         } else 
         {

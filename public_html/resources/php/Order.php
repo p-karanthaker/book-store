@@ -60,6 +60,7 @@
     {
       try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("SELECT PlaceOrder(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -71,7 +72,10 @@
         }
       } catch (PDOException $ex)
       {
-        return false;
+        $this->db->showError($ex, false);
+      } finally
+      {
+        $this->db->closeConnection();
       }
     }
     
@@ -80,6 +84,7 @@
       $order_id = ctype_digit($order_id) ? $order_id : null;
       try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetOrderById(:order_id)");
         $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -90,7 +95,10 @@
         }
       } catch (PDOException $ex)
       {
-        return false;
+        $this->db->showError($ex, false);
+      } finally
+      {
+        $this->db->closeConnection();
       }
     }
   }

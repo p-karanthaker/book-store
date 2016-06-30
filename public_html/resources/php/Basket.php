@@ -56,6 +56,7 @@
         try
         {
           $results = "";
+          $this->db->openConnection();
           $connection = $this->db->getConnection();
           $statement = $connection->prepare("CALL AddItemToBasket(:user_id, :book_id)");
           $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -63,13 +64,14 @@
           if($statement->execute())
           {
             echo $this->messages->createMessage("Added", array($_POST['bookTitle']." to your basket."), "success", ["inSessionVar" => false, "dismissable" => false]);
-            return true;
           }
           echo $this->messages->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
-          return false;
         } catch (PDOException $ex)
         {
-          return false;
+          $this->db->showError($ex, false);
+        } finally
+        {
+          $this->db->closeConnection();
         }
       }
     }
@@ -79,6 +81,7 @@
       $results = "";
       try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL GetBasketByUserId(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -107,7 +110,10 @@
         }
       } catch (PDOException $ex)
       {
-        return false;
+        $this->db->showError($ex, false);
+      } finally
+      {
+        $this->db->closeConnection();
       }
     }
     
@@ -118,6 +124,7 @@
         $results = "";
         try
         {
+          $this->db->openConnection();
           $connection = $this->db->getConnection();
           $statement = $connection->prepare("CALL RemoveItemFromBasket(:user_id, :book_id, :new_amount)");
           $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -130,7 +137,10 @@
           }
         } catch (PDOException $ex)
         {
-          return false;
+          $this->db->showError($ex, false);
+        } finally
+        {
+          $this->db->closeConnection();
         }
       }
     }
@@ -140,6 +150,7 @@
       $results = "";
       try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("CALL EmptyBasket(:user_id)");
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
@@ -153,7 +164,10 @@
         return false;
       } catch (PDOException $ex)
       {
-        return false;
+        $this->db->showError($ex, false);
+      } finally
+      {
+        $this->db->closeConnection();
       }
     }
     

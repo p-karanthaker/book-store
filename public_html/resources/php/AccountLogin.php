@@ -50,26 +50,15 @@
       {
         $username = $_POST["username"];
         $password = $_POST["password"];
-        if($this->authenticate($username, $password))
-        {
-          $this->messages->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
-          $this->result = true;
-          return true;
-        } else
-        {
-          // Authentication failed...drop down into default return.
-        }
+        $this->authenticate($username, $password);
       }
-      // Invalid form data / authentication failed / db connection failed
-      $msg_details = array("Username or Password is invalid.");
-      $this->messages->createMessage("Login Failed!", $msg_details, "error");
-      return false;
     }
 
     private function authenticate($username, $password)
     {
       try
       {
+        $this->db->openConnection();
         $connection = $this->db->getConnection();
         $statement = $connection->prepare("SELECT user_id, password_hash, type FROM user WHERE username = :username");
         $statement->bindParam(":username", $username);
@@ -90,13 +79,20 @@
             // Authentication success
             $user_session = array("user_id"=>$db_user_id, "username"=>$username, "user_type"=>$db_user_type);
             $_SESSION["user_session"] = $user_session;
-            return true;
+            $this->messages->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
+            $this->result = true;
+          } else
+          {
+            $msg_details = array("Username or Password is invalid.");
+            $this->messages->createMessage("Login Failed!", $msg_details, "error");
           }
         }
-        return false;
       } catch (PDOException $ex)
       {
-        return false;
+        $this->db->showError($ex);
+      } finally
+      {
+        $this->db->closeConnection();
       }
     }
     
@@ -121,6 +117,8 @@
       {
         return true;
       } else {
+        $msg_details = array("Username or Password is invalid.");
+        $this->messages->createMessage("Login Failed!", $msg_details, "error");
         return false;
       }
     }
