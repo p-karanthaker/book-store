@@ -82,23 +82,26 @@
     private function getOrderDetails($order_id)
     {
       $order_id = ctype_digit($order_id) ? $order_id : null;
-      try
+      if($order_id != null)
       {
-        $this->db->openConnection();
-        $connection = $this->db->getConnection();
-        $statement = $connection->prepare("CALL GetOrderById(:order_id)");
-        $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
-        if($statement->execute())
+        try
         {
-          $this->result = $statement->fetchAll(PDO::FETCH_ASSOC);
-          return true;
+          $this->db->openConnection();
+          $connection = $this->db->getConnection();
+          $statement = $connection->prepare("CALL GetOrderById(:order_id)");
+          $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
+          if($statement->execute())
+          {
+            $this->result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return true;
+          }
+        } catch (PDOException $ex)
+        {
+          $this->db->showError($ex, false);
+        } finally
+        {
+          $this->db->closeConnection();
         }
-      } catch (PDOException $ex)
-      {
-        $this->db->showError($ex, false);
-      } finally
-      {
-        $this->db->closeConnection();
       }
     }
   }
