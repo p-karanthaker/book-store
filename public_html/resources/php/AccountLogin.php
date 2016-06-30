@@ -81,12 +81,11 @@
             $_SESSION["user_session"] = $user_session;
             $this->messages->createMessage("Welcome back", array("<strong>$username</strong>!"), "info");
             $this->result = true;
-          } else
-          {
-            $msg_details = array("Username or Password is invalid.");
-            $this->messages->createMessage("Login Failed!", $msg_details, "error");
+            return;
           }
         }
+        $msg_details = array("Username or Password is invalid.");
+        $this->messages->createMessage("Login Failed!", $msg_details, "error");
       } catch (PDOException $ex)
       {
         $this->db->showError($ex);
