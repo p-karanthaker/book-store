@@ -84,14 +84,15 @@
           ?>
         </div>
       </div>
-      
+      <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
       <div class="row">
         <div class="three columns">
-          <a id="users" class="button u-full-width" href="">Users</a>
-          <a id="addBook" class="button u-full-width" href="">Add Books</a>
+          <a id="userOrders" class="button u-full-width">Users</a>
+          <a id="addBook" class="button u-full-width">Add Books</a>
         </div>
         <div class="nine columns">
           <div id="controlPanel">
+            <!-- Add Book Panel -->
             <div id="addBookPanel">
               <h2>Add New Book</h2>
               <label>Title</label><input class="u-full-width" type="text" placeholder="Title" name="bookTitle" required>
@@ -118,6 +119,12 @@
                 </div>
                 <input id="addNewBook" class="button-primary u-full-width" type="submit" name="register" value="Add New Book">
               </div>
+            </div>
+            
+            <!-- User Orders Panel -->
+            <div id="userOrdersPanel">
+              <h2>User Orders</h2>
+              
             </div>
           </div>
         </div>
