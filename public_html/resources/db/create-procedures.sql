@@ -1,6 +1,21 @@
 DELIMITER $$
-CREATE PROCEDURE `AddItemToBasket`(IN user_id INT, IN book_id INT)
+CREATE PROCEDURE `AddItemToBasket`(IN user_id INT, IN book_id INT, IN quantity INT)
 BEGIN
+	-- Create a basket for the user, ignore if they already have one
+	INSERT IGNORE INTO basket (basket.user_id) VALUES (user_id);
+    
+    -- Add the book to the basket, if already in the basket then update the quantity
+    INSERT INTO basketitem (basket_id, book_id, quantity, cost)
+		SELECT 	basket.basket_id,
+				book_id,
+				quantity,
+				books.price
+		FROM basket, books
+		WHERE basket.user_id = user_id
+		AND books.book_id = book_id
+	ON DUPLICATE KEY UPDATE basketitem.quantity=basketitem.quantity+quantity;
+END$$
+/*BEGIN
 	IF EXISTS (SELECT * FROM basket WHERE basket.user_id = user_id) THEN
 		INSERT INTO basketitem (basket_id, book_id, quantity, cost)
 		SELECT 	basket.basket_id,
@@ -32,7 +47,7 @@ BEGIN
 		SELECT b.basket_id FROM basket b
 		WHERE b.user_id = user_id
 	);
-END$$
+END$$*/
 
 DELIMITER $$
 CREATE PROCEDURE `GetBasketByUserId`(IN user_id INT)
@@ -120,6 +135,29 @@ BEGIN
 	-- Get the current number of item in the basket
 	SET @current_amount = 
 	(
+		SELECT quantity FROM basketitem
+		INNER JOIN basket
+		ON basket.basket_id = basketitem.basket_id
+		WHERE basket.user_id = user_id
+		AND basketitem.book_id = book_id
+	);
+    IF new_amount > @current_amount THEN
+		SET remove_limit = new_amount - @current_amount;
+		CALL AddItemToBasket(user_id, book_id, remove_limit);
+	ELSEIF new_amount < @current_amount THEN
+		UPDATE basketitem AS bi
+        INNER JOIN basket b
+			ON b.basket_id = bi.basket_id
+        SET quantity=new_amount
+			WHERE bi.book_id=book_id
+			AND b.user_id=user_id;
+	END IF;
+END$$
+/*BEGIN
+	DECLARE remove_limit INT;
+	-- Get the current number of item in the basket
+	SET @current_amount = 
+	(
 		SELECT count(*) FROM basketitem
 		INNER JOIN basket
 		ON basket.basket_id = basketitem.basket_id
@@ -136,7 +174,7 @@ BEGIN
 			AND basketitem.book_id = book_id
 		) LIMIT remove_limit;
 	END IF;
-END$$
+END$$*/
 
 DELIMITER $$
 CREATE FUNCTION `PlaceOrder`(user_id INT) RETURNS int(11)
