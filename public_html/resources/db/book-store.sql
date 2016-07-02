@@ -47,7 +47,7 @@ CREATE TABLE basketitem
 	book_id INT NOT NULL,
 	FOREIGN KEY(basket_id) REFERENCES basket(basket_id),
 	FOREIGN KEY(book_id) REFERENCES books(book_id),
-  UNIQUE KEY `book_id_UNIQUE` (book_id),
+  UNIQUE KEY `book_basket_UNIQUE` (basket_id, book_id),
 	quantity INT NOT NULL DEFAULT '0',
 	cost DECIMAL(13,2) NOT NULL DEFAULT '0.00'
 ) ENGINE = InnoDB;

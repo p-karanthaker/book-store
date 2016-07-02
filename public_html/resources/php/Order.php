@@ -38,11 +38,11 @@
             {
               echo "<tr>
                       <td>".utf8_encode($arr['title'])."</td>
-                      <td>".utf8_encode($arr['quantity'])."</td>
+                      <td>".utf8_encode($arr['quantity'])." &times;</td>
                       <td>£".utf8_encode($arr['cost'])."</td>
                     </tr>";
               $order_date = utf8_encode($arr['date']);
-              $order_total += utf8_encode($arr['cost']);
+              $order_total += utf8_encode($arr['subtotal']);
             }
             echo "</tbody></table>";
             echo "<h5>Amount Due: £$order_total</h5>";

@@ -23,6 +23,31 @@ function getBasketDetails() {
   return data;
 }
 
+$(document).on('click', '.removeItem', function () {
+  var data = $(this).closest('#items').attr('data-book-id');
+  removeItem(data);
+});
+
+function removeItem(data) {
+    "use strict";
+    var xmlhttp;
+    xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        $("#basket-alert-section").append("<div id=alert" + uid + ">" + xmlhttp.responseText + "</div>");
+        $("#basket-alert-section > div#alert".concat(uid)).show();
+        $("#basket-alert-section > div#alert".concat(uid)).fadeOut(3000, function () {
+          $(this).remove(); 
+        });
+        showBasket();
+      }
+    };
+    xmlhttp.open("post", "/resources/php/Basket.php", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlhttp.send("removeItem=" + data);
+  }
+
 var uid = 0;
 $(document).on('click', '#updateBasket', function () {
   updateBasket();
