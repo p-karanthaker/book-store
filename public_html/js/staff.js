@@ -87,8 +87,10 @@ $(document).on('click', '#userOrders', function () {
   return false;
 });
 
+var uid = 0;
 $(document).on('click', '#addNewBook', function () {
   addNewBook();
+  uid++;
 });
 
 /**
@@ -141,11 +143,30 @@ function removeLastAuthor() {
   authorList.val(lastAuthorAdded);
 }
 
-function addNewBook() {
-  var bookTitle = $('#bookTitle').val();
-  var authors = $('#authorList').val();
-  var description = $('#description').val();
-  var categories = $('#categoryList').val();
-  var quantity = $('#quantity').val();
-  var price = $('#price').val();
+function addNewBook(uid) {
+  var book = [
+      {
+        "title": $('#bookTitle').val(),
+        "authors": $('#authorList').val(),
+        "description": $('#description').val(),
+        "categories": $('#categoryList').val(),
+        "quantity": $('#quantity').val(),
+        "price": $('#price').val()
+      }
+    ];
+  
+  $.ajax({
+    url: "/resources/php/ShowBooks.php",
+    type: "post",
+    dataType: "text",
+    success: function (data) {
+      $('html, body').animate({ scrollTop: 0 }, 'slow');
+      $("#basket-alert-section").append("<div id=alert" + uid + ">" + data + "</div>");
+      $("#basket-alert-section > div#alert".concat(uid)).show();
+      $("#basket-alert-section > div#alert".concat(uid)).fadeOut(3000, function () {
+        $(this).remove(); 
+      });
+    },
+    data: {book : book}
+  });
 }

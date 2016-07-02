@@ -97,8 +97,8 @@ function addToBasket(uid) {
         $("#basket-alert-section").append("<div id=alert" + uid + ">" + xmlhttp.responseText + "</div>");
         $("#basket-alert-section > div#alert".concat(uid)).show();
         $("#basket-alert-section > div#alert".concat(uid)).fadeOut(3000, function () {
-        $(this).remove(); 
-      });
+          $(this).remove(); 
+        });
       }
     };
     xmlhttp.open("post", "/resources/php/Basket.php", true);

@@ -69,7 +69,6 @@
           </ol>
         </div>
       </div>
-      
       <div class="row">
         <div class="twelve columns">
           <?php
@@ -85,6 +84,7 @@
         </div>
       </div>
       <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
+      
       <div class="row">
         <div class="three columns">
           <a id="userOrders" class="button u-full-width" href="/resources/php/UserOrders.php">Users</a>

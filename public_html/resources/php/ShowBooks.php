@@ -6,11 +6,14 @@
   class ShowBooks 
   {
     private $db;
+    private $messages;
     
     public function __construct()
     {
       global $db;
+      global $messages;
       $this->db = $db;
+      $this->messages = $messages;
       
       $category = "";
       if(isset($_GET["Category"]))
@@ -22,6 +25,9 @@
       } else if(isset($_POST["loadCategories"]))
       {
         $this->getCategories();
+      } else if(isset($_POST["book"]))
+      {
+        $this->addNewBook($_POST["book"]);
       }
     }
     
@@ -122,7 +128,103 @@
       }
     }
     
+    private function addNewBook($new_book)
+    {
+      $book = $new_book[0];
+      $title = array_key_exists("title", $book) ? $book["title"] : "";
+      $authors = array_key_exists("title", $book) ? $book["authors"] : "";
+      $description = array_key_exists("title", $book) ? $book["description"] : "";
+      $categories = array_key_exists("title", $book) ? $book["categories"] : "";
+      $quantity = array_key_exists("title", $book) ? $book["quantity"] : "";
+      $price = array_key_exists("title", $book) ? $book["price"] : "";
+      if($this->validateBookDetails($book))
+      {
+        try
+        {
+          $this->db->openConnection();
+          $connection = $this->db->getConnection();
+          $statement = $connection->prepare("INSERT INTO books (title, `authors`, quantity, price, description) 
+                                             VALUES (:title, :authors, :quantity, :price, :description)");
+          $statement->bindParam(":title", $title);
+          $statement->bindParam(":authors", $authors);
+          $statement->bindParam(":quantity", $quantity);
+          $statement->bindParam(":price", $price);
+          $statement->bindParam(":description", $description);
+          if($statement->execute())
+          {
+            $bookId = $connection->lastInsertId();
+            
+            $cat_arr = explode(", ", $categories);
+            foreach($cat_arr as $category)
+            {
+              $statement = $connection->prepare("INSERT INTO bookcategory (book_id, cat_id)
+                                               SELECT	:book_id,
+                                                      cat_id
+                                               FROM category
+                                               WHERE `name` LIKE :category");
+              $statement->bindParam(":book_id", $bookId);
+              $statement->bindParam(":category", $category);
+              if($statement->execute())
+              {
+                $msg_details = array("$title to the book stock.");
+                echo $this->messages->createMessage("Added", $msg_details, "success", ["inSessionVar" => false]);
+              }
+            }
+          }
+        } catch (PDOException $ex)
+        {
+          $this->db->showError($ex, false);
+        } finally
+        {
+          $this->db->closeConnection();
+        }
+      }
+    }
+    
+    private function validateBookDetails($book)
+    {
+      $title = array_key_exists("title", $book) ? $book["title"] : "";
+      $authors = array_key_exists("title", $book) ? $book["authors"] : "";
+      $description = array_key_exists("title", $book) ? $book["description"] : "";
+      $categories = array_key_exists("title", $book) ? $book["categories"] : "";
+      $quantity = array_key_exists("title", $book) ? $book["quantity"] : "";
+      $price = array_key_exists("title", $book) ? $book["price"] : "";
+      
+      define("REGEX_MATCHER_ONE", "/^[\s\S]{1,100}$/i");
+      define("REGEX_MATCHER_FIF", "/^[\s\S]{1,50}$/i");
+      define("REGEX_MATCHER_NUM", "/^[\d]{1,11}$/");
+      define("REGEX_MATCHER_DEC", "/^\d{1,13}\.?(?:\d{0}|\d{2})$/");
+      define("REGEX_MATCHER_DESCRIPTION", "/^[\s\S]{1,5000}$/i");
+      
+      $cat_arr = explode(", ", $categories);
+      
+      if(!preg_match(REGEX_MATCHER_ONE, $title))
+      {
+        return false;
+      } else if(!preg_match(REGEX_MATCHER_ONE, $authors))
+      {
+        return false;
+      } else if(!preg_match(REGEX_MATCHER_DESCRIPTION, $description))
+      {
+        return false;
+      } else if(!preg_match(REGEX_MATCHER_NUM, $quantity))
+      {
+        return false;
+      } else if(!preg_match(REGEX_MATCHER_DEC, $price))
+      {
+        return false;
+      }
+      
+      foreach($cat_arr as $category)
+      {
+        if(!preg_match(REGEX_MATCHER_FIF, $category))
+        {
+          return false; 
+        }
+      }
+      
+      return true;
+    }
+    
   }
-
-
 ?>
