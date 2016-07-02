@@ -51,7 +51,7 @@
 
   </head>
   <!-- End Head -->
-  <body onload="categoryFilter()">
+  <body>
 
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -103,17 +103,6 @@
           <label>Filter By Category: 
             <select id="category" name="category" onchange="categoryFilter()">
               <option value="all" selected>All</option>
-              <option value="1">Business &amp; Economics</option>
-              <option value="2">History</option>
-              <option value="3">Computers</option>
-              <option value="4">Mathematics</option>
-              <option value="5">Photography</option>
-              <option value="6">Art</option>
-              <option value="7">Music</option>
-              <option value="8">Religion</option>
-              <option value="9">Science</option>
-              <option value="10">Nature</option>
-              <option value="11">Medical</option>
             </select>
           </label>
           <table class="u-full-width" id="table">

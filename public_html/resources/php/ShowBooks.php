@@ -19,6 +19,35 @@
       } else if(isset($_GET["Book"]))
       {
         $this->getBookDetails();
+      } else if(isset($_POST["loadCategories"]))
+      {
+        $this->getCategories();
+      }
+    }
+    
+    private function getCategories()
+    {
+      $results = "";
+      try
+      {
+        $this->db->openConnection();
+        $connection = $this->db->getConnection();
+        $statement = $connection->prepare("SELECT cat_id, `name` FROM category");
+        if($statement->execute())
+        {
+          $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        foreach($results as $arr)
+        {
+          echo "<option value=".$arr['cat_id'].">".utf8_encode($arr['name'])."</option>";
+        }
+      } catch (PDOException $ex)
+      {
+        $this->db->showError($ex, false);
+      } finally
+      {
+        $this->db->closeConnection();
       }
     }
     

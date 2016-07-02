@@ -87,45 +87,12 @@
       <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
       <div class="row">
         <div class="three columns">
-          <a id="userOrders" class="button u-full-width">Users</a>
-          <a id="addBook" class="button u-full-width">Add Books</a>
+          <a id="userOrders" class="button u-full-width" href="/resources/php/UserOrders.php">Users</a>
+          <a id="addBook" class="button u-full-width" href="/resources/php/NewBook.php">Add Books</a>
         </div>
         <div class="nine columns">
           <div id="controlPanel">
-            <!-- Add Book Panel -->
-            <div id="addBookPanel">
-              <h2>Add New Book</h2>
-              <label>Title</label><input class="u-full-width" type="text" placeholder="Title" name="bookTitle" required>
-              <label>Authors</label>
-              <div>
-                <input id="newAuthor" type="text" placeholder="Author">
-                <span>
-                  <button id="addAuthor" type="button"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></button>
-                </span>
-              </div>
-              <textarea id="authorList" class="u-full-width" placeholder="Authors..." style="resize:none" disabled></textarea>
-              <button id="removeAuthor" class="u-full-width" type="button"><i class="fa fa-trash fa-lg"></i> Remove Last Author</button>
-              <label>Description</label>
-              <textarea id="description" class="u-full-width" placeholder="Description..." style="resize:none"></textarea>
-              <!-- Placeholder for Category selection -->
-              <div class="row">
-                <div class="one-half column">
-                  <label>Quantity</label>
-                  <input class="u-full-width" type="number" min="1" max="100" value="1"/>
-                </div>
-                <div class="one-half column">
-                  <label>Price <i class="icon-gbp icon"></i></label>
-                  <input class="u-full-width" type="number" min="1" max="100" value="1"/>
-                </div>
-                <input id="addNewBook" class="button-primary u-full-width" type="submit" name="register" value="Add New Book">
-              </div>
-            </div>
-            
-            <!-- User Orders Panel -->
-            <div id="userOrdersPanel">
-              <h2>User Orders</h2>
-              
-            </div>
+            <h3>Use the buttons on the side!</h3>
           </div>
         </div>
       </div>
