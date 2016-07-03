@@ -3,7 +3,6 @@
   session_start();
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
-  $messages = require_once($doc_root.$config["paths"]["messages"]);
 ?>
 <!-- End PHP -->
 
@@ -49,6 +48,14 @@
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
+      <?php
+        require_once($doc_root.$config["paths"]["header"]);
+        if(isset($_SESSION["user_session"]))
+        {
+          $header->makeHeader();
+        }
+      ?>
+      
       <div class="row">
         <!-- Title -->
         <div class="nine columns" style="margin-top: 5%">
@@ -79,7 +86,6 @@
             <li class="active">Home</li>
             <li><a href="shop.php">Shop</a></li>
             <li><a href="basket.php">Basket</a></li>
-            <li><a href="account.php">My Account</a></li>
             <?php isset($_SESSION["user_session"]) && $_SESSION["user_session"]["user_type"] == "STAFF" ? print_r("<li><a href='staff.php'>Staff</a></li>") : "" ?>
           </ol>
         </div>

@@ -6,6 +6,22 @@ $(document).ready(function () {
 });
 
 /**
+ * Live filtering of the table while typing
+ */
+function filterTable() {
+  "use strict";
+  var $rows = $('#table tbody tr');
+  $('#search').keyup(function () {
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+    $rows.show().filter(function () {
+      var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+      return !~text.indexOf(val);
+    }).hide();
+  });
+}
+
+/**
   * On Click event for showing the Users Pane
   */
 $(document).on('click', '#users', function () {
@@ -75,8 +91,7 @@ function loadOrders() {
   xmlhttp.onreadystatechange = function () {
   if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
       $('tbody').html(xmlhttp.responseText);
-      //filterTable(); // Reload filterTable so live search continues.showBookDetails()
-      //showBookDetails();
+      filterTable();
     }
   };
   xmlhttp.open("post", "/resources/php/Order.php", true);
@@ -91,8 +106,7 @@ function loadUsers() {
   xmlhttp.onreadystatechange = function () {
   if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
       $('tbody').html(xmlhttp.responseText);
-      //filterTable(); // Reload filterTable so live search continues.showBookDetails()
-      //showBookDetails();
+      filterTable();
     }
   };
   xmlhttp.open("post", "/resources/php/Users.php", true);

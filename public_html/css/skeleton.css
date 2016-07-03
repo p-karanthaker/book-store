@@ -616,6 +616,15 @@ tr.clickableRow.hover {
   background-color: rgba(236, 240, 241, 0.6);
 }
 
+.infobar {
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  padding:0.01em 16px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  color: #FFF;
+}
+
 
 /* Clearing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

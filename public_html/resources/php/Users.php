@@ -64,30 +64,52 @@
     private function getAllUsers()
     {
       try
+      {
+        $this->db->openConnection();
+        $connection = $this->db->getConnection();
+        $statement = $connection->prepare("SELECT user_id, username, `type`, balance FROM `user`");
+        if($statement->execute())
         {
-          $this->db->openConnection();
-          $connection = $this->db->getConnection();
-          $statement = $connection->prepare("SELECT user_id, username, `type`, balance FROM `user`");
-          if($statement->execute())
+          $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+          foreach($results as $arr)
           {
-            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-            
-            foreach($results as $arr)
-            {
-              echo "<tr class='clickableRow users'>";
-              echo "<td data-user-id=".utf8_encode($arr['user_id']).">".utf8_encode($arr['username'])."</td>";        
-              echo "<td>".utf8_encode($arr['type'])."</td>";
-              echo "<td>".utf8_encode($arr['balance'])."</td>";
-              echo "</tr>";
-            }
+            echo "<tr class='clickableRow users'>";
+            echo "<td data-user-id=".utf8_encode($arr['user_id']).">".utf8_encode($arr['username'])."</td>";        
+            echo "<td>".utf8_encode($arr['type'])."</td>";
+            echo "<td>".utf8_encode($arr['balance'])."</td>";
+            echo "</tr>";
           }
-        } catch (PDOException $ex)
-        {
-          $this->db->showError($ex, false);
-        } finally
-        {
-          $this->db->closeConnection();
         }
+      } catch (PDOException $ex)
+      {
+        $this->db->showError($ex, false);
+      } finally
+      {
+        $this->db->closeConnection();
+      }
+    }
+    
+    private function addBalance($user_id, $amount)
+    {
+      try
+      {
+        $this->db->openConnection();
+        $connection = $this->db->getConnection();
+        $statement = $connection->prepare("UPDATE `user` SET balance=balance+:amount WHERE user_id=:user_id");
+        $statement->bindParam(":amount", $amount);
+        $statement->bindParam(":user_id", $user_id);
+        if($statement->execute())
+        {
+          
+        }
+      } catch (PDOException $ex)
+      {
+        $this->db->showError($ex, false);
+      } finally
+      {
+        $this->db->closeConnection();
+      }
     }
     
   }

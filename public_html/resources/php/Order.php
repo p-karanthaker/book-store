@@ -143,7 +143,8 @@
           $statement = $connection->prepare("SELECT o.order_id, u.username, o.`date`
                                              FROM orders o
                                              INNER JOIN `user` u
-                                             ON u.user_id = o.user_id"
+                                             ON u.user_id = o.user_id
+                                             WHERE o.active = true"
                                            );
           if($statement->execute())
           {

@@ -50,12 +50,33 @@
     <!-- Primary Page Layout
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
+      <?php
+        require_once($doc_root.$config["paths"]["header"]);
+        if(isset($_SESSION["user_session"]))
+        {
+          $header->makeHeader();
+        }
+      ?>
+      
       <div class="row">
         <!-- Title -->
-        <div class="twelve columns" style="margin-top: 5%">
+        <div class="nine columns" style="margin-top: 5%">
           <h1>Staff Console</h1>
         </div>
         <!-- End Title -->
+        <div class="three columns" style="margin-top: 5%">
+          <?php 
+            if(isset($_SESSION["user_session"]))
+            {
+              echo "<form id='logoutForm' action='/resources/php/AccountLogin.php' method='post'>
+                      <input class='button-primary u-full-width' type='submit' name='logout' value='Sign Out'>
+                    </form>";
+            } else
+            {
+              echo "<a class='button button-primary u-full-width' href='login.php'>Sign In</a>";
+            }
+          ?>
+        </div>
       </div>
 
       <div class="row">
@@ -64,7 +85,6 @@
             <li><a href="index.php">Home</a></li>
             <li><a href="shop.php">Shop</a></li>
             <li><a href="basket.php">Basket</a></li>
-            <li><a href="account.php">My Account</a></li>
             <li class="active">Staff</li>
           </ol>
         </div>
