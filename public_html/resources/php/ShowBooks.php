@@ -198,20 +198,31 @@
       
       $cat_arr = explode(", ", $categories);
       
+      $msg_details = array();
       if(!preg_match(REGEX_MATCHER_ONE, $title))
       {
+        $msg_details = array("Book Title must be between 1 and 100 characters.");
+        echo $this->messages->createMessage("Warning!", $msg_details, "warning", ["inSessionVar" => false]);
         return false;
       } else if(!preg_match(REGEX_MATCHER_ONE, $authors))
       {
+        $msg_details = array("Author list must be between 1 and 100 characters.");
+        echo $this->messages->createMessage("Warning!", $msg_details, "warning", ["inSessionVar" => false]);
         return false;
       } else if(!preg_match(REGEX_MATCHER_DESCRIPTION, $description))
       {
+        $msg_details = array("Description must be between 1 and 5000 characters.");
+        echo $this->messages->createMessage("Warning!", $msg_details, "warning", ["inSessionVar" => false]);
         return false;
       } else if(!preg_match(REGEX_MATCHER_NUM, $quantity))
       {
+        $msg_details = array("Quantity must be an integer.");
+        echo $this->messages->createMessage("Warning!", $msg_details, "warning", ["inSessionVar" => false]);
         return false;
       } else if(!preg_match(REGEX_MATCHER_DEC, $price))
       {
+        $msg_details = array("Price must be a value of either 0 decimal places or 2 decimal places.");
+        echo $this->messages->createMessage("Warning!", $msg_details, "warning", ["inSessionVar" => false]);
         return false;
       }
       
@@ -219,6 +230,8 @@
       {
         if(!preg_match(REGEX_MATCHER_FIF, $category))
         {
+          $msg_details = array("Category must be between 1 and 50 characters.");
+          echo $this->messages->createMessage("Warning!", $msg_details, "warning", ["inSessionVar" => false]);
           return false; 
         }
       }

@@ -163,10 +163,12 @@ function addNewBook(uid) {
       $('html, body').animate({ scrollTop: 0 }, 'slow');
       $("#basket-alert-section").append("<div id=alert" + uid + ">" + data + "</div>");
       $("#basket-alert-section > div#alert".concat(uid)).show();
-      $("#basket-alert-section > div#alert".concat(uid)).fadeOut(3000, function () {
+      $("#basket-alert-section > div#alert".concat(uid)).fadeOut(6000, function () {
         $(this).remove(); 
       });
     },
     data: {book : book}
   });
+  
+  document.getElementById("bookForm").reset();
 }
