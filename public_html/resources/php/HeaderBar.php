@@ -1,17 +1,15 @@
 <?php 
   require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
   $header = new Header();
+  $header->makeHeader();
 
   class Header
   {
-    private $messages;
     private $db;  
     
     public function __construct()
     {
-      global $messages;
       global $db;
-      $this->messages = $messages;
       $this->db = $db;
     }
     

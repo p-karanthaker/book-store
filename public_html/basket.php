@@ -57,10 +57,9 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
       <?php
-        require_once($doc_root.$config["paths"]["header"]);
         if(isset($_SESSION["user_session"]))
         {
-          $header->makeHeader();
+          require_once($doc_root.$config["paths"]["header"]);
         }
       ?>
       

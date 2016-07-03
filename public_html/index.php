@@ -3,6 +3,7 @@
   session_start();
   $doc_root = $_SERVER["DOCUMENT_ROOT"];
   $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
+  $messages = require_once($doc_root.$config["paths"]["messages"]);
 ?>
 <!-- End PHP -->
 
@@ -49,10 +50,9 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
       <?php
-        require_once($doc_root.$config["paths"]["header"]);
         if(isset($_SESSION["user_session"]))
         {
-          $header->makeHeader();
+          require_once($doc_root.$config["paths"]["header"]);  
         }
       ?>
       
