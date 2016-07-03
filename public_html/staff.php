@@ -87,7 +87,8 @@
       
       <div class="row">
         <div class="three columns">
-          <a id="userOrders" class="button u-full-width" href="/resources/php/UserOrders.php">Users</a>
+          <a id="users" class="button u-full-width" href="/resources/php/UserInfo.php">Users</a>
+          <a id="orders" class="button u-full-width" href="/resources/php/UserOrders.php">Orders</a>
           <a id="addBook" class="button u-full-width" href="/resources/php/NewBook.php">Add Books</a>
         </div>
         <div class="nine columns">

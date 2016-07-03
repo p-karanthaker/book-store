@@ -6,9 +6,24 @@ $(document).ready(function () {
 });
 
 /**
-  * On Click event for showing the UserOrderPane
+  * On Click event for showing the Users Pane
   */
-$(document).on('click', '#userOrders', function () {
+$(document).on('click', '#users', function () {
+  var toLoad = $(this).attr('href');
+  $('#controlPanel').hide('fast',loadContent);
+  
+  function loadContent () {
+    $('#controlPanel').load(toLoad, '', showNewContent());
+    loadUsers();
+  }
+
+  return false;
+});
+
+/**
+  * On Click event for showing the User Order Pane
+  */
+$(document).on('click', '#orders', function () {
   var toLoad = $(this).attr('href');
   $('#controlPanel').hide('fast',loadContent);
   
@@ -69,6 +84,22 @@ function loadOrders() {
   xmlhttp.send("loadOrders=" + true);
 }
 
+function loadUsers() {
+  "use strict";
+  var xmlhttp;
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function () {
+  if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      $('tbody').html(xmlhttp.responseText);
+      //filterTable(); // Reload filterTable so live search continues.showBookDetails()
+      //showBookDetails();
+    }
+  };
+  xmlhttp.open("post", "/resources/php/Users.php", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlhttp.send("loadUsers=" + true);
+}
+
 $(document).on({
     click: function () {
       showOrderDetails(this);
@@ -79,7 +110,19 @@ $(document).on({
     mouseleave: function () {
       $(this).toggleClass('hover');
     }
-}, 'tr.clickableRow');
+}, 'tr.clickableRow.orders');
+
+$(document).on({
+    click: function () {
+      showUserDetails(this);
+    },
+    mouseenter: function () {
+      $(this).toggleClass('hover');
+    },
+    mouseleave: function () {
+      $(this).toggleClass('hover');
+    }
+}, 'tr.clickableRow.users');
 
 function showOrderDetails(row) {
   "use strict";
@@ -96,6 +139,24 @@ function showOrderDetails(row) {
     }
   };
   xmlhttp.open("get", "/resources/php/Order.php?Order=" + orderId, true);
+  xmlhttp.send();
+}
+
+function showUserDetails(row) {
+  "use strict";
+  var userId = $(row).find('td').attr('data-user-id'), xmlhttp;
+  if (userId === "") {
+    // display error 
+  } else {
+    xmlhttp = new XMLHttpRequest();
+  }
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      $('#userDetails').html(xmlhttp.responseText);
+      //$('html, body').animate({ scrollTop: 0 }, 'slow');
+    }
+  };
+  xmlhttp.open("get", "/resources/php/Users.php?User=" + userId, true);
   xmlhttp.send();
 }
 

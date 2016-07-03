@@ -80,7 +80,7 @@
           echo "<h5>Amount Due: £$order_total</h5>";
           echo "<input id='completeOrder' data-order-id=".$_GET["Order"]." class='button-primary' type='button' value='Complete Order'>";
           echo "</div>";
-          echo "<footer class='w3-container-footer w3-blue'>Ordered On: ".$order_date."</footer>"; 
+          echo "<footer class='w3-container-footer w3-blue'>Ordered On: ".$order_date."</footer>";
         }
       }
     }
@@ -151,7 +151,7 @@
             
             foreach($results as $arr)
             {
-              echo "<tr class='clickableRow'>";
+              echo "<tr class='clickableRow orders'>";
               echo "<td data-order-id=".utf8_encode($arr['order_id']).">".utf8_encode($arr['order_id'])."</td>";        
               echo "<td>".utf8_encode($arr['username'])."</td>";
               echo "<td>".utf8_encode($arr['date'])."</td>";

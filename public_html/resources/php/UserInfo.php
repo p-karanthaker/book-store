@@ -12,7 +12,7 @@
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>User Orders</title>
+    <title>Users</title>
     <meta name="description" content="Aston Book Store Project">
     <meta name="author" content="Karan Thaker">
 
@@ -55,10 +55,10 @@
         
         <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
           
-        <div id="orderDetails" class="w3-card-4">
+        <div id="userDetails" class="w3-card-4">
           <header class="w3-container-header w3-blue"><h3 id="bookTitle">Details</h3></header>
           <div class="w3-container-central">
-          <p id="bookDescription">Order details will appear here.</p>
+          <p id="bookDescription">User details will appear here.</p>
           </div>
         </div>
         <br />
@@ -67,9 +67,9 @@
         <table class="u-full-width" id="table">
           <thead>
             <tr>
-              <th>Order Id</th>
-              <th>User</th>
-              <th>Date</th>
+              <th>Username</th>
+              <th>Type</th>
+              <th>Balance</th>
             </tr>
           </thead>
           <tbody>
