@@ -6,6 +6,21 @@ $(document).ready(function () {
 });
 
 /**
+  * On Click event for showing the UserOrderPane
+  */
+$(document).on('click', '#userOrders', function () {
+  var toLoad = $(this).attr('href');
+  $('#controlPanel').hide('fast',loadContent);
+  
+  function loadContent () {
+    $('#controlPanel').load(toLoad, '', showNewContent());
+    loadOrders();
+  }
+
+  return false;
+});
+
+/**
   * On Click event for showing the AddBookPane
   */
 $(document).on('click', '#addBook', function () {
@@ -16,13 +31,13 @@ $(document).on('click', '#addBook', function () {
     $('#controlPanel').load(toLoad, '', showNewContent());
     loadCategories();
   }
-  
-  function showNewContent () {
-    $('#controlPanel').show('normal');
-  }
+
   return false;
 });
 
+function showNewContent () {
+  $('#controlPanel').show('normal');
+}
   
 function loadCategories() {
   "use strict";
@@ -36,6 +51,52 @@ function loadCategories() {
   xmlhttp.open("post", "/resources/php/ShowBooks.php", true);
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xmlhttp.send("loadCategories=" + true);
+}
+
+function loadOrders() {
+  "use strict";
+  var xmlhttp;
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function () {
+  if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      $('tbody').html(xmlhttp.responseText);
+      //filterTable(); // Reload filterTable so live search continues.showBookDetails()
+      //showBookDetails();
+    }
+  };
+  xmlhttp.open("post", "/resources/php/Order.php", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlhttp.send("loadOrders=" + true);
+}
+
+$(document).on({
+    click: function () {
+      showOrderDetails(this);
+    },
+    mouseenter: function () {
+      $(this).toggleClass('hover');
+    },
+    mouseleave: function () {
+      $(this).toggleClass('hover');
+    }
+}, 'tr.clickableRow');
+
+function showOrderDetails(row) {
+  "use strict";
+  var orderId = $(row).find('td').attr('data-order-id'), xmlhttp;
+  if (orderId === "") {
+    // display error 
+  } else {
+    xmlhttp = new XMLHttpRequest();
+  }
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      $('#orderDetails').html(xmlhttp.responseText);
+      //$('html, body').animate({ scrollTop: 0 }, 'slow');
+    }
+  };
+  xmlhttp.open("get", "/resources/php/Order.php?Order=" + orderId, true);
+  xmlhttp.send();
 }
 
 $(document).on('change', '#category', function () {
@@ -69,23 +130,6 @@ function removeLastCategory() {
   var lastAuthorAdded = categoryList.val().substr(0, categoryList.val().lastIndexOf(","));
   categoryList.val(lastAuthorAdded);
 }
-
-/**
-  * On Click event for showing the UserOrderPane
-  */
-$(document).on('click', '#userOrders', function () {
-  var toLoad = $(this).attr('href');
-  $('#controlPanel').hide('fast',loadContent);
-  
-  function loadContent () {
-    $('#controlPanel').load(toLoad, '', showNewContent());
-  }
-  
-  function showNewContent () {
-    $('#controlPanel').show('normal');
-  }
-  return false;
-});
 
 var uid = 0;
 $(document).on('click', '#addNewBook', function () {

@@ -34,7 +34,7 @@ function filterTable() {
 
 function showBookDetails() {
   "use strict";
-  $('tr#books').click(function () {
+  $('tr.clickableRow').click(function () {
     var bookId = $(this).find('td').attr('data-book-id'), xmlhttp;
     if (bookId === "") {
       // display error 
