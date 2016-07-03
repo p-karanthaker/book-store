@@ -108,7 +108,7 @@ BEGIN
 END$$
 
 DELIMITER $$
-CREATE PROCEDURE `UpdateBasket`(IN user_id INT, IN book_id INT, IN new_amount INT)
+CREATE PROCEDURE `UpdateBasket`(IN userid INT, IN bookid INT, IN new_amount INT)
 BEGIN
 	DECLARE remove_limit INT;
 	-- Get the current number of item in the basket
@@ -166,9 +166,9 @@ BEGIN
 		-- Insert items from basket into the order item table
 		INSERT INTO orderitem (order_id, book_id, quantity, cost)
 		SELECT  @orderId,
-				    bi.book_id,
-				    bi.quantity,
-				    bi.cost
+				bi.book_id,
+				bi.quantity,
+				bi.cost
 		FROM basket bsk
 		INNER JOIN basketitem bi
 			ON bi.basket_id = bsk.basket_id
