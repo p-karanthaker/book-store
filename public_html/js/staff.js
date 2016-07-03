@@ -156,6 +156,41 @@ function showOrderDetails(row) {
   xmlhttp.send();
 }
 
+/**
+  * On Click event for adding balance to a user account
+  */
+var uid = 0;
+$(document).on('click', '#increaseBalance', function () {
+  addToUserBalance(uid);
+  uid++;
+});
+
+function addToUserBalance(uid) {
+  "use strict";
+  var amount = $('#addBalance').val();
+  var userId = $('#increaseBalance').attr('data-user-id');
+  var xmlhttp;
+  if (amount === "") {
+    // display error 
+  } else {
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        $("#alert-section").append("<div id=alert" + uid + ">" + xmlhttp.responseText + "</div>");
+        $("#alert-section > div#alert".concat(uid)).show();
+        $("#alert-section > div#alert".concat(uid)).fadeOut(3000, function () {
+          $(this).remove(); 
+        });
+        loadUsers();
+        showUserDetails();
+      }
+    };
+    xmlhttp.open("post", "/resources/php/Users.php", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlhttp.send("addBalance=" + amount + "&userId=" + userId);
+  }
+}
+
 function showUserDetails(row) {
   "use strict";
   var userId = $(row).find('td').attr('data-user-id'), xmlhttp;

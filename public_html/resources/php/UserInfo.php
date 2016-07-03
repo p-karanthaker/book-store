@@ -53,7 +53,7 @@
           }
         ?>
         
-        <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
+        <div id="alert-section"></div>
           
         <div id="userDetails" class="w3-card-4">
           <header class="w3-container-header w3-blue"><h3 id="bookTitle">Details</h3></header>

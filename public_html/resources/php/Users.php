@@ -22,6 +22,9 @@
       } else if(isset($_GET["User"]))
       {
         $this->getUserDetails($_GET["User"]);
+      } else if(isset($_POST["addBalance"]))
+      {
+        $this->addBalance($_POST["userId"], $_POST["addBalance"]);
       }
     }
     
@@ -44,7 +47,7 @@
             echo "<div class='w3-container-central'>";
             echo "<h5>Account Balance: £".$result[0]['balance']."</h5>";
             echo "<label>Add Balance:</label>";
-            echo "<input type='number' min=".$result[0]['balance']." value=".$result[0]['balance']."></input>";
+            echo "<input id='addBalance' type='number' min='0' value='0'></input>";
             echo "<input id='increaseBalance' data-user-id=".$result[0]['user_id']." class='button-primary u-pull-right' type='button' value='Increase Balance'>";
             echo "</div>";
             echo "<footer class='w3-container-footer w3-blue'>User Type: ".$result[0]['type']."</footer>";
@@ -92,23 +95,34 @@
     
     private function addBalance($user_id, $amount)
     {
-      try
+      if(ctype_digit($user_id) && is_double(floatval($amount)))
       {
-        $this->db->openConnection();
-        $connection = $this->db->getConnection();
-        $statement = $connection->prepare("UPDATE `user` SET balance=balance+:amount WHERE user_id=:user_id");
-        $statement->bindParam(":amount", $amount);
-        $statement->bindParam(":user_id", $user_id);
-        if($statement->execute())
+        try
         {
-          
+          if($amount > 0)
+          {
+            $this->db->openConnection();
+            $connection = $this->db->getConnection();
+            $statement = $connection->prepare("UPDATE `user` SET balance=balance+:amount WHERE user_id=:user_id");
+            $statement->bindParam(":amount", $amount);
+            $statement->bindParam(":user_id", $user_id);
+            if($statement->execute())
+            {
+              echo $this->messages->createMessage("Info:", array("Added $amount to user $user_id's account."), "info", ["inSessionVar" => false]);
+              return true;
+            }
+          } else 
+          {
+            echo $this->messages->createMessage("Warning:", array("Value must be greater than 0."), "warning", ["inSessionVar" => false]);
+            return true;
+          }
+        } catch (PDOException $ex)
+        {
+          $this->db->showError($ex, false);
+        } finally
+        {
+          $this->db->closeConnection();
         }
-      } catch (PDOException $ex)
-      {
-        $this->db->showError($ex, false);
-      } finally
-      {
-        $this->db->closeConnection();
       }
     }
     
