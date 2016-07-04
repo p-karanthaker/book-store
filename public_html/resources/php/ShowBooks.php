@@ -132,11 +132,11 @@
     {
       $book = $new_book[0];
       $title = array_key_exists("title", $book) ? $book["title"] : "";
-      $authors = array_key_exists("title", $book) ? $book["authors"] : "";
-      $description = array_key_exists("title", $book) ? $book["description"] : "";
-      $categories = array_key_exists("title", $book) ? $book["categories"] : "";
-      $quantity = array_key_exists("title", $book) ? $book["quantity"] : "";
-      $price = array_key_exists("title", $book) ? $book["price"] : "";
+      $authors = array_key_exists("authors", $book) ? $book["authors"] : "";
+      $description = array_key_exists("description", $book) ? $book["description"] : "";
+      $categories = array_key_exists("categories", $book) ? $book["categories"] : "";
+      $quantity = array_key_exists("quantity", $book) ? $book["quantity"] : "";
+      $price = array_key_exists("price", $book) ? $book["price"] : "";
       if($this->validateBookDetails($book))
       {
         try
@@ -155,6 +155,7 @@
             $bookId = $connection->lastInsertId();
             
             $cat_arr = explode(", ", $categories);
+            $addedToCategories = false;
             foreach($cat_arr as $category)
             {
               $statement = $connection->prepare("INSERT INTO bookcategory (book_id, cat_id)
@@ -166,9 +167,13 @@
               $statement->bindParam(":category", $category);
               if($statement->execute())
               {
-                $msg_details = array("$title to the book stock.");
-                echo $this->messages->createMessage("Added", $msg_details, "success", ["inSessionVar" => false]);
+                $addedToCategories = true;
               }
+            }
+            if($addedToCategories)
+            {
+              $msg_details = array("$title to the book stock.");
+              echo $this->messages->createMessage("Added", $msg_details, "success", ["inSessionVar" => false]);
             }
           }
         } catch (PDOException $ex)
@@ -184,11 +189,11 @@
     private function validateBookDetails($book)
     {
       $title = array_key_exists("title", $book) ? $book["title"] : "";
-      $authors = array_key_exists("title", $book) ? $book["authors"] : "";
-      $description = array_key_exists("title", $book) ? $book["description"] : "";
-      $categories = array_key_exists("title", $book) ? $book["categories"] : "";
-      $quantity = array_key_exists("title", $book) ? $book["quantity"] : "";
-      $price = array_key_exists("title", $book) ? $book["price"] : "";
+      $authors = array_key_exists("authors", $book) ? $book["authors"] : "";
+      $description = array_key_exists("description", $book) ? $book["description"] : "";
+      $categories = array_key_exists("categories", $book) ? $book["categories"] : "";
+      $quantity = array_key_exists("quantity", $book) ? $book["quantity"] : "";
+      $price = array_key_exists("price", $book) ? $book["price"] : "";
       
       define("REGEX_MATCHER_ONE", "/^[\s\S]{1,100}$/i");
       define("REGEX_MATCHER_FIF", "/^[\s\S]{1,50}$/i");
