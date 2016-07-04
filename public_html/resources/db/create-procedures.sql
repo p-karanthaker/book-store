@@ -184,6 +184,43 @@ BEGIN
 	RETURN NULL;
 END$$
 
+DELIMITER$$
+CREATE FUNCTION `CompleteOrder`(orderid INT) RETURNS tinyint(1)
+BEGIN
+	SET @user = 
+    (
+		SELECT
+			user_id
+		FROM orders
+        WHERE order_id = orderid
+	);
+	SET @totalcost =
+    (
+		SELECT 
+			SUM(oi.quantity * oi.cost) AS 'total'
+		FROM orderitem oi
+		INNER JOIN orders o
+		ON o.order_id = oi.order_id
+		WHERE oi.order_id = orderid
+	);
+    SET @balance = 
+    (
+		SELECT 
+			balance
+		FROM `user`
+        WHERE user_id = @user
+	);
+    
+    SET @newbalance = @balance - @totalcost;
+    IF @newbalance < 0 THEN
+		RETURN FALSE;
+	ELSE 
+		UPDATE `user` SET balance = @newbalance WHERE user_id = @user;
+        UPDATE orders SET active = FALSE WHERE order_id = orderid;
+        RETURN TRUE;
+	END IF;
+END$$
+
 GRANT EXECUTE ON PROCEDURE book_store.AddItemToBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBasketByUserId TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBookById TO 'bs_user'@'localhost';
@@ -192,3 +229,4 @@ GRANT EXECUTE ON PROCEDURE book_store.GetOrderById TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.UpdateBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.EmptyBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON FUNCTION book_store.PlaceOrder TO 'bs_user'@'localhost';
+GRANT EXECUTE ON FUNCTION book_store.CompleteOrder TO 'bs_user'@'localhost';
