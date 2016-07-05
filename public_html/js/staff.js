@@ -25,12 +25,17 @@ function filterTable() {
   * On Click event for showing the Users Pane
   */
 $(document).on('click', '#users', function () {
-  var toLoad = $(this).attr('href');
+  var toLoad = $(this).attr('href') + " #content";
   $('#controlPanel').hide('fast',loadContent);
   
   function loadContent () {
-    $('#controlPanel').load(toLoad, '', showNewContent());
-    loadUsers();
+    $('#controlPanel').load(toLoad, '', showNewContent);
+  }
+  
+  function showNewContent () {
+    $('#controlPanel').show('normal', function () {
+      loadUsers();
+    });
   }
 
   return false;
@@ -40,12 +45,17 @@ $(document).on('click', '#users', function () {
   * On Click event for showing the User Order Pane
   */
 $(document).on('click', '#orders', function () {
-  var toLoad = $(this).attr('href');
+  var toLoad = $(this).attr('href') + " #content";
   $('#controlPanel').hide('fast',loadContent);
   
   function loadContent () {
-    $('#controlPanel').load(toLoad, '', showNewContent());
-    loadOrders();
+    $('#controlPanel').load(toLoad, '', showNewContent);
+  }
+  
+  function showNewContent () {
+    $('#controlPanel').show('normal', function () {
+      loadOrders();
+    });
   }
 
   return false;
@@ -55,20 +65,22 @@ $(document).on('click', '#orders', function () {
   * On Click event for showing the AddBookPane
   */
 $(document).on('click', '#addBook', function () {
-  var toLoad = $(this).attr('href');
-  $('#controlPanel').hide('fast',loadContent);
+  var toLoad = $(this).attr('href') + " #content";
+  $('#controlPanel').hide('fast', loadContent);
   
   function loadContent () {
-    $('#controlPanel').load(toLoad, '', showNewContent());
-    loadCategories();
+    $('#controlPanel').load(toLoad, '', showNewContent);
   }
-
+  
+  function showNewContent () {
+    $('#controlPanel').show('normal', function () {
+      loadCategories();
+    });
+  }
   return false;
 });
 
-function showNewContent () {
-  $('#controlPanel').show('normal');
-}
+
   
 function loadCategories() {
   "use strict";
