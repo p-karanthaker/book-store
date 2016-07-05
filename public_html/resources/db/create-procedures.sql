@@ -188,14 +188,14 @@ DELIMITER$$
 CREATE FUNCTION `CompleteOrder`(orderid INT) RETURNS tinyint(1)
 BEGIN
 	SET @user = 
-    (
+  (
 		SELECT
 			user_id
 		FROM orders
-        WHERE order_id = orderid
+    WHERE order_id = orderid
 	);
 	SET @totalcost =
-    (
+  (
 		SELECT 
 			SUM(oi.quantity * oi.cost) AS 'total'
 		FROM orderitem oi
@@ -203,21 +203,28 @@ BEGIN
 		ON o.order_id = oi.order_id
 		WHERE oi.order_id = orderid
 	);
-    SET @balance = 
-    (
+  SET @balance = 
+  (
 		SELECT 
 			balance
 		FROM `user`
-        WHERE user_id = @user
+    WHERE user_id = @user
+	);
+  SET @active = 
+  (
+		SELECT
+			active
+		FROM orders
+    WHERE order_id = orderid
 	);
     
-    SET @newbalance = @balance - @totalcost;
-    IF @newbalance < 0 THEN
+  SET @newbalance = @balance - @totalcost;
+  IF @newbalance < 0 OR NOT @active THEN
 		RETURN FALSE;
 	ELSE 
 		UPDATE `user` SET balance = @newbalance WHERE user_id = @user;
-        UPDATE orders SET active = FALSE WHERE order_id = orderid;
-        RETURN TRUE;
+    UPDATE orders SET active = FALSE WHERE order_id = orderid;
+    RETURN TRUE;
 	END IF;
 END$$
 
