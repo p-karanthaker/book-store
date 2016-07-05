@@ -64,7 +64,7 @@
           $results = "";
           $this->db->openConnection();
           $connection = $this->db->getConnection();
-          $statement = $connection->prepare("CALL UpdateBasket(:user_id, :book_id, 1)");
+          $statement = $connection->prepare("CALL AddItemToBasket(:user_id, :book_id, 1)");
           $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
           $statement->bindParam(":book_id", $book_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
           if($statement->execute())
