@@ -11,7 +11,7 @@
         }
       ?>
 
-      <div id="alert-section"></div>
+      <div id="alert-section" class="u-full-width"></div>
 
       <div id="userDetails" class="w3-card-4">
         <header class="w3-container-header w3-blue"><h3 id="bookTitle">Details</h3></header>

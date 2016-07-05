@@ -11,7 +11,7 @@
         }
       ?>
 
-      <div id="basket-alert-section" class="u-float-top u-full-width u-text-center"></div>
+      <div id="order-alert-section" class="u-full-width"></div>
 
       <div id="orderDetails" class="w3-card-4">
         <header class="w3-container-header w3-blue"><h3 id="bookTitle">Details</h3></header>

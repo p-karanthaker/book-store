@@ -82,6 +82,9 @@
           echo "</div>";
           echo "<footer class='w3-container-footer w3-blue'>Ordered On: ".$order_date."</footer>";
         }
+      } else if(isset($_GET["CompleteOrder"]))
+      {
+        $this->completeOrder($_GET["CompleteOrder"]);
       }
     }
     
@@ -105,6 +108,39 @@
       } finally
       {
         $this->db->closeConnection();
+      }
+    }
+    
+    private function completeOrder($order_id)
+    {
+      $order_id = ctype_digit($order_id) ? $order_id : null;
+      if($order_id != null)
+      {
+        try
+        {
+          $this->db->openConnection();
+          $connection = $this->db->getConnection();
+          $statement = $connection->prepare("SELECT CompleteOrder(:order_id)");
+          $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
+          if($statement->execute())
+          {
+            $results = $statement->fetch(PDO::FETCH_ASSOC);
+            $success = $results["CompleteOrder('$order_id')"];
+            if($success)
+            {
+              echo $this->messages->createMessage("Success!", array("Order #$order_id is complete. Payment has been taken from the user."), "success", ["inSessionVar" => false, "dismissable" => false]);
+            } else
+            {
+              echo $this->messages->createMessage("Failed!", array("Unable to complete Order #$order_id. User does not have enough balance, or order is already complete."), "error", ["inSessionVar" => false, "dismissable" => false]);
+            }
+          }
+        } catch (PDOException $ex)
+        {
+          $this->db->showError($ex, false);
+        } finally
+        {
+          $this->db->closeConnection();
+        }
       }
     }
     

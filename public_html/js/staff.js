@@ -327,9 +327,9 @@ function addNewBook(uid) {
     dataType: "text",
     success: function (data) {
       $('html, body').animate({ scrollTop: 0 }, 'slow');
-      $("#basket-alert-section").append("<div id=alert" + uid + ">" + data + "</div>");
-      $("#basket-alert-section > div#alert".concat(uid)).show();
-      $("#basket-alert-section > div#alert".concat(uid)).fadeOut(6000, function () {
+      $("#book-alert-section").append("<div id=alert" + uid + ">" + data + "</div>");
+      $("#book-alert-section > div#alert".concat(uid)).show();
+      $("#book-alert-section > div#alert".concat(uid)).fadeOut(6000, function () {
         $(this).remove(); 
       });
     },
@@ -338,3 +338,23 @@ function addNewBook(uid) {
   
   document.getElementById("bookForm").reset();
 }
+
+$(document).on('click', '#completeOrder', function () {
+  var order_id = $(this).attr('data-order-id');
+  $.ajax({
+    url: "/resources/php/Order.php",
+    type: "get",
+    dataType: "text",
+    success: function (data) {
+      $('html, body').animate({ scrollTop: 0 }, 'slow');
+      $("#order-alert-section").append("<div id=alert" + uid + ">" + data + "</div>");
+      $("#order-alert-section > div#alert".concat(uid)).show();
+      $("#order-alert-section > div#alert".concat(uid)).fadeOut(6000, function () {
+        $(this).remove();
+      });
+      loadOrders();
+      showOrderDetails();
+    },
+    data: {CompleteOrder: order_id}
+  });
+});

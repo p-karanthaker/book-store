@@ -12,6 +12,8 @@
       ?>
     </div>
   </div>
+  
+  <div id="book-alert-section" class="u-full-width"></div>
 
   <div class="row">
     <form id="bookForm">
