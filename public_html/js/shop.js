@@ -99,6 +99,10 @@ function addToBasket(uid) {
         $("#basket-alert-section > div#alert".concat(uid)).fadeOut(3000, function () {
           $(this).remove(); 
         });
+        categoryFilter();
+        var data = $('td[data-book-id="' + bookId + '"]');
+        var row = data.closest('tr');
+        $(row).trigger('click');
       }
     };
     xmlhttp.open("post", "/resources/php/Basket.php", true);

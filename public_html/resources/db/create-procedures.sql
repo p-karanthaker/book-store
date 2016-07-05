@@ -3,17 +3,22 @@ CREATE PROCEDURE `AddItemToBasket`(IN user_id INT, IN book_id INT, IN quantity I
 BEGIN
 	-- Create a basket for the user, ignore if they already have one
 	INSERT IGNORE INTO basket (basket.user_id) VALUES (user_id);
-    
-    -- Add the book to the basket, if already in the basket then update the quantity
-    INSERT INTO basketitem (basket_id, book_id, quantity, cost)
-		SELECT 	basket.basket_id,
+
+	-- Add the book to the basket, if already in the basket then update the quantity
+	INSERT INTO basketitem (basket_id, book_id, quantity, cost)
+		SELECT 	bt.basket_id,
 				book_id,
 				quantity,
-				books.price
-		FROM basket, books
-		WHERE basket.user_id = user_id
-		AND books.book_id = book_id
+				bk.price
+		FROM basket bt, books bk
+		WHERE bt.user_id = user_id
+		AND bk.book_id = book_id
 	ON DUPLICATE KEY UPDATE basketitem.quantity=basketitem.quantity+quantity;
+
+	-- reduce stock by 1
+	UPDATE books AS b 
+	SET b.quantity = b.quantity - quantity
+	WHERE b.book_id = book_id;
 END$$
 
 DELIMITER $$
@@ -114,22 +119,35 @@ BEGIN
 	-- Get the current number of item in the basket
 	SET @current_amount = 
 	(
-		SELECT quantity FROM basketitem
-		INNER JOIN basket
-		ON basket.basket_id = basketitem.basket_id
-		WHERE basket.user_id = userid
-		AND basketitem.book_id = bookid
+		SELECT IFNULL
+		(
+			(
+				SELECT quantity FROM basketitem
+				INNER JOIN basket
+				ON basket.basket_id = basketitem.basket_id
+				WHERE basket.user_id = userid
+				AND basketitem.book_id = bookid
+		), '0')
 	);
+
     IF new_amount > @current_amount THEN
+		SELECT @new_amount;
 		SET @add_amount = new_amount - @current_amount;
 		CALL AddItemToBasket(userid, bookid, @add_amount);
 	ELSEIF new_amount < @current_amount AND new_amount > 0 THEN
+		SET @del_amount = @current_amount - new_amount;
+		-- remove items from basket
 		UPDATE basketitem AS bi
         INNER JOIN basket b
 			ON b.basket_id = bi.basket_id
         SET quantity=new_amount
 			WHERE bi.book_id=bookid
 			AND b.user_id=userid;
+		
+		-- add removed items back to stock
+		UPDATE books AS b
+		SET b.quantity = b.quantity + @del_amount
+		WHERE b.book_id = bookid;
 	ELSEIF new_amount = 0 THEN
 		SET @basket_id = 
 		(
@@ -140,6 +158,11 @@ BEGIN
 		DELETE FROM basketitem
 		WHERE basketitem.book_id = @bookid
 		AND basketitem.basket_id = @basket_id;
+
+		-- add removed items back to stock
+		UPDATE books AS b
+		SET b.quantity = b.quantity + @current_amount
+		WHERE b.book_id = bookid;
 	END IF;
 END$$
 
