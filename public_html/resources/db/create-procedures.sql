@@ -1,3 +1,4 @@
+DELIMITER $$
 CREATE PROCEDURE `EmptyBasket`(IN user_id INT)
 BEGIN
 	SELECT bi.book_id, bi.quantity
@@ -12,7 +13,7 @@ BEGIN
 		SELECT b.basket_id FROM basket b
 		WHERE b.user_id = user_id
 	);
-END
+END$$
 
 CREATE PROCEDURE `GetBasketByUserId`(IN user_id INT)
 BEGIN
@@ -27,7 +28,7 @@ BEGIN
 	INNER JOIN books b
 		ON b.book_id = bi.book_id
 	WHERE bsk.user_id = user_id;
-END
+END$$
 
 CREATE PROCEDURE `GetBookById`(IN bookId INT)
 BEGIN
@@ -48,7 +49,7 @@ BEGIN
 		ON c.cat_id = bc.cat_id
 	WHERE b.book_id = bookId
 	GROUP BY b.book_id;
-END
+END$$
 
 CREATE PROCEDURE `GetBooksByCategory`(IN categoryName VARCHAR(50))
 BEGIN
@@ -69,7 +70,7 @@ BEGIN
 		ON c.cat_id = bc.cat_id
 	WHERE c.name LIKE CONCAT("%", categoryName, "%")
 	GROUP BY b.book_id;
-END
+END$$
 
 CREATE PROCEDURE `GetOrderById`(IN order_id INT)
 BEGIN
@@ -88,7 +89,7 @@ BEGIN
 		ON b.book_id = oi.book_id
 	WHERE
 		oi.order_id LIKE order_id;
-END
+END$$
 
 CREATE PROCEDURE `UpdateBasket`(IN userid INT, IN bookid INT, IN new_amount INT)
 BEGIN
@@ -140,7 +141,7 @@ BEGIN
 		SET b.quantity = b.quantity + @current_amount
 		WHERE b.book_id = bookid;
 	END IF;
-END
+END$$
 
 CREATE FUNCTION `AddItemToBasket`(user_id INT, book_id INT, quantity INT) RETURNS tinyint(1)
 BEGIN
@@ -173,7 +174,7 @@ BEGIN
 	ELSE 
 		RETURN FALSE;
 	END IF;
-END
+END$$
 
 CREATE FUNCTION `CompleteOrder`(orderid INT) RETURNS tinyint(1)
 BEGIN
@@ -216,7 +217,7 @@ BEGIN
         UPDATE orders SET active = FALSE WHERE order_id = orderid;
         RETURN TRUE;
 	END IF;
-END
+END$$
 
 CREATE FUNCTION `PlaceOrder`(user_id INT) RETURNS int(11)
 BEGIN
@@ -261,15 +262,4 @@ BEGIN
 		RETURN @orderId;
 	END IF;
 	RETURN NULL;
-END
-
-GRANT EXECUTE ON PROCEDURE book_store.EmptyBasket TO 'bs_user'@'localhost';
-GRANT EXECUTE ON PROCEDURE book_store.GetBasketByUserId TO 'bs_user'@'localhost';
-GRANT EXECUTE ON PROCEDURE book_store.GetBookById TO 'bs_user'@'localhost';
-GRANT EXECUTE ON PROCEDURE book_store.GetBooksByCategory TO 'bs_user'@'localhost';
-GRANT EXECUTE ON PROCEDURE book_store.GetOrderById TO 'bs_user'@'localhost';
-GRANT EXECUTE ON PROCEDURE book_store.UpdateBasket TO 'bs_user'@'localhost';
-
-GRANT EXECUTE ON FUNCTION book_store.AddItemToBasket TO 'bs_user'@'localhost';
-GRANT EXECUTE ON FUNCTION book_store.CompleteOrder TO 'bs_user'@'localhost';
-GRANT EXECUTE ON FUNCTION book_store.PlaceOrder TO 'bs_user'@'localhost';
+END$$
