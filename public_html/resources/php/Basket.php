@@ -64,12 +64,20 @@
           $results = "";
           $this->db->openConnection();
           $connection = $this->db->getConnection();
-          $statement = $connection->prepare("CALL AddItemToBasket(:user_id, :book_id, 1)");
+          $statement = $connection->prepare("SELECT AddItemToBasket(:user_id, :book_id, 1)");
           $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
           $statement->bindParam(":book_id", $book_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
           if($statement->execute())
           {
-            echo $this->messages->createMessage("Added", array($_POST['bookTitle']." to your basket."), "success", ["inSessionVar" => false, "dismissable" => false]);
+            $results = $statement->fetch(PDO::FETCH_ASSOC);
+            $success = $results["AddItemToBasket('$user_id', '$book_id', 1)"];
+            if($success)
+            {
+              echo $this->messages->createMessage("Added", array($_POST['bookTitle']." to your basket."), "success", ["inSessionVar" => false, "dismissable" => false]);
+            } else
+            {
+              echo $this->messages->createMessage("Out of Stock!", array("This item is no longer in stock."), "error", ["inSessionVar" => false, "dismissable" => false]);
+            }
           } else
           {
             echo $this->messages->createMessage("Error", array("Unable to add item to your basket right now. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]);
@@ -104,7 +112,7 @@
           {
             echo "<tr id='items' data-book-id=".utf8_encode($arr['book_id']).">";
             echo "<td id='bookTitle'>".utf8_encode($arr['title'])."</td>";
-            echo "<td><input id='quantity' type='number' value='".utf8_encode($arr['quantity'])."' min='1' max='10'/></td>";
+            echo "<td><input id='quantity' type='number' value='".utf8_encode($arr['quantity'])."' min='1' max='100'/></td>";
             echo "<td id='bookPrice'>£".utf8_encode($arr['cost'])."</td>";
             echo "<td><button class='removeItem u-pull-right' type='submit'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></button></td>";
             echo "</tr>";
@@ -166,7 +174,15 @@
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
 
         if($statement->execute())
-        {
+        { 
+          $itemsToRestock = $statement->fetchAll();
+          foreach($itemsToRestock as $item)
+          {
+            $statement = $connection->prepare("UPDATE books AS b SET b.quantity = b.quantity + :quantity WHERE b.book_id = :book_id");
+            $statement->bindParam(":quantity", $item['quantity']);
+            $statement->bindParam(":book_id", $item['book_id']);
+            $statement->execute();
+          }
           echo $this->messages->createMessage("Info:", array("Your basket has been emptied."), "info", ["inSessionVar" => false, "dismissable" => false]);
         }
         else

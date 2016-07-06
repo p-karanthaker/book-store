@@ -45,7 +45,7 @@ function showBookDetails() {
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         $('#bookDetails').html(xmlhttp.responseText);
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        $('html, body').scrollTop(0);
       }
     };
     xmlhttp.open("get", "/resources/php/ShowBooks.php?Book=" + bookId, true);

@@ -1,38 +1,19 @@
-DELIMITER $$
-CREATE PROCEDURE `AddItemToBasket`(IN user_id INT, IN book_id INT, IN quantity INT)
-BEGIN
-	-- Create a basket for the user, ignore if they already have one
-	INSERT IGNORE INTO basket (basket.user_id) VALUES (user_id);
-
-	-- Add the book to the basket, if already in the basket then update the quantity
-	INSERT INTO basketitem (basket_id, book_id, quantity, cost)
-		SELECT 	bt.basket_id,
-				book_id,
-				quantity,
-				bk.price
-		FROM basket bt, books bk
-		WHERE bt.user_id = user_id
-		AND bk.book_id = book_id
-	ON DUPLICATE KEY UPDATE basketitem.quantity=basketitem.quantity+quantity;
-
-	-- reduce stock by 1
-	UPDATE books AS b 
-	SET b.quantity = b.quantity - quantity
-	WHERE b.book_id = book_id;
-END$$
-
-DELIMITER $$
 CREATE PROCEDURE `EmptyBasket`(IN user_id INT)
 BEGIN
+	SELECT bi.book_id, bi.quantity
+    FROM basketitem bi
+    INNER JOIN basket bsk
+	ON bsk.basket_id = bi.basket_id
+    WHERE bsk.user_id = user_id;
+    
 	DELETE FROM basketitem
 	WHERE basket_id IN
 	(
 		SELECT b.basket_id FROM basket b
 		WHERE b.user_id = user_id
 	);
-END$$
+END
 
-DELIMITER $$
 CREATE PROCEDURE `GetBasketByUserId`(IN user_id INT)
 BEGIN
 	SELECT  bi.book_id,
@@ -46,9 +27,8 @@ BEGIN
 	INNER JOIN books b
 		ON b.book_id = bi.book_id
 	WHERE bsk.user_id = user_id;
-END$$
+END
 
-DELIMITER $$
 CREATE PROCEDURE `GetBookById`(IN bookId INT)
 BEGIN
 	SELECT  b.book_id,
@@ -68,9 +48,8 @@ BEGIN
 		ON c.cat_id = bc.cat_id
 	WHERE b.book_id = bookId
 	GROUP BY b.book_id;
-END$$
+END
 
-DELIMITER $$
 CREATE PROCEDURE `GetBooksByCategory`(IN categoryName VARCHAR(50))
 BEGIN
 	SELECT  b.book_id,
@@ -90,9 +69,8 @@ BEGIN
 		ON c.cat_id = bc.cat_id
 	WHERE c.name LIKE CONCAT("%", categoryName, "%")
 	GROUP BY b.book_id;
-END$$
+END
 
-DELIMITER $$
 CREATE PROCEDURE `GetOrderById`(IN order_id INT)
 BEGIN
 	SELECT 
@@ -110,9 +88,8 @@ BEGIN
 		ON b.book_id = oi.book_id
 	WHERE
 		oi.order_id LIKE order_id;
-END$$
+END
 
-DELIMITER $$
 CREATE PROCEDURE `UpdateBasket`(IN userid INT, IN bookid INT, IN new_amount INT)
 BEGIN
 	DECLARE remove_limit INT;
@@ -131,9 +108,8 @@ BEGIN
 	);
 
     IF new_amount > @current_amount THEN
-		SELECT @new_amount;
 		SET @add_amount = new_amount - @current_amount;
-		CALL AddItemToBasket(userid, bookid, @add_amount);
+		SELECT AddItemToBasket(userid, bookid, @add_amount);
 	ELSEIF new_amount < @current_amount AND new_amount > 0 THEN
 		SET @del_amount = @current_amount - new_amount;
 		-- remove items from basket
@@ -164,9 +140,84 @@ BEGIN
 		SET b.quantity = b.quantity + @current_amount
 		WHERE b.book_id = bookid;
 	END IF;
-END$$
+END
 
-DELIMITER $$
+CREATE FUNCTION `AddItemToBasket`(user_id INT, book_id INT, quantity INT) RETURNS tinyint(1)
+BEGIN
+	-- Create a basket for the user, ignore if they already have one
+	INSERT IGNORE INTO basket (basket.user_id) VALUES (user_id);
+
+	SET @instock = 
+    (
+		SELECT bks.quantity FROM books bks WHERE bks.book_id = book_id
+    );
+    SET @valu = @instock - quantity;
+
+	IF @valu >= 0 THEN
+		-- Add the book to the basket, if already in the basket then update the quantity
+		INSERT INTO basketitem (basket_id, book_id, quantity, cost)
+			SELECT 	bt.basket_id,
+					book_id,
+					quantity,
+					bk.price
+			FROM basket bt, books bk
+			WHERE bt.user_id = user_id
+			AND bk.book_id = book_id
+		ON DUPLICATE KEY UPDATE basketitem.quantity=basketitem.quantity+quantity;
+
+		-- reduce stock by 1
+		UPDATE books AS b 
+		SET b.quantity = b.quantity - quantity
+		WHERE b.book_id = book_id;
+        RETURN TRUE;
+	ELSE 
+		RETURN FALSE;
+	END IF;
+END
+
+CREATE FUNCTION `CompleteOrder`(orderid INT) RETURNS tinyint(1)
+BEGIN
+	SET @user = 
+    (
+		SELECT
+			user_id
+		FROM orders
+        WHERE order_id = orderid
+	);
+	SET @totalcost =
+    (
+		SELECT 
+			SUM(oi.quantity * oi.cost) AS 'total'
+		FROM orderitem oi
+		INNER JOIN orders o
+		ON o.order_id = oi.order_id
+		WHERE oi.order_id = orderid
+	);
+    SET @balance = 
+    (
+		SELECT 
+			balance
+		FROM `user`
+        WHERE user_id = @user
+	);
+    SET @active = 
+    (
+		SELECT
+			active
+		FROM orders
+        WHERE order_id = orderid
+	);
+    
+    SET @newbalance = @balance - @totalcost;
+    IF @newbalance < 0 OR NOT @active THEN
+		RETURN FALSE;
+	ELSE 
+		UPDATE `user` SET balance = @newbalance WHERE user_id = @user;
+        UPDATE orders SET active = FALSE WHERE order_id = orderid;
+        RETURN TRUE;
+	END IF;
+END
+
 CREATE FUNCTION `PlaceOrder`(user_id INT) RETURNS int(11)
 BEGIN
 	-- Check if basket has items
@@ -201,62 +252,24 @@ BEGIN
 		GROUP BY book_id;
 		
 		-- Empty the basket and return the order id
-		CALL EmptyBasket(user_id);
+		DELETE FROM basketitem
+		WHERE basket_id IN
+		(
+			SELECT b.basket_id FROM basket b
+			WHERE b.user_id = user_id
+		);
 		RETURN @orderId;
 	END IF;
 	RETURN NULL;
-END$$
+END
 
-DELIMITER$$
-CREATE FUNCTION `CompleteOrder`(orderid INT) RETURNS tinyint(1)
-BEGIN
-	SET @user = 
-  (
-		SELECT
-			user_id
-		FROM orders
-    WHERE order_id = orderid
-	);
-	SET @totalcost =
-  (
-		SELECT 
-			SUM(oi.quantity * oi.cost) AS 'total'
-		FROM orderitem oi
-		INNER JOIN orders o
-		ON o.order_id = oi.order_id
-		WHERE oi.order_id = orderid
-	);
-  SET @balance = 
-  (
-		SELECT 
-			balance
-		FROM `user`
-    WHERE user_id = @user
-	);
-  SET @active = 
-  (
-		SELECT
-			active
-		FROM orders
-    WHERE order_id = orderid
-	);
-    
-  SET @newbalance = @balance - @totalcost;
-  IF @newbalance < 0 OR NOT @active THEN
-		RETURN FALSE;
-	ELSE 
-		UPDATE `user` SET balance = @newbalance WHERE user_id = @user;
-    UPDATE orders SET active = FALSE WHERE order_id = orderid;
-    RETURN TRUE;
-	END IF;
-END$$
-
-GRANT EXECUTE ON PROCEDURE book_store.AddItemToBasket TO 'bs_user'@'localhost';
+GRANT EXECUTE ON PROCEDURE book_store.EmptyBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBasketByUserId TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBookById TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetBooksByCategory TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.GetOrderById TO 'bs_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE book_store.UpdateBasket TO 'bs_user'@'localhost';
-GRANT EXECUTE ON PROCEDURE book_store.EmptyBasket TO 'bs_user'@'localhost';
-GRANT EXECUTE ON FUNCTION book_store.PlaceOrder TO 'bs_user'@'localhost';
+
+GRANT EXECUTE ON FUNCTION book_store.AddItemToBasket TO 'bs_user'@'localhost';
 GRANT EXECUTE ON FUNCTION book_store.CompleteOrder TO 'bs_user'@'localhost';
+GRANT EXECUTE ON FUNCTION book_store.PlaceOrder TO 'bs_user'@'localhost';
