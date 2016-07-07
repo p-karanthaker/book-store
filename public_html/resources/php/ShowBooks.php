@@ -131,12 +131,12 @@
     private function addNewBook($new_book)
     {
       $book = $new_book[0];
-      $title = array_key_exists("title", $book) ? $book["title"] : "";
-      $authors = array_key_exists("authors", $book) ? $book["authors"] : "";
-      $description = array_key_exists("description", $book) ? $book["description"] : "";
-      $categories = array_key_exists("categories", $book) ? $book["categories"] : "";
-      $quantity = array_key_exists("quantity", $book) ? $book["quantity"] : "";
-      $price = array_key_exists("price", $book) ? $book["price"] : "";
+      $title = array_key_exists("title", $book) ? htmlspecialchars($book["title"], ENT_QUOTES) : "";
+      $authors = array_key_exists("authors", $book) ? htmlspecialchars($book["authors"], ENT_QUOTES) : "";
+      $description = array_key_exists("description", $book) ? htmlspecialchars($book["description"], ENT_QUOTES) : "";
+      $categories = array_key_exists("categories", $book) ? htmlspecialchars($book["categories"], ENT_QUOTES) : "";
+      $quantity = array_key_exists("quantity", $book) ? htmlspecialchars($book["quantity"], ENT_QUOTES) : "";
+      $price = array_key_exists("price", $book) ? htmlspecialchars($book["price"], ENT_QUOTES) : "";
       if($this->validateBookDetails($book))
       {
         try
@@ -194,12 +194,13 @@
       $categories = array_key_exists("categories", $book) ? $book["categories"] : "";
       $quantity = array_key_exists("quantity", $book) ? $book["quantity"] : "";
       $price = array_key_exists("price", $book) ? $book["price"] : "";
-      
-      define("REGEX_MATCHER_ONE", "/^[\s\S]{1,100}$/i");
-      define("REGEX_MATCHER_FIF", "/^[\s\S]{1,50}$/i");
+
+      $stringmatcher="a-z0-9\s,.+*?$\(\)!:\-'\"\&";
+      define("REGEX_MATCHER_ONE", "/^[$stringmatcher]{1,100}$/i");
+      define("REGEX_MATCHER_FIF", "/^[$stringmatcher]{1,50}$/i");
       define("REGEX_MATCHER_NUM", "/^[\d]{1,11}$/");
       define("REGEX_MATCHER_DEC", "/^\d{1,13}\.?(?:\d{0}|\d{2})$/");
-      define("REGEX_MATCHER_DESCRIPTION", "/^[\s\S]{1,5000}$/i");
+      define("REGEX_MATCHER_DESCRIPTION", "/^[$stringmatcher]{1,5000}$/i");
       
       $cat_arr = explode(", ", $categories);
       
