@@ -16,7 +16,7 @@
       <div id="userDetails" class="w3-card-4">
         <header class="w3-container-header w3-blue"><h3 id="bookTitle">Details</h3></header>
         <div class="w3-container-central">
-        <p id="bookDescription">User details will appear here.</p>
+        <p id="bookDescription">Click on a user to view and update balance.</p>
         </div>
       </div>
       <br />

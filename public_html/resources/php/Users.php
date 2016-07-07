@@ -43,14 +43,20 @@
           {
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             
-            echo "<header class='w3-container-header w3-blue'><h3 id='username'>".$result[0]['username']."</h3></header>";
-            echo "<div class='w3-container-central'>";
-            echo "<h5>Account Balance: £".$result[0]['balance']."</h5>";
-            echo "<label>Add Balance:</label>";
-            echo "<input id='addBalance' type='number' min='0' value='0'></input>";
-            echo "<input id='increaseBalance' data-user-id=".$result[0]['user_id']." class='button-primary u-pull-right' type='button' value='Increase Balance'>";
-            echo "</div>";
-            echo "<footer class='w3-container-footer w3-blue'>User Type: ".$result[0]['type']."</footer>";
+            echo "<header class='w3-container-header w3-blue'><h3 id='username'>".$result[0]['username']."</h3></header>
+                    <div class='w3-container-central'>
+                      <h5>Account Balance: £".$result[0]['balance']."</h5>
+                      <label>Add Balance:</label>
+                      <div class='row'>
+                        <div class='one-half column'>
+                          <input id='addBalance' type='number' min='0' value='0' class='u-full-width'></input>
+                        </div>
+                        <div class='one-half column'>
+                          <input id='increaseBalance' data-user-id=".$result[0]['user_id']." class='button-primary u-full-width' type='button' value='Increase Balance'>
+                        </div>
+                      </div>
+                    </div>
+                  <footer class='w3-container-footer w3-blue'>User Type: ".$result[0]['type']."</footer>";
             
             return true;
           }

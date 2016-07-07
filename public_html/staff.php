@@ -112,7 +112,12 @@
         </div>
         <div class="nine columns">
           <div id="controlPanel">
-            <h3>Use the buttons on the side!</h3>
+            <?php
+              $msg_details = array("<strong><h3>Users</h3></strong><p>Click Users to view details of Book Store users and top up their accounts.</p>
+                                    <strong><h3>Orders</h3></strong><p>Click Orders to view details of user orders and complete the order.</p>
+                                    <strong><h3>Add Books</h3></strong><p>Click Add Books to add new books into the Book Store catalogue.</p>");
+              echo $messages->createMessage("<i class='fa fa-info-circle fa-lg' aria-hidden='true'></i> Staff Actions", $msg_details, "info", ["isBlock" => true, "inSessionVar" => false, "dismissable" => false]);
+            ?>
           </div>
         </div>
       </div>
