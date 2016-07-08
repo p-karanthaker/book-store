@@ -114,12 +114,12 @@
             $statement->bindParam(":user_id", $user_id);
             if($statement->execute())
             {
-              echo $this->messages->createMessage("Info:", array("Added $amount to user $user_id's account."), "info", ["inSessionVar" => false]);
+              echo $this->messages->createMessage("Info:", array("Added £$amount to user $user_id's account."), "info", ["inSessionVar" => false, "dismissable" => false]);
               return true;
             }
           } else 
           {
-            echo $this->messages->createMessage("Warning:", array("Value must be greater than 0."), "warning", ["inSessionVar" => false]);
+            echo $this->messages->createMessage("Warning:", array("Value must be greater than £0."), "warning", ["inSessionVar" => false, "dismissable" => false]);
             return true;
           }
         } catch (PDOException $ex)

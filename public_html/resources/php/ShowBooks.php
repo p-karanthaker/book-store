@@ -173,7 +173,7 @@
             if($addedToCategories)
             {
               $msg_details = array("$title to the book stock.");
-              echo $this->messages->createMessage("Added", $msg_details, "success", ["inSessionVar" => false]);
+              echo $this->messages->createMessage("Added", $msg_details, "success", ["inSessionVar" => false, "dismissable" => false]);
             }
           }
         } catch (PDOException $ex)
@@ -195,7 +195,7 @@
       $quantity = array_key_exists("quantity", $book) ? $book["quantity"] : "";
       $price = array_key_exists("price", $book) ? $book["price"] : "";
 
-      $stringmatcher="a-z0-9\s,.+*?$\(\)!:\-'\"\&";
+      $stringmatcher="a-z0-9\s,.+*?$!:\-'\"\&";
       define("REGEX_MATCHER_ONE", "/^[$stringmatcher]{1,100}$/i");
       define("REGEX_MATCHER_FIF", "/^[$stringmatcher]{1,50}$/i");
       define("REGEX_MATCHER_NUM", "/^[\d]{1,11}$/");
