@@ -223,10 +223,10 @@
             echo "<div class='row'>
                     <div class='twelve columns infobar bg-color-skeleton-blue'>
                       <div class='u-pull-left'>
-                        <i class='fa fa-user fa-lg' aria-hidden='true' style='color:#000;'></i> ".$result[0]["username"]."
+                        <i class='fa fa-user fa-lg' aria-hidden='true' style='color:#34495e;'></i> ".$result[0]["username"]."
                       </div>
                       <div class='u-pull-right'>
-                        <i class='fa fa-gbp fa-lg' aria-hidden='true' style='color:#000;'></i>".$result[0]["balance"]."
+                        <i class='fa fa-gbp fa-lg' aria-hidden='true' style='color:#34495e;'></i>".$result[0]["balance"]."
                       </div>
                     </div>
                   </div>";
