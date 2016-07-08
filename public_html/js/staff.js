@@ -91,7 +91,7 @@ function loadCategories() {
       $('#category').append(xmlhttp.responseText);
     }
   };
-  xmlhttp.open("post", "/resources/php/ShowBooks.php", true);
+  xmlhttp.open("post", "/resources/php/Books.php", true);
   xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xmlhttp.send("loadCategories=" + true);
 }
@@ -322,7 +322,7 @@ function addNewBook(uid) {
     ];
   
   $.ajax({
-    url: "/resources/php/ShowBooks.php",
+    url: "/resources/php/Books.php",
     type: "post",
     dataType: "text",
     success: function (data) {

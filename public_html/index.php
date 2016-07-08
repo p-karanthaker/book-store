@@ -1,9 +1,7 @@
 <!-- Begin PHP -->
 <?php
   session_start();
-  $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
-  $messages = require_once($doc_root.$config["paths"]["messages"]);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
 ?>
 <!-- End PHP -->
 
@@ -40,7 +38,7 @@
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" href="<?php echo $config["paths"]["host"].$config["paths"]["favicon"]; ?>">
+    <link rel="icon" href="<?php echo $config["paths"]["baseurl"].$config["images"]["favicon"]; ?>">
 
   </head>
   <!-- End Head -->
@@ -52,7 +50,7 @@
       <?php
         if(isset($_SESSION["user_session"]))
         {
-          require_once($doc_root.$config["paths"]["header"]);  
+          require_once($doc_root.$config["php"]["header_bar"]);  
         }
       ?>
       

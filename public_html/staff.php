@@ -1,9 +1,8 @@
 <!-- Begin PHP -->
 <?php
   session_start();
-  $doc_root = $_SERVER["DOCUMENT_ROOT"];
-  $config = parse_ini_file($doc_root."/resources/configs/config.ini", true);
-  $messages = require_once($doc_root.$config["paths"]["messages"]);
+  require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
+  $messages = new Messages();
 ?>
 <!-- End PHP -->
 
@@ -41,7 +40,7 @@
     
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" href="<?php echo $config["paths"]["host"].$config["paths"]["favicon"]; ?>">
+    <link rel="icon" href="<?php echo $config["paths"]["baseurl"].$config["images"]["favicon"]; ?>">
 
   </head>
   <!-- End Head -->
@@ -53,7 +52,7 @@
       <?php
         if(isset($_SESSION["user_session"]))
         {
-          require_once($doc_root.$config["paths"]["header"]);
+          require_once($doc_root.$config["php"]["header_bar"]);
         }
       ?>
       
@@ -93,8 +92,7 @@
           <?php
             if(!isset($_SESSION["user_session"]) || (isset($_SESSION["user_session"]) && $_SESSION["user_session"]["user_type"] != "STAFF"))
             {
-              $message = new Messages();
-              $message->createMessage("<i class='fa fa-lock'></i>", array("Only members of staff can access this page."), "error", ["dismissable" => false]);
+              $messages->createMessage("<i class='fa fa-lock'></i>", array("Only members of staff can access this page."), "error", ["dismissable" => false]);
               echo $_SESSION["message"];
               $_SESSION["message"] = null;
               die();

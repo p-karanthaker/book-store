@@ -1,19 +1,18 @@
 <?php
   session_start();
   require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
-  $books = new ShowBooks();
-  
-  class ShowBooks 
+  $books = new Books();
+  die();
+
+  class Books 
   {
     private $db;
     private $messages;
     
     public function __construct()
     {
-      global $db;
-      global $messages;
-      $this->db = $db;
-      $this->messages = $messages;
+      $this->db = new DatabaseHelper();
+      $this->messages = new Messages();
       
       $category = "";
       if(isset($_GET["Category"]))

@@ -18,10 +18,10 @@
       global $messages;
       $this->config = $config;
       $this->messages = $messages;
-      $this->db_host = $config["database_dev"]["db_host"];
-      $this->db_name = $config["database_dev"]["db_name"];
-      $this->db_user = $config["database_dev"]["db_user"];
-      $this->db_pass = $config["database_dev"]["db_pass"];
+      $this->db_host = $config["database"]["db_host"];
+      $this->db_name = $config["database"]["db_name"];
+      $this->db_user = $config["database"]["db_user"];
+      $this->db_pass = $config["database"]["db_pass"];
     }
     
     public function openConnection()

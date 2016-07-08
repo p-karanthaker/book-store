@@ -7,10 +7,10 @@
 
   if($result)
   {
-    header("Location: ".$config["paths"]["host"].$config["paths"]["index"], true, 303);
+    header("Location: ".$config["paths"]["baseurl"].$config["content"]["index"], true, 303);
   } else
   {
-    header("Location: ".$config["paths"]["host"].$config["paths"]["login"], true, 303);
+    header("Location: ".$config["paths"]["baseurl"].$config["content"]["login"], true, 303);
   }
   die();
 
@@ -22,10 +22,8 @@
     
     public function __construct()
     {
-      global $messages;
-      global $db;
-      $this->messages = $messages;
-      $this->db = $db;
+      $this->messages = new Messages();
+      $this->db = new DatabaseHelper();
       
       if(isset($_POST["login"]))
       {

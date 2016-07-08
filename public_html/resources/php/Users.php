@@ -11,10 +11,8 @@
     
     public function __construct()
     {
-      global $messages;
-      global $db;
-      $this->messages = $messages;
-      $this->db = $db;
+      $this->messages = new Messages();
+      $this->db = new DatabaseHelper();
       
       if(isset($_POST["loadUsers"]))
       {
