@@ -1,3 +1,4 @@
+<!-- User Info view for the Staff.php page -->
 <div id="content">
   <div class="row">
     <div class="twelve columns">

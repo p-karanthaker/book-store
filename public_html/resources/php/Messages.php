@@ -1,13 +1,36 @@
 <?php
+  /**
+   * The Messages class provides an easy method of creating
+   * bootstrap flash alert messages. The messages can either be added to
+   * a "message" session variable or they can returned as a string.
+   */
   class Messages
-  {
+  {/**
+     * The message being written.
+     */
     private $message;
     
+    /**
+     * Constructs the Message object by initialising a null session for the message.
+     */
     public function __construct()
     {
       $_SESSION["message"] = null;
     }
     
+    /**
+     * Create a bootstrap alert flash message.
+     *
+     * @param String  $title  The title of the message.
+     * @param String  $message  The message content.
+     * @param String  $type The type of alert (info, success, warning, error)
+     * @param Array   $options  Optional parameters in an associative array.
+     *                          "isBlock" => true/false   Is the alert a block style? Default: false
+     *                          "inSessionVar" => true/false  Is the alert in the session variable? Default: true
+     *                          "dismissable" => true/false Is the alert able to be closed?
+     *
+     * @return  String  Returns the message as a string rather than in the session variable.
+     */
     public function createMessage($title, $message, $type, $options = array()) {      
       $isBlock = array_key_exists("isBlock", $options) ? $options["isBlock"] : false;
       $inSessionVar = array_key_exists("inSessionVar", $options) ? $options["inSessionVar"] : true;

@@ -6,9 +6,20 @@
 
   class Basket
   {
+    /**
+     * The Messages object.
+     */
     private $messages;
-    private $db;  
     
+    /**
+     * The DatabaseHelper object.
+     */
+    private $db;
+    
+    /**
+     * Constructs Basket by initialising Messages and DatabaseHelper objects.
+     * Checks POST variables to perform various Basket actions.
+     */
     public function __construct()
     {
       $this->messages = new Messages();
@@ -16,15 +27,16 @@
       
       $category = "";
       $user_id = $_SESSION["user_session"]["user_id"];
-      if(isset($_POST["bookId"]))
+      
+      if(isset($_POST["bookId"]))  // Add item to basket.
       {
         $this->addToBasket($user_id, $_POST["bookId"]);
-      } else if(isset($_POST["showBasket"]))
+      } else if(isset($_POST["showBasket"]))  // Show the user basket.
       {
         $this->showBasket($user_id);
-      } else if(isset($_POST["updateBasket"]))
+      } else if(isset($_POST["updateBasket"]))  // Try to update the user basket.
       {
-        if(!empty($_POST["updateBasket"]))
+        if(!empty($_POST["updateBasket"]))  // Update the user basket if POST variable is not empty
         {
           $arr = explode(",", $_POST["updateBasket"]);
           $books = array_chunk($arr, 2);
@@ -41,10 +53,10 @@
             echo $this->messages->createMessage("Info:", array("Nothing to update."), "info", ["inSessionVar" => false, "dismissable" => false]);
           }
         }
-      } else if(isset($_POST["emptyBasket"]))
+      } else if(isset($_POST["emptyBasket"]))   // Empty the user's basket.
       {
         $this->emptyBasket($user_id);
-      } else if(isset($_POST["removeItem"]))
+      } else if(isset($_POST["removeItem"]))    // Remove an item from the user's basket.
       {
         if($this->updateBasket($user_id, $_POST["removeItem"], "0"))
         {
@@ -53,6 +65,12 @@
       }
     }
     
+    /**
+     * Add an item to the user's basket.
+     *
+     * @param Integer   $user_id  The user's user_id.
+     * @param Integer   $book_id  The id of the book.
+     */
     private function addToBasket($user_id, $book_id)
     {
       if(ctype_digit($book_id))
@@ -62,7 +80,7 @@
           $results = "";
           $this->db->openConnection();
           $connection = $this->db->getConnection();
-          $statement = $connection->prepare("SELECT AddItemToBasket(:user_id, :book_id, 1)");
+          $statement = $connection->prepare("SELECT AddItemToBasket(:user_id, :book_id, 1)"); // See /resources/sql/create-procedures.sql for SQL code.
           $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
           $statement->bindParam(":book_id", $book_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
           if($statement->execute())
@@ -90,6 +108,11 @@
       }
     }
     
+    /**
+     * Get details of a user's basket.
+     *
+     * @param Integer $user_id  The id of the user.
+     */
     private function showBasket($user_id)
     {
       $results = "";
@@ -97,7 +120,7 @@
       {
         $this->db->openConnection();
         $connection = $this->db->getConnection();
-        $statement = $connection->prepare("CALL GetBasketByUserId(:user_id)");
+        $statement = $connection->prepare("CALL GetBasketByUserId(:user_id)");  // See /resources/sql/create-procedures.sql for SQL code.
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
         if($statement->execute())
         {
@@ -133,6 +156,13 @@
       }
     }
     
+    /**
+     * Updates the user's basket with a book id and a new amount of books.
+     *
+     * @param Integer $user_id  The id of the user.
+     * @param Integer $book_id  The id of the book being updated.
+     * @param Integer $new_amount The amount to change the current basket amount to.
+     */
     private function updateBasket($user_id, $book_id, $new_amount)
     {
       if(ctype_digit($book_id) && ctype_digit($new_amount))
@@ -161,6 +191,9 @@
       }
     }
     
+    /**
+     * Empty the user's basket.
+     */
     private function emptyBasket($user_id)
     {
       $results = "";
@@ -168,11 +201,12 @@
       {
         $this->db->openConnection();
         $connection = $this->db->getConnection();
-        $statement = $connection->prepare("CALL EmptyBasket(:user_id)");
+        $statement = $connection->prepare("CALL EmptyBasket(:user_id)");  // See /resources/sql/create-procedures.sql for SQL code.
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT);
 
         if($statement->execute())
         { 
+          // Restock the items after being removed from the basket.
           $itemsToRestock = $statement->fetchAll();
           foreach($itemsToRestock as $item)
           {

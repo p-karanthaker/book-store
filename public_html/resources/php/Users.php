@@ -4,28 +4,48 @@
   $users = new Users();
   die();
 
+  /**
+   * The Users class provides various actions to perform on
+   * BookStore users.
+   */
   class Users
   {
+    /**
+     * The Messages object.
+     */
     private $messages;
-    private $db;  
     
+    /**
+     * The DatabaseHelper object.
+     */
+    private $db;
+    
+    /**
+     * Constructs the Users object by initialising Messages and DatabaseHelper objects.
+     * Then looks at POST/GET variables to decide on what action to take.
+     */
     public function __construct()
     {
       $this->messages = new Messages();
       $this->db = new DatabaseHelper();
       
-      if(isset($_POST["loadUsers"]))
+      if(isset($_POST["loadUsers"]))  // Get details of all users.
       {
         $this->getAllUsers(); 
-      } else if(isset($_GET["User"]))
+      } else if(isset($_GET["User"])) // Get details of a single user.
       {
         $this->getUserDetails($_GET["User"]);
-      } else if(isset($_POST["addBalance"]))
+      } else if(isset($_POST["addBalance"]))  // Add funds to a specific user account.
       {
         $this->addBalance($_POST["userId"], $_POST["addBalance"]);
       }
     }
     
+    /**
+     * Get the details of a single user.
+     *
+     * @param Integer $user_id  The user_id of the user to retrieve the details from.
+     */
     private function getUserDetails($user_id)
     {
       $user_id = ctype_digit($user_id) ? $user_id : null;
@@ -68,6 +88,9 @@
       }
     }
     
+    /**
+     * Get all users of the BookStore.
+     */
     private function getAllUsers()
     {
       try
@@ -97,6 +120,12 @@
       }
     }
     
+    /**
+     * Add funds to a user account.
+     *
+     * @param Integer $user_id  The id of the user account to add funds to.
+     * @param Integer $amount   The amount of funds to add to the user account.
+     */
     private function addBalance($user_id, $amount)
     {
       if(ctype_digit($user_id) && is_double(floatval($amount)))

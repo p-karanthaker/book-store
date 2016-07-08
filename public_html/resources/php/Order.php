@@ -4,13 +4,36 @@
   $order = new Order();
   die();
 
+  /**
+   * The Order class performs various actions for processing and retrieving
+   * BookStore user orders.
+   */
   class Order
   {
+    /**
+     * The Messages object.
+     */
     private $messages;
+    
+    /**
+     * The DatabaseHelper object.
+     */
     private $db;
+    
+    /**
+     * Stores the result of functions.
+     */
     private $result = "";
+    
+    /**
+     * Stores the order id of a new order.
+     */
     private $order_id;
     
+    /**
+     * Constructs the Order object by initialising Messages and DatabaseHelper objects
+     * and then decides on the action to perform based on POST/GET variables.
+     */
     public function __construct()
     {
       $this->messages = new Messages();
@@ -18,11 +41,11 @@
       
       $user_id = $_SESSION["user_session"]["user_id"];
       
-      if(isset($_POST["placeOrder"]))
+      if(isset($_POST["placeOrder"]))   
       {
-        if($this->placeOrder($user_id))
+        if($this->placeOrder($user_id))   // Place an order from basket checkout.
         {
-          if($this->getOrderDetails($this->order_id))
+          if($this->getOrderDetails($this->order_id))  // Get the order details to display back to the user.
           {
             $order_date = "";
             $order_total = 0;
@@ -51,10 +74,10 @@
         {
           echo $this->messages->createMessage("Error!", array("We were unable to process the order. Please try again later."), "error", ["inSessionVar" => false, "dismissable" => false]); 
         }
-      } else if(isset($_POST["loadOrders"]))
+      } else if(isset($_POST["loadOrders"]))  // Gets all user orders for staff members to view.
       {
         $this->getAllOrders();
-      } else if(isset($_GET["Order"]))
+      } else if(isset($_GET["Order"]))    // Get the order details of a single order.
       {
         if($this->getOrderDetails($_GET["Order"]))
         {
@@ -80,12 +103,16 @@
           echo "</div>";
           echo "<footer class='w3-container-footer w3-blue'>Ordered On: ".$order_date."</footer>";
         }
-      } else if(isset($_GET["CompleteOrder"]))
+      } else if(isset($_GET["CompleteOrder"]))  // Complete a user's order.
       {
         $this->completeOrder($_GET["CompleteOrder"]);
       }
     }
     
+    /**
+     * Places an order for a student by calling the PlaceOrder stored function.
+     * See the SQL code in /resources/db/create-procedures.sql
+     */
     private function placeOrder($user_id)
     {
       try
@@ -109,6 +136,10 @@
       }
     }
     
+    /**
+     * Completes a user order by calling the CompleteOrder stored function.
+     * See /resources/db/create-procedures.sql for SQL code.
+     */
     private function completeOrder($order_id)
     {
       $order_id = ctype_digit($order_id) ? $order_id : null;
@@ -142,6 +173,9 @@
       }
     }
     
+    /**
+     * Get the details of a single order.
+     */
     private function getOrderDetails($order_id)
     {
       $order_id = ctype_digit($order_id) ? $order_id : null;
@@ -168,6 +202,9 @@
       }
     }
     
+    /**
+     * Get all user orders which have not yet been completed.
+     */
     private function getAllOrders()
     {
       try

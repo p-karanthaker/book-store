@@ -7,20 +7,41 @@
 
   if($result)
   {
+    // Redirect to BookStore homepage if registration was successful.
     header("Location: ".$config["paths"]["baseurl"].$config["content"]["index"], true, 303);
   } else
   {
+    // Redirect to BookStore registration page if registration was unsuccessful.
     header("Location: ".$config["paths"]["baseurl"].$config["content"]["register"], true, 303);
   }
 
   die();
 
+  /**
+   * AccountRegistration performs the actions needed to register a user
+   * to the BookStore database.
+   */
   class AccountRegistration
   { 
+    /**
+     * The Messages object.
+     */
     private $messages;
+    
+    /**
+     * The DatabaseHelper object.
+     */
     private $db;
+    
+    /**
+     * The results of functions.
+     */
     private $result;
     
+    /**
+     * Constructs AccountRegistration by initialising Messages and DatabaseHelper objects.
+     * Then checks if any POST actions have been sent to perform registration.
+     */
     public function __construct()
     { 
       $this->messages = new Messages();
@@ -31,6 +52,9 @@
       }
     }
     
+    /** 
+     * Registers a user to the BookStore database.
+     */
     private function registerUser()
     {
         if($this->validateFormData())
@@ -89,8 +113,10 @@
     } 
     
     /**
-     * Validates the user input on the registration form
-     * @return bool Returns whether the form is valid or not
+     * Validates the user input on the registration form using
+     * regex matching, and min/max length checking.
+     *
+     * @return Boolean Returns whether the form is valid or not
      */    
     private function validateFormData()
     {
@@ -117,6 +143,11 @@
       }
     }
     
+    /**
+     * Returns the value of the result variable.
+     *
+     * @return String   The value of the result variable.
+     */
     public function getResult()
     {
       return $this->result;

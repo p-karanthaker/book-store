@@ -4,15 +4,31 @@
   $books = new Books();
   die();
 
+  /**
+   * The Books class performs various actions to get
+   * details about books and book categories. Also adds
+   * books into the store.
+   */
   class Books 
   {
-    private $db;
+    /**
+     * The Messages object.
+     */
     private $messages;
     
+    /**
+     * The DatabaseHelper object.
+     */
+    private $db;
+    
+    /**
+     * Constructs Books by initialising Messages and DatabaseHelper.
+     * Then checks POST/GET variable to decide which action to perform.
+     */
     public function __construct()
     {
-      $this->db = new DatabaseHelper();
       $this->messages = new Messages();
+      $this->db = new DatabaseHelper();
       
       $category = "";
       if(isset($_GET["Category"]))
@@ -20,7 +36,7 @@
         $this->getBooksByCategory($_GET["Category"]);
       } else if(isset($_GET["Book"]))
       {
-        $this->getBookDetails();
+        $this->getBookDetails($_GET["Book"]);
       } else if(isset($_POST["loadCategories"]))
       {
         $this->getCategories();
@@ -30,6 +46,10 @@
       }
     }
     
+    /**
+     * Gets the book categories from the database and echo's as
+     * HTML select tag options.
+     */
     private function getCategories()
     {
       $results = "";
@@ -56,6 +76,10 @@
       }
     }
     
+    /**
+     * Get's books beloging to specific categories
+     * and outputs as HTML table rows.
+     */
     private function getBooksByCategory($category)
     {
       $category = $_GET["Category"];
@@ -66,7 +90,7 @@
       {
         $this->db->openConnection();
         $connection = $this->db->getConnection();
-        $statement = $connection->prepare("CALL GetBooksByCategory(:book_category)");
+        $statement = $connection->prepare("CALL GetBooksByCategory(:book_category)");   // See /resources/sql/create-procedures.sql for SQL code.
         $statement->bindParam(":book_category", $category, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT);
         if($statement->execute())
         {
@@ -92,9 +116,12 @@
       }
     }
     
-    private function getBookDetails()
+    /**
+     * Gets the details of a specific book id and returns HTML
+     * to be added into a <div> using the w3-card css class.
+     */
+    private function getBookDetails($bookId)
     {
-      $bookId = $_GET["Book"];
       $bookId = ctype_digit($bookId) ? $bookId : 1;
 
       $results = "";
@@ -127,8 +154,12 @@
       }
     }
     
+    /**
+     * Adds a new book to the BookStore database.
+     */
     private function addNewBook($new_book)
     {
+      // Get all the details of the book and store in variables after escaping html characters.
       $book = $new_book[0];
       $title = array_key_exists("title", $book) ? htmlspecialchars($book["title"], ENT_QUOTES) : "";
       $authors = array_key_exists("authors", $book) ? htmlspecialchars($book["authors"], ENT_QUOTES) : "";
@@ -185,6 +216,10 @@
       }
     }
     
+    /**
+     * Validate the new book details by matching user input against
+     * regex patterns.
+     */
     private function validateBookDetails($book)
     {
       $title = array_key_exists("title", $book) ? $book["title"] : "";

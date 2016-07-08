@@ -2,11 +2,31 @@
   require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
   $commonPage = new CommonPage();
 
+  /**
+   * This class is allows you to create the HTML structures
+   * which are common across the BookStore website.It includes
+   * page access restriction, a common HTML <head> content creator,
+   * a common header for the <body> tag, a common navigation bar,
+   * and a common header bar.
+   *
+   * @author Prem-Karan Thaker
+   */
   class CommonPage
   {
+    /**
+     * The database connection object.
+     */
     private $db;
+    
+    /**
+     * The BookStore configuration array.
+     */
     private $config;
     
+    /**
+     * Constructs the CommonPage class by instantiating 
+     * the configuration file array, and the database connection helper.
+     */
     public function __construct()
     {
       global $config;
@@ -14,6 +34,11 @@
       $this->db = new DatabaseHelper();
     }
     
+    /**
+     * Restricts access to pages to only users or only staff.
+     *
+     * @param Boolean   $staffOnlyPage Is the page accessible only by staff?
+     */
     public function restrictAccess($staffOnlyPage)
     {
       $messages = new Messages();
@@ -34,6 +59,12 @@
       }
     }
     
+    /**
+     * Creates the common HTML code to go within the <head></head> tags.
+     * This includes all CSS links, JavaScript links, Font links, and Favicon links.
+     *
+     * @param String    $pageTitle  The title of the web page.
+     */
     public function makeHTMLHead($pageTitle)
     {
       echo "
@@ -68,6 +99,11 @@
         <link rel='icon' href=".$this->config['paths']['baseurl'].$this->config['images']['favicon'].">";
     }
     
+    /**
+     * Creates the common HTML code to go within the <body></body> tags.
+     *
+     * @param String    $headerTitle  The title of the header banner.
+     */
     public function makeBodyHeader($headerTitle)
     {
       if(isset($_SESSION["user_session"]))
@@ -104,6 +140,13 @@
         ";
     }
     
+    /**
+     * Creates the common HTML code for the navigation bar.
+     *
+     * @param String    $activePage Changes the navigation bar style based
+     *                              on a choice of content pages - home, shop,
+     *                              basket, staff.
+     */
     public function makeNavBar($activePage)
     {
       // <li class='active'>Home</li>
@@ -161,6 +204,10 @@
       ";
     }
     
+    /**
+     * Creates the common HTML code for the header bar which displays
+     * user information (name, and account balance).
+     */
     public function makeHeader()
     {
       try

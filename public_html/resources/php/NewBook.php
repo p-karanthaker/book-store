@@ -1,3 +1,4 @@
+<!-- Form to add new books for Staff.php page -->
 <div id="content">
   <div class="row">
     <div class="twelve columns">

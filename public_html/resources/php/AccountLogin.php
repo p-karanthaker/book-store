@@ -7,19 +7,40 @@
 
   if($result)
   {
+    // Redirect to BookStore homepage if login was successful.
     header("Location: ".$config["paths"]["baseurl"].$config["content"]["index"], true, 303);
   } else
   {
+    // Redirect to BookStore login page if login was unsuccessful.
     header("Location: ".$config["paths"]["baseurl"].$config["content"]["login"], true, 303);
   }
   die();
 
+  /**
+   * AccountLogin performs credential validation and session creation/destruction for
+   * users of the BookStore.
+   */
   class AccountLogin
   {
+    /**
+     * The Messages object.
+     */
     private $messages;
+    
+    /**
+     * The DatabaseHelper object.
+     */
     private $db;
+    
+    /**
+     * The results of functions.
+     */
     private $result;
     
+    /**
+     * Constructs AccountLogin by initialising Messages and DatabaseHelper objects.
+     * Then checks if any POST actions have been sent to perform login or logout.
+     */
     public function __construct()
     {
       $this->messages = new Messages();
@@ -42,6 +63,9 @@
       }
     }
     
+    /**
+     * Perform the login steps of BookStore.
+     */
     private function doLogin()
     {
       if($this->validateFormData())
@@ -52,6 +76,12 @@
       }
     }
 
+    /**
+     * Authenticates user input against database values.
+     *
+     * @param String $username  The username entered.
+     * @param String $password  The password entered.
+     */
     private function authenticate($username, $password)
     {
       try
@@ -94,8 +124,10 @@
     }
     
     /**
-     * Validates the user input on the registration form
-     * @return bool Returns whether the form is valid or not
+     * Validates the user input on the registration form using
+     * regex matching, and min/max length checking.
+     *
+     * @return Boolean Returns whether the form is valid or not
      */    
     private function validateFormData()
     {
@@ -120,6 +152,11 @@
       }
     }
     
+    /**
+     * Returns the value of the result variable.
+     *
+     * @return String   The value of the result variable.
+     */
     public function getResult()
     {
       return $this->result;
