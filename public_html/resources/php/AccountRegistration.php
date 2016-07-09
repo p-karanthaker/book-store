@@ -146,8 +146,8 @@
         && strlen($_POST["password"]) >= MIN_LENGTH
         && preg_match(REGEX_MATCHER, $_POST["username"])
         && preg_match(REGEX_MATCHER, $_POST["password"])
-        && ($_POST["password"] === $_POST["password_confirm"])
-        && ($_POST["user_type"] === "Student") || ($_POST["user_type"] === "Staff"))
+        && strcmp($_POST["password"], $_POST["password_confirm"]) == 0
+        && (($_POST["user_type"] === "Student") || ($_POST["user_type"] === "Staff")))
       {
         return true;
       } else {
