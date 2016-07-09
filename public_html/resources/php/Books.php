@@ -57,7 +57,7 @@
       {
         $this->db->openConnection();
         $connection = $this->db->getConnection();
-        $statement = $connection->prepare("SELECT cat_id, `name` FROM category");
+        $statement = $connection->prepare("SELECT cat_id, `name` FROM category ORDER BY `name` ASC");
         if($statement->execute())
         {
           $results = $statement->fetchAll(PDO::FETCH_ASSOC);
