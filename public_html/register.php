@@ -2,6 +2,7 @@
 <?php
   session_start();
   require_once($_SERVER["DOCUMENT_ROOT"]."/resources/php/CommonObjects.php");
+  require_once($doc_root.$config["php"]["common_page"]);
 
   if(isset($_SESSION["user_session"]))
   {
@@ -10,40 +11,11 @@
 ?>
 <!-- End PHP -->
 
-<!-- Begin HTML-->
+<!-- Begin HTML -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Basic Page Needs
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta charset="utf-8">
-    <title>Registration</title>
-    <meta name="description" content="Registration">
-    <meta name="author" content="Karan Thaker">
-
-    <!-- Mobile Specific Metas
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- FONT
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-
-    <!-- CSS
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="/css/normalize.css">
-    <link rel="stylesheet" href="/css/skeleton.css">
-    <script src="https://use.fontawesome.com/824b9bf6de.js"></script>
-    
-    <!-- JavaScript
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-    <!-- Favicon
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" href="<?php echo $config["paths"]["baseurl"].$config["images"]["favicon"]; ?>">
-
+    <?php $commonPage->makeHTMLHead("Book Store: Register"); ?>
   </head>
   <!-- End Head -->
   <body>
