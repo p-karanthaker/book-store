@@ -34,7 +34,7 @@
       <!-- Registration Form -->
       <div class="row">
         <div class="four columns offset-by-one-third">
-          <form name="registerform" action="/resources/php/AccountRegistration.php" method="post">
+          <form name="registerform" action="<?php echo $config['php']['account_registration']; ?>" method="post">
             <label for="username">Username</label>
             <input class="u-full-width" type="text" placeholder="Username" name="username" required>
 

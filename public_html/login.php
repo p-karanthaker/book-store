@@ -34,7 +34,7 @@
       <!-- Login Form -->
       <div id="loginForm" class="row">
         <div class="four columns offset-by-one-third">
-          <form id="loginForm" action="/resources/php/AccountLogin.php" method="post">
+          <form id="loginForm" action="<?php echo $config['php']['account_login']; ?>" method="post">
               <label for="username">Username</label>
               <input class="u-full-width" type="text" placeholder="Username" id="username" name="username" required>
 
