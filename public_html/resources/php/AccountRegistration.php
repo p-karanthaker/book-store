@@ -39,11 +39,18 @@
     private $result;
     
     /**
+     * The config associative array.
+     */
+    private $config;
+    
+    /**
      * Constructs AccountRegistration by initialising Messages and DatabaseHelper objects.
      * Then checks if any POST actions have been sent to perform registration.
      */
     public function __construct()
     { 
+      global $config;
+      $this->config = $config;
       $this->messages = new Messages();
       $this->db = new DatabaseHelper();
       if(isset($_POST["register"]))
@@ -57,6 +64,11 @@
      */
     private function registerUser()
     {
+        if($_POST["user_type"] === "Staff" && $this->config["disabled"]["staff_registration"])
+        {
+          $this->messages->createMessage("Forbidden!", array("Staff registration is currently disabled."), "error");
+          return false;
+        }
         if($this->validateFormData())
         { 
           try
